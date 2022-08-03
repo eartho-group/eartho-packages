@@ -47,6 +47,7 @@ Here's why:
 * Ready high converting UI/UX
 * Login from Google, Twitter, Github, Facebook, Apple, Microsoft, VK, Snapchat, Yandex, Reddit, SMS, Metamask at once with not extra steps or
   extra effort.
+* You don't need to read the documents of all companies and you don't need to open accounts there.
 * Your users will be protected under our third layer, we prevent from companies to track after your
   users.
 * Set boundaries and rules to stop users you don't want from connecting.

@@ -35,7 +35,6 @@ You can easily keep your backend solution - self server / firebase / amplify , o
 
 <p align="center">
 <br />
-    <img src="https://user-images.githubusercontent.com/99670283/173504901-695e423a-de2a-4f70-873b-33fce39aa49c.png" alt="Logo" height="300" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="https://user-images.githubusercontent.com/99670283/178576414-ac74ae1f-c072-4ea2-81e4-a0b758d5256d.gif" alt="Logo" height="300" />
 <br /><br /><br />
 Get all integrations at once. No extra steps.

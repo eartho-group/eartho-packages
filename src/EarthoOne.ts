@@ -203,6 +203,19 @@ export default class EarthoOne {
         typeof window !== 'undefined' && validateCrypto();
 
         options.domain = options.domain || "one.eartho.world";
+        this.domainUrl = getDomain(this.options.domain);
+        this.tokenIssuer = 'https://one.eartho.world/';
+        this.options.useRefreshTokens = true;
+        this.options.cacheLocation = 'localstorage';
+        this.options.redirect_uri = this.options.redirect_uri || window.location.href
+        this.defaultScope = getUniqueScopes(
+            'openid',
+            this.options?.advancedOptions?.defaultScope !== undefined
+                ? this.options.advancedOptions.defaultScope
+                : DEFAULT_SCOPE
+        );
+
+
         if (options.cache && options.cacheLocation) {
             console.warn(
                 'Both `cache` and `cacheLocation` options have been specified in the earthoOne configuration; ignoring `cacheLocation` and using `cache`.'
@@ -260,18 +273,7 @@ export default class EarthoOne {
             this.nowProvider
         );
 
-        this.domainUrl = getDomain(this.options.domain);
-        this.tokenIssuer = 'https://one.eartho.world/';
-        this.options.useRefreshTokens = true;
-        this.options.cacheLocation = 'localstorage';
-
-        this.defaultScope = getUniqueScopes(
-            'openid',
-            this.options?.advancedOptions?.defaultScope !== undefined
-                ? this.options.advancedOptions.defaultScope
-                : DEFAULT_SCOPE
-        );
-
+        
         // If using refresh tokens, automatically specify the `offline_access` scope.
         // Note we cannot add this to 'defaultScope' above as the scopes are used in the
         // cache keys - changing the order could invalidate the keys
@@ -430,12 +432,18 @@ export default class EarthoOne {
         const queryStringFragments = url.split('?').slice(1);
 
         if (queryStringFragments.length === 0) {
-            throw new Error('There are no query params available for parsing.');
+            // throw new Error('There are no query params available for parsing.');
+            return;
         }
 
         const { state, code, error, error_description } = parseQueryResult(
             queryStringFragments.join('')
         );
+
+        if (!state || !code) {
+            // throw new Error('There are no query params available for parsing.');
+            return;
+        }
 
         const transaction = this.transactionManager.get();
 
@@ -459,7 +467,7 @@ export default class EarthoOne {
             !transaction.code_verifier ||
             (transaction.state && transaction.state !== state)
         ) {
-            throw new Error('Invalid state' + transaction.state + " ~~ " + state);
+            throw new Error('Invalid state ' + transaction.state + " ~~ " + state);
         }
 
         const tokenOptions = {
@@ -501,6 +509,8 @@ export default class EarthoOne {
             daysUntilExpire: this.sessionCheckExpiryDays,
             cookieDomain: this.options.cookieDomain
         });
+        var newURL = location.href.split("?")[0];
+        window.history.pushState('object', document.title, newURL);
 
         return {
             appState: transaction.appState
@@ -1005,7 +1015,7 @@ export default class EarthoOne {
             nonce,
             redirect_uri: redirect_uri || this.options.redirect_uri,
             access_id,
-            enabled_providers:enabledProviders,
+            enabled_providers: enabledProviders,
             code_challenge,
             code_challenge_method: 'S256'
         };

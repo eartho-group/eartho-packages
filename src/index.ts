@@ -26,8 +26,13 @@ export * from './global';
  * @returns An instance of EarthoOne
  */
 export default async function createEarthoOne(options: EarthoOneOptions) {
-  const earthoOne =  new EarthoOne(options);
-  await earthoOne.checkSession();
+  const earthoOne = new EarthoOne(options);
+  try {
+    await earthoOne.checkSession();
+  } catch (e) { }
+  try {
+    await earthoOne.handleRedirectCallback();
+  } catch (e) { }
   return earthoOne;
 }
 

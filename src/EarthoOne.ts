@@ -829,7 +829,7 @@ export default class EarthoOne {
 
             const url = this.buildLogoutUrl(logoutOptions);
 
-            window.location.assign(url);
+            // window.location.assign(url);
         };
 
         if (this.options.cache) {

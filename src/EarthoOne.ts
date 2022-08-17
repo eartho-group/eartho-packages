@@ -207,7 +207,7 @@ export default class EarthoOne {
         this.tokenIssuer = 'https://one.eartho.world/';
         this.options.useRefreshTokens = true;
         this.options.cacheLocation = 'localstorage';
-        this.options.redirect_uri = this.options.redirect_uri || window.location.href
+        this.options.redirect_uri = this.options.redirect_uri || window?.location?.href
         this.defaultScope = getUniqueScopes(
             'openid',
             this.options?.advancedOptions?.defaultScope !== undefined

@@ -3,7 +3,7 @@
   "name": "@eartho/one-client-js",
   "description": "Login and authentication from all sources with 1 line of code ! Login from Google, Twitter, Github, Facebook, Apple, Microsoft, Twitch and VK at once with not extra steps or extra effort.",
   "license": "Eartho Inc.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "dist/lib/eartho-one.cjs.js",
   "types": "dist/typings/index.d.ts",
   "module": "dist/eartho-one-js.production.esm.js",

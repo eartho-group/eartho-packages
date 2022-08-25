@@ -52,11 +52,12 @@ export const decode = (token: string) => {
       user[k] = payloadJSON[k];
     }
   });
+
   return {
     encoded: { header, payload, signature },
     header: JSON.parse(urlDecodeB64(header)),
     claims,
-    user
+    user: user.user
   };
 };
 
@@ -79,7 +80,7 @@ export const verify = (options: JWTVerifyOptions) => {
     );
   }
 
-  if (!decoded.user.sub) {
+  if (!decoded.claims.sub) {
     throw new Error(
       'Subject (sub) claim must be a string present in the ID token'
     );

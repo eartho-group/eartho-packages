@@ -293,6 +293,11 @@ export interface PopupConfigOptions {
    * security restrictions around when popups can be invoked (e.g. from a user click event)
    */
   popup?: any;
+
+  /**
+   * Popup will be kept open and will be closed by the operator
+   */
+  manualMode?: boolean;
 }
 
 export interface GetUserOptions {

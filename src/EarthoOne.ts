@@ -204,7 +204,8 @@ export default class EarthoOne {
 
         options.domain = options.domain || "one.eartho.world";
         this.domainUrl = getDomain(this.options.domain);
-        this.tokenIssuer = 'https://one.eartho.world/';
+        this.tokenIssuer = options.issuer || 'https://one.eartho.world/';
+        this.options.audience = options.audience || options.client_id;
         this.options.useRefreshTokens = true;
         this.options.cacheLocation = 'localstorage';
         this.options.redirect_uri = this.options.redirect_uri || window?.location?.href
@@ -1030,7 +1031,7 @@ export default class EarthoOne {
 
         return verifyIdToken({
             iss: this.tokenIssuer,
-            aud: this.options.client_id,
+            aud: this.options.audience,
             id_token,
             nonce,
             leeway: this.options.leeway,

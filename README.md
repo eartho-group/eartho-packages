@@ -2,7 +2,7 @@
 <div id="top"></div>
 <br />
 <div align="center">
-  <a href="https://eartho.world">
+  <a href="https://eartho.io">
     <img src="https://user-images.githubusercontent.com/99670283/172473537-5b4005cf-979b-45cf-bc8a-0f74fb6842e5.png" alt="Logo" width="128" height="128">
   </a>
 
@@ -13,10 +13,10 @@
 You don't need to read the documents of all companies and you don't need to open accounts there.<br />
 We are a third layer that abstracts the complexity for you and protects your users from being tracked.<br /><br />
 You can easily keep your backend solution - self server / firebase / amplify , or get a nocode solution from us.<br /><br />
-    <a href="https://www.eartho.world/product/learn"><strong>Quick Start »</strong></a>
+    <a href="https://www.eartho.io/product/learn"><strong>Quick Start »</strong></a>
     <br />
     <br />
-    <a href="https://eartho.world">Our Website</a>
+    <a href="https://eartho.io">Our Website</a>
     ·
     <a href="https://github.com/eartho-group/one-client-js/issues">Report Bug</a>
     ·
@@ -79,8 +79,8 @@ get started.
 
 <br /> 
 <h3>Full Docs Here<br /> 
-<a href="https://www.eartho.world/product/learn"> 
-https://www.eartho.world/product/learn
+<a href="https://www.eartho.io/product/learn"> 
+https://www.eartho.io/product/learn
 </a></h3>
 <br /> <br />
 <h3>

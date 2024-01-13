@@ -202,9 +202,9 @@ export default class EarthoOne {
     constructor(private options: EarthoOneOptions) {
         typeof window !== 'undefined' && validateCrypto();
 
-        options.domain = options.domain || "one.eartho.world";
+        options.domain = options.domain || "one.eartho.io";
         this.domainUrl = getDomain(this.options.domain);
-        this.tokenIssuer = options.issuer || 'https://one.eartho.world/';
+        this.tokenIssuer = options.issuer || 'https://one.eartho.io/';
         this.options.audience = options.audience || options.client_id;
         this.options.useRefreshTokens = true;
         this.options.cacheLocation = 'localstorage';
@@ -386,7 +386,7 @@ export default class EarthoOne {
             {
                 audience: params.audience,
                 scope: params.scope,
-                baseUrl: `https://api.eartho.world/access/oauth/token`,
+                baseUrl: `https://api.eartho.io/access/oauth/token`,
                 client_id: this.options.client_id,
                 code_verifier,
                 code: codeResult.code,
@@ -474,7 +474,7 @@ export default class EarthoOne {
         const tokenOptions = {
             audience: transaction.audience,
             scope: transaction.scope,
-            baseUrl: `https://api.eartho.world/access/oauth/token`,
+            baseUrl: `https://api.eartho.io/access/oauth/token`,
             client_id: this.options.client_id,
             code_verifier: transaction.code_verifier,
             code: code,
@@ -896,7 +896,7 @@ export default class EarthoOne {
                     ...customOptions,
                     audience,
                     scope,
-                    baseUrl: `https://api.eartho.world/access/oauth/refreshtoken`,
+                    baseUrl: `https://api.eartho.io/access/oauth/refreshtoken`,
                     client_id: this.options.client_id,
                     grant_type: 'refresh_token',
                     access_id: '',

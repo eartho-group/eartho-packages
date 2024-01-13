@@ -97,7 +97,7 @@
   "bugs": {
     "url": "https://github.com/eartho-group/one-client-js/issues"
   },
-  "homepage": "https://www.eartho.world/",
+  "homepage": "https://www.eartho.io/",
   "keywords": [
     "eartho",
     "login",
@@ -116,9 +116,9 @@
   ],
   "ccu": {
     "name": "eartho-one",
-    "cdn": "https://cdn.eartho.world",
+    "cdn": "https://cdn.eartho.io",
     "mainBundleFile": "eartho-one-js.production.js",
-    "bucket": "assets.us.eartho.world",
+    "bucket": "assets.us.eartho.io",
     "localPath": "dist",
     "digest": {
       "hashes": [

@@ -13,7 +13,7 @@ import { createApp } from './scripts/oidc-provider';
 
 import pkg from './package.json';
 
-const EXPORT_NAME = 'createEarthoOne';
+const EXPORT_NAME = 'auth0';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const shouldGenerateStats = process.env.WITH_STATS === 'true';
@@ -47,8 +47,17 @@ const getPlugins = shouldMinify => {
         }
       }
     }),
-    replace({ 'process.env.NODE_ENV': `'${process.env.NODE_ENV}'` }),
-    shouldMinify && terser(),
+    replace({
+      'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
+      preventAssignment: false
+    }),
+    shouldMinify
+      ? terser()
+      : terser({
+          compress: false,
+          mangle: false,
+          format: { beautify: true }
+        }),
     sourcemaps()
   ];
 };
@@ -58,29 +67,38 @@ const getStatsPlugins = () => {
   return [visualizer(visualizerOptions), analyze({ summaryOnly: true })];
 };
 
-const footer = `('earthoOne' in this) && this.console && this.console.warn && this.console.warn('earthoOne already declared on the global namespace');
-this && this.${EXPORT_NAME} && (this.earthoOne = this.earthoOne || this.${EXPORT_NAME}.earthoOne);`;
-
 let bundles = [
   {
-    input: 'src/index.cjs.ts',
+    input: 'src/core/worker/token.worker.ts',
+    output: {
+      name: EXPORT_NAME,
+      file: 'dist/eartho-one-js.worker.development.js',
+      format: 'umd',
+      sourcemap: true
+    },
+    plugins: [...getPlugins(false)],
+    watch: {
+      clearScreen: false
+    }
+  },
+  {
+    input: 'src/index.ts',
     output: {
       name: EXPORT_NAME,
       file: 'dist/eartho-one-js.development.js',
-      footer,
       format: 'umd',
       sourcemap: true
     },
     plugins: [
       ...getPlugins(false),
       !isProduction &&
-      dev({
-        dirs: ['dist', 'static'],
-        port: serverPort,
-        extend(app, modules) {
-          app.use(modules.mount(createApp({ port: serverPort })));
-        }
-      }),
+        dev({
+          dirs: ['dist', 'static'],
+          port: serverPort,
+          extend(app, modules) {
+            app.use(modules.mount(createApp({ port: serverPort })));
+          }
+        }),
       !isProduction && livereload()
     ],
     watch: {
@@ -92,12 +110,22 @@ let bundles = [
 if (isProduction) {
   bundles = bundles.concat(
     {
-      input: 'src/index.cjs.ts',
+      input: 'src/core/worker/token.worker.ts',
+      output: [
+        {
+          name: EXPORT_NAME,
+          file: 'dist/eartho-one-js.worker.production.js',
+          format: 'umd'
+        }
+      ],
+      plugins: [...getPlugins(isProduction), ...getStatsPlugins()]
+    },
+    {
+      input: 'src/index.ts',
       output: [
         {
           name: EXPORT_NAME,
           file: 'dist/eartho-one-js.production.js',
-          footer,
           format: 'umd'
         }
       ],
@@ -114,7 +142,7 @@ if (isProduction) {
       plugins: getPlugins(isProduction)
     },
     {
-      input: 'src/index.cjs.ts',
+      input: 'src/index.ts',
       output: [
         {
           name: EXPORT_NAME,
@@ -122,8 +150,7 @@ if (isProduction) {
           format: 'cjs'
         }
       ],
-      plugins: getPlugins(false),
-      external: Object.keys(pkg.dependencies)
+      plugins: getPlugins(false)
     }
   );
 }

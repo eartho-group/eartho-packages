@@ -204,7 +204,7 @@ export default class EarthoOne {
 
         options.domain = options.domain || "one.eartho.io";
         this.domainUrl = getDomain(this.options.domain);
-        this.tokenIssuer = options.issuer || 'https://one.eartho.io/';
+        this.tokenIssuer = options.issuer || 'https://one.eartho.world/';
         this.options.audience = options.audience || options.client_id;
         this.options.useRefreshTokens = true;
         this.options.cacheLocation = 'localstorage';

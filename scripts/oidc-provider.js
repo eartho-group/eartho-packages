@@ -57,7 +57,7 @@ const config = {
   },
   routes: {
     authorization: '/connect', // lgtm [js/hardcoded-credentials]
-    token: '/oauth/token',
+    token: '/access/oauth/token',
     end_session: '/v2/logout'
   },
   scopes: ['openid', 'offline_access'],
@@ -96,7 +96,7 @@ export function createApp(opts) {
   provider.use(async (ctx, next) => {
     await next();
 
-    if (ctx.oidc.route === 'end_session_success') {
+    if (ctx.oidc?.route === 'end_session_success') {
       ctx.redirect('http://127.0.0.1:3000');
     }
   });

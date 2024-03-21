@@ -13,7 +13,7 @@ import { createApp } from './scripts/oidc-provider';
 
 import pkg from './package.json';
 
-const EXPORT_NAME = 'auth0';
+const EXPORT_NAME = 'eartho';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const shouldGenerateStats = process.env.WITH_STATS === 'true';
@@ -69,10 +69,10 @@ const getStatsPlugins = () => {
 
 let bundles = [
   {
-    input: 'src/core/worker/token.worker.ts',
+    input: 'src/worker/token.worker.ts',
     output: {
       name: EXPORT_NAME,
-      file: 'dist/eartho-one-js.worker.development.js',
+      file: 'dist/one-client-js.worker.development.js',
       format: 'umd',
       sourcemap: true
     },
@@ -85,7 +85,7 @@ let bundles = [
     input: 'src/index.ts',
     output: {
       name: EXPORT_NAME,
-      file: 'dist/eartho-one-js.development.js',
+      file: 'dist/one-client-js.development.js',
       format: 'umd',
       sourcemap: true
     },
@@ -110,11 +110,11 @@ let bundles = [
 if (isProduction) {
   bundles = bundles.concat(
     {
-      input: 'src/core/worker/token.worker.ts',
+      input: 'src/worker/token.worker.ts',
       output: [
         {
           name: EXPORT_NAME,
-          file: 'dist/eartho-one-js.worker.production.js',
+          file: 'dist/one-client-js.worker.production.js',
           format: 'umd'
         }
       ],
@@ -125,7 +125,7 @@ if (isProduction) {
       output: [
         {
           name: EXPORT_NAME,
-          file: 'dist/eartho-one-js.production.js',
+          file: 'dist/one-client-js.production.js',
           format: 'umd'
         }
       ],

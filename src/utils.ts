@@ -12,24 +12,21 @@ import {
   PopupCancelledError
 } from './errors';
 
-export const parseQueryResult = (queryString: string): AuthenticationResult => {
+export const parseAuthenticationResult = (
+  queryString: string
+): AuthenticationResult => {
   if (queryString.indexOf('#') > -1) {
-    queryString = queryString.substr(0, queryString.indexOf('#'));
+    queryString = queryString.substring(0, queryString.indexOf('#'));
   }
 
-  const queryParams = queryString.split('&');
-  const parsedQuery: Record<string, any> = {};
+  const searchParams = new URLSearchParams(queryString);
 
-  queryParams.forEach(qp => {
-    const [key, val] = qp.split('=');
-    parsedQuery[key] = decodeURIComponent(val);
-  });
-
-  if (parsedQuery.expires_in) {
-    parsedQuery.expires_in = parseInt(parsedQuery.expires_in);
-  }
-
-  return parsedQuery as AuthenticationResult;
+  return {
+    state: searchParams.get('state')!,
+    code: searchParams.get('code') || undefined,
+    error: searchParams.get('error') || undefined,
+    error_description: searchParams.get('error_description') || undefined
+  };
 };
 
 export const runIframe = (
@@ -76,7 +73,7 @@ export const runIframe = (
       window.removeEventListener('message', iframeEventHandler, false);
 
       // Delay the removal of the iframe to prevent hanging loading status
-      // in Chrome: https://github.com/earthoOne/eartho-one-js/issues/240
+      // in Chrome: https://github.com/eartho/one-client-js/issues/240
       setTimeout(removeIframe, CLEANUP_IFRAME_TIMEOUT_IN_SECONDS * 1000);
     };
 
@@ -88,20 +85,20 @@ export const runIframe = (
 
 export const openPopup = (url: string) => {
   const width = 400;
-  const height = 610;
+  const height = 600;
   const left = window.screenX + (window.innerWidth - width) / 2;
   const top = window.screenY + (window.innerHeight - height) / 2;
 
   return window.open(
     url,
-    'earthoOne:authorize:popup',
+    'eartho:authorize:popup',
     `left=${left},top=${top},width=${width},height=${height},resizable,scrollbars=yes,status=1`
   );
 };
 
 export const runPopup = (config: PopupConfigOptions) => {
   return new Promise<AuthenticationResult>((resolve, reject) => {
-    let popupEventListener: EventListenerOrEventListenerObject;
+    let popupEventListener: (e: MessageEvent) => void;
 
     // Check each second if the popup is closed triggering a PopupCancelledError
     const popupTimer = setInterval(() => {
@@ -127,9 +124,7 @@ export const runPopup = (config: PopupConfigOptions) => {
       clearTimeout(timeoutId);
       clearInterval(popupTimer);
       window.removeEventListener('message', popupEventListener, false);
-      if (config?.manualMode != true) {
-        config.popup.close();
-      }
+      config.popup.close();
 
       if (e.data.response.error) {
         return reject(GenericError.fromPayload(e.data.response));
@@ -143,15 +138,9 @@ export const runPopup = (config: PopupConfigOptions) => {
 };
 
 export const getCrypto = () => {
-  //ie 11.x uses msCrypto
-  return (window.crypto || (window as any).msCrypto) as Crypto;
+  return window.crypto;
 };
 
-export const getCryptoSubtle = () => {
-  const crypto = getCrypto();
-  //safari 10.x uses webkitSubtle
-  return crypto.subtle || (crypto as any).webkitSubtle;
-};
 export const createRandomString = () => {
   const charset =
     '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_~.';
@@ -166,41 +155,23 @@ export const createRandomString = () => {
 export const encode = (value: string) => btoa(value);
 export const decode = (value: string) => atob(value);
 
-export const createQueryParams = (params: any) => {
+const stripUndefined = (params: any) => {
   return Object.keys(params)
     .filter(k => typeof params[k] !== 'undefined')
-    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-    .join('&');
+    .reduce((acc, key) => ({ ...acc, [key]: params[key] }), {});
+};
+
+export const createQueryParams = ({ clientId: client_id, ...params }: any) => {
+  return new URLSearchParams(
+    stripUndefined({ client_id, ...params })
+  ).toString();
 };
 
 export const sha256 = async (s: string) => {
-  const digestOp: any = getCryptoSubtle().digest(
+  const digestOp: any = getCrypto().subtle.digest(
     { name: 'SHA-256' },
     new TextEncoder().encode(s)
   );
-
-  // msCrypto (IE11) uses the old spec, which is not Promise based
-  // https://msdn.microsoft.com/en-us/expression/dn904640(v=vs.71)
-  // Instead of returning a promise, it returns a CryptoOperation
-  // with a result property in it.
-  // As a result, the various events need to be handled in the event that we're
-  // working in IE11 (hence the msCrypto check). These events just call resolve
-  // or reject depending on their intention.
-  if ((window as any).msCrypto) {
-    return new Promise((res, rej) => {
-      digestOp.oncomplete = (e: any) => {
-        res(e.target.result);
-      };
-
-      digestOp.onerror = (e: ErrorEvent) => {
-        rej(e.error);
-      };
-
-      digestOp.onabort = () => {
-        rej('The digest operation was aborted');
-      };
-    });
-  }
 
   return await digestOp;
 };
@@ -234,12 +205,44 @@ export const bufferToBase64UrlEncoded = (input: number[] | Uint8Array) => {
 export const validateCrypto = () => {
   if (!getCrypto()) {
     throw new Error(
-      'For security reasons, `window.crypto` is required to run `eartho-one-js`.'
+      'For security reasons, `window.crypto` is required to run `one-client-js`.'
     );
   }
-  if (typeof getCryptoSubtle() === 'undefined') {
+  if (typeof getCrypto().subtle === 'undefined') {
     throw new Error(`
-      eartho-one-js must run on a secure origin. See https://github.com/earthoOne/eartho-one-js/blob/master/FAQ.md#why-do-i-get-eartho-one-js-must-run-on-a-secure-origin for more information.
+      one-client-js must run on a secure origin.
     `);
   }
+};
+
+/**
+ * @ignore
+ */
+export const getDomain = (domainUrl: string) => {
+  if (!/^https?:\/\//.test(domainUrl)) {
+    return `https://${domainUrl}`;
+  }
+
+  return domainUrl;
+};
+
+/**
+ * @ignore
+ */
+export const getTokenIssuer = (
+  issuer: string | undefined,
+  domainUrl: string
+) => {
+  if (issuer) {
+    return issuer.startsWith('https://') ? issuer : `https://${issuer}/`;
+  }
+
+  return `${domainUrl}/`;
+};
+
+export const parseNumber = (value: any): number | undefined => {
+  if (typeof value !== 'string') {
+    return value;
+  }
+  return parseInt(value, 10) || undefined;
 };

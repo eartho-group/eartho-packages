@@ -1,9 +1,6 @@
-import { ICache } from './core/cache';
+import { ICache } from './cache';
 
-/**
- * @ignore
- */
-export interface BaseLoginOptions {
+export interface AuthorizationParams {
   /**
    * - `'page'`: displays the UI with a full page view
    * - `'popup'`: displays the UI with a popup window
@@ -21,7 +18,7 @@ export interface BaseLoginOptions {
   prompt?: 'none' | 'login' | 'consent' | 'select_account';
 
   /**
-   * Maximum allowable elasped time (in seconds) since authentication.
+   * Maximum allowable elapsed time (in seconds) since authentication.
    * If the last time the user authenticated is greater than this value,
    * the user must be reauthenticated.
    */
@@ -39,13 +36,13 @@ export interface BaseLoginOptions {
   id_token_hint?: string;
 
   /**
-   * Provides a hint to EarthoOne as to what flow should be displayed.
+   * Provides a hint to Eartho as to what flow should be displayed.
    * The default behavior is to show a login page but you can override
    * this by passing 'signup' to show the signup page instead.
    *
    * This only affects the New Universal Login Experience.
    */
-  screen_hint?: string;
+  screen_hint?: 'signup' | 'login' | string;
 
   /**
    * The user's email address or other identifier. When your app knows
@@ -60,10 +57,14 @@ export interface BaseLoginOptions {
 
   /**
    * The default scope to be used on authentication requests.
-   * The defaultScope defined in the earthoOne is included
-   * along with this scope
+   *
+   * This defaults to `profile email` if not set. If you are setting extra scopes and require
+   * `profile` and `email` to be included then you must include them in the provided scope.
+   *
+   * Note: The `openid` scope is **always applied** regardless of this setting.
    */
   scope?: string;
+  access_id?: string;
 
   /**
    * The default audience to be used for requesting API access.
@@ -72,15 +73,35 @@ export interface BaseLoginOptions {
 
   /**
    * The name of the connection configured for your application.
-   * If null, it will redirect to the EarthoOne Login Page and show
+   * If null, it will redirect to the Eartho Login Page and show
    * the Login Widget.
    */
   connection?: string;
 
   /**
+   * The organization to log in to.
+   *
+   * This will specify an `organization` parameter in your user's login request.
+   *
+   * - If you provide an Organization ID (a string with the prefix `org_`), it will be validated against the `org_id` claim of your user's ID Token. The validation is case-sensitive.
+   * - If you provide an Organization Name (a string *without* the prefix `org_`), it will be validated against the `org_name` claim of your user's ID Token. The validation is case-insensitive.
+   *
+   */
+  organization?: string;
+
+  /**
    * The Id of an invitation to accept. This is available from the user invitation URL that is given when participating in a user invitation flow.
    */
   invitation?: string;
+
+  /**
+   * The default URL where Eartho will redirect your browser to with
+   * the authentication result. It must be whitelisted in
+   * the "Allowed Callback URLs" field in your Eartho Application's
+   * settings. If not provided here, it should be provided in the other
+   * methods that provide authentication.
+   */
+  redirect_uri?: string;
 
   /**
    * If you need to send custom parameters to the Authorization Server,
@@ -89,18 +110,21 @@ export interface BaseLoginOptions {
   [key: string]: any;
 }
 
-interface AdvancedOptions {
+interface BaseConnectOptions {
   /**
-   * The default scope to be included with all requests.
-   * If not provided, 'openid profile email' is used. This can be set to `null` in order to effectively remove the default scopes.
-   *
-   * Note: The `openid` scope is **always applied** regardless of this setting.
+   * URL parameters that will be sent back to the Authorization Server. This can be known parameters
+   * defined by Eartho or custom parameters that you define.
    */
-  defaultScope?: string;
+  authorizationParams?: AuthorizationParams;
 }
 
-export interface EarthoOneOptions extends BaseLoginOptions {
-  domain?: string;
+export interface EarthoOneOptions extends BaseConnectOptions {
+  /**
+   * Your Eartho account domain such as `'example.eartho.com'`,
+   * `'example.eu.eartho.com'` or , `'example.mycompany.com'`
+   * (when using [custom domains](https://eartho.com/docs/custom-domains))
+   */
+  domain: string;
   /**
    * The issuer to be used for validation of JWTs, optionally defaults to the domain above
    */
@@ -108,15 +132,8 @@ export interface EarthoOneOptions extends BaseLoginOptions {
   /**
    * The Client ID found on your Application settings page
    */
-  client_id: string;
-  /**
-   * The default URL where EarthoOne will redirect your browser to with
-   * the authentication result. It must be whitelisted in
-   * the "Allowed Callback URLs" field in your EarthoOne Application's
-   * settings. If not provided here, it should be provided in the other
-   * methods that provide authentication.
-   */
-  redirect_uri?: string;
+  clientId: string;
+  accessId: string;
   /**
    * The value in seconds used to account for clock skew in JWT expirations.
    * Typically, this value is no more than a minute or two at maximum.
@@ -128,7 +145,7 @@ export interface EarthoOneOptions extends BaseLoginOptions {
    * The location to use when storing cache data. Valid values are `memory` or `localstorage`.
    * The default setting is `memory`.
    *
-   * Read more about [changing storage options in the EarthoOne docs]
+   * Read more about [changing storage options in the Eartho docs](https://eartho.com/docs/libraries/eartho-single-page-app-sdk#change-storage-options)
    */
   cacheLocation?: CacheLocation;
 
@@ -138,13 +155,34 @@ export interface EarthoOneOptions extends BaseLoginOptions {
   cache?: ICache;
 
   /**
-   * If true, refresh tokens are used to fetch new access tokens from the EarthoOne server. If false, the legacy technique of using a hidden iframe and the `authorization_code` grant with `prompt=none` is used.
+   * If true, refresh tokens are used to fetch new access tokens from the Eartho server. If false, the legacy technique of using a hidden iframe and the `authorization_code` grant with `prompt=none` is used.
    * The default setting is `false`.
    *
-   * **Note**: Use of refresh tokens must be enabled by an administrator on your EarthoOne client application.
+   * **Note**: Use of refresh tokens must be enabled by an administrator on your Eartho client application.
    */
   useRefreshTokens?: boolean;
-  enabledProviders?: string[];
+
+  /**
+   * If true, fallback to the technique of using a hidden iframe and the `authorization_code` grant with `prompt=none` when unable to use refresh tokens. If false, the iframe fallback is not used and
+   * errors relating to a failed `refresh_token` grant should be handled appropriately. The default setting is `false`.
+   *
+   * **Note**: There might be situations where doing silent auth with a Web Message response from an iframe is not possible,
+   * like when you're serving your application from the file system or a custom protocol (like in a Desktop or Native app).
+   * In situations like this you can disable the iframe fallback and handle the failed `refresh_token` grant and prompt the user to login interactively with `connectWithRedirect` or `connectWithPopup`."
+   *
+   * E.g. Using the `file:` protocol in an Electron application does not support that legacy technique.
+   *
+   * @example
+   * let token: string;
+   * try {
+   *   token = await eartho.getTokenSilently();
+   * } catch (e) {
+   *   if (e.error === 'missing_refresh_token' || e.error === 'invalid_grant') {
+   *     eartho.connectWithRedirect();
+   *   }
+   * }
+   */
+  useRefreshTokensFallback?: boolean;
 
   /**
    * A maximum number of seconds to wait before declaring background calls to /authorize as failed for timeout
@@ -161,7 +199,11 @@ export interface EarthoOneOptions extends BaseLoginOptions {
    * Internal property to send information about the client to the authorization server.
    * @internal
    */
-  earthoOne?: { name: string; version: string };
+  earthoOneClient?: {
+    name: string;
+    version: string;
+    env?: { [key: string]: string };
+  };
 
   /**
    * Sets an additional cookie with no SameSite attribute to support legacy browsers
@@ -187,12 +229,7 @@ export interface EarthoOneOptions extends BaseLoginOptions {
   useCookiesForTransactions?: boolean;
 
   /**
-   * Changes to recommended defaults, like defaultScope
-   */
-  advancedOptions?: AdvancedOptions;
-
-  /**
-   * Number of days until the cookie `earthoOne.is.authenticated` will expire
+   * Number of days until the cookie `eartho.is.authenticated` will expire
    * Defaults to 1.
    */
   sessionCheckExpiryDays?: number;
@@ -211,11 +248,10 @@ export interface EarthoOneOptions extends BaseLoginOptions {
   cookieDomain?: string;
 
   /**
-   * When true, data to the token endpoint is transmitted as x-www-form-urlencoded data instead of JSON. The default is false, but will default to true in a
-   * future major version.
+   * If true, data to the token endpoint is transmitted as x-www-form-urlencoded data, if false it will be transmitted as JSON. The default setting is `true`.
    *
-   * **Note:** Setting this to `true` may affect you if you use EarthoOne Rules and are sending custom, non-primative data. If you enable this, please verify that your EarthoOne Rules
-   * continue to work as intended.
+   * **Note:** Setting this to `false` may affect you if you use Eartho Rules and are sending custom, non-primitive data. If you disable this,
+   * please verify that your Eartho Rules continue to work as intended.
    */
   useFormData?: boolean;
 
@@ -225,6 +261,16 @@ export interface EarthoOneOptions extends BaseLoginOptions {
    * **Note**: Using this improperly can potentially compromise the token validation.
    */
   nowProvider?: () => Promise<number> | number;
+
+  /**
+   * If provided, the SDK will load the token worker from this URL instead of the integrated `blob`. An example of when this is useful is if you have strict
+   * Content-Security-Policy (CSP) and wish to avoid needing to set `worker-src: blob:`. We recommend either serving the worker, which you can find in the module 
+   * at `<module_path>/dist/one-client-js.worker.production.js`, from the same host as your application or using the Eartho CDN 
+   * `https://cdn.eartho.com/js/one-client-js/<version>/one-client-js.worker.production.js`.
+   * 
+   * **Note**: The worker is only used when `useRefreshTokens: true`, `cacheLocation: 'memory'`, and the `cache` is not custom.
+   */
+  workerUrl?: string;
 }
 
 /**
@@ -235,10 +281,10 @@ export type CacheLocation = 'memory' | 'localstorage';
 /**
  * @ignore
  */
-export interface AuthorizeOptions extends BaseLoginOptions {
+export interface AuthorizeOptions extends AuthorizationParams {
   response_type: string;
   response_mode: string;
-  redirect_uri: string;
+  redirect_uri?: string;
   nonce: string;
   state: string;
   scope: string;
@@ -247,14 +293,8 @@ export interface AuthorizeOptions extends BaseLoginOptions {
 }
 
 export interface RedirectConnectOptions<TAppState = any>
-  extends BaseLoginOptions {
-  /**
-   * The URL where EarthoOne will redirect your browser to with
-   * the authentication result. It must be whitelisted in
-   * the "Allowed Callback URLs" field in your EarthoOne Application's
-   * settings.
-   */
-  redirect_uri?: string;
+  extends BaseConnectOptions {
+  accessId: string;
   /**
    * Used to store state before doing the redirect
    */
@@ -264,20 +304,49 @@ export interface RedirectConnectOptions<TAppState = any>
    */
   fragment?: string;
   /**
-   * Used to select the window.location method used to redirect
+   * Used to control the redirect and not rely on the SDK to do the actual redirect.
+   *
+   * @example
+   * const client = new EarthoOne({
+   *   async onRedirect(url) {
+   *     window.location.replace(url);
+   *   }
+   * });
+   * @deprecated since v2.0.1, use `openUrl` instead.
    */
-  redirectMethod?: 'replace' | 'assign';
+  onRedirect?: (url: string) => Promise<void>;
+
+  /**
+   * Used to control the redirect and not rely on the SDK to do the actual redirect.
+   *
+   * @example
+   * const client = new EarthoOne({
+   *   openUrl(url) {
+   *     window.location.replace(url);
+   *   }
+   * });
+   *
+   * @example
+   * import { Browser } from '@capacitor/browser';
+   *
+   * const client = new EarthoOne({
+   *   async openUrl(url) {
+   *     await Browser.open({ url });
+   *   }
+   * });
+   */
+  openUrl?: (url: string) => Promise<void> | void;
 }
 
-export interface RedirectLoginResult<TAppState = any> {
+export interface RedirectConnectResult<TAppState = any> {
   /**
    * State stored when the redirect request was made
    */
   appState?: TAppState;
 }
 
-export interface PopupConnectOptions extends BaseLoginOptions {
-  access_id: string;
+export interface PopupConnectOptions extends BaseConnectOptions {
+    accessId: string;
 }
 
 export interface PopupConfigOptions {
@@ -293,66 +362,47 @@ export interface PopupConfigOptions {
    * security restrictions around when popups can be invoked (e.g. from a user click event)
    */
   popup?: any;
-
-  /**
-   * Popup will be kept open and will be closed by the operator
-   */
-  manualMode?: boolean;
 }
-
-export interface GetUserOptions {
-  /**
-   * The scope that was used in the authentication request
-   */
-  scope?: string;
-  /**
-   * The audience that was used in the authentication request
-   */
-  audience?: string;
-}
-
-export interface GetIdTokenClaimsOptions {
-  /**
-   * The scope that was used in the authentication request
-   */
-  scope?: string;
-  /**
-   * The audience that was used in the authentication request
-   */
-  audience?: string;
-}
-
-/*
- * TODO: Remove this on the next major
- */
-export type getIdTokenClaimsOptions = GetIdTokenClaimsOptions;
 
 export interface GetTokenSilentlyOptions {
   /**
-   * When `true`, ignores the cache and always sends a
-   * request to EarthoOne.
+   * When `off`, ignores the cache and always sends a
+   * request to Eartho.
+   * When `cache-only`, only reads from the cache and never sends a request to Eartho.
+   * Defaults to `on`, where it both reads from the cache and sends a request to Eartho as needed.
    */
-  ignoreCache?: boolean;
+  cacheMode?: 'on' | 'off' | 'cache-only';
 
   /**
-   * There's no actual redirect when getting a token silently,
-   * but, according to the spec, a `redirect_uri` param is required.
-   * EarthoOne uses this parameter to validate that the current `origin`
-   * matches the `redirect_uri` `origin` when sending the response.
-   * It must be whitelisted in the "Allowed Web Origins" in your
-   * EarthoOne Application's settings.
+   * Parameters that will be sent back to Eartho as part of a request.
    */
-  redirect_uri?: string;
+  authorizationParams?: {
+    /**
+     * There's no actual redirect when getting a token silently,
+     * but, according to the spec, a `redirect_uri` param is required.
+     * Eartho uses this parameter to validate that the current `origin`
+     * matches the `redirect_uri` `origin` when sending the response.
+     * It must be whitelisted in the "Allowed Web Origins" in your
+     * Eartho Application's settings.
+     */
+    redirect_uri?: string;
 
-  /**
-   * The scope that was used in the authentication request
-   */
-  scope?: string;
+    /**
+     * The scope that was used in the authentication request
+     */
+    scope?: string;
 
-  /**
-   * The audience that was used in the authentication request
-   */
-  audience?: string;
+    /**
+     * The audience that was used in the authentication request
+     */
+    audience?: string;
+    
+    /**
+     * If you need to send custom parameters to the Authorization Server,
+     * make sure to use the original parameter name.
+     */
+    [key: string]: any;
+  };
 
   /** A maximum number of seconds to wait before declaring the background /authorize call as failed for timeout
    * Defaults to 60s.
@@ -366,99 +416,98 @@ export interface GetTokenSilentlyOptions {
    * The default is `false`.
    */
   detailedResponse?: boolean;
-
-  /**
-   * If you need to send custom parameters to the Authorization Server,
-   * make sure to use the original parameter name.
-   */
-  [key: string]: any;
 }
 
 export interface GetTokenWithPopupOptions extends PopupConnectOptions {
   /**
-   * When `true`, ignores the cache and always sends a
-   * request to EarthoOne.
+   * When `off`, ignores the cache and always sends a request to Eartho.
+   * When `cache-only`, only reads from the cache and never sends a request to Eartho.
+   * Defaults to `on`, where it both reads from the cache and sends a request to Eartho as needed.
    */
-  ignoreCache?: boolean;
+  cacheMode?: 'on' | 'off' | 'cache-only';
 }
 
 export interface LogoutUrlOptions {
   /**
-   * The URL where EarthoOne will redirect your browser to after the logout.
+   * The `clientId` of your application.
    *
-   * **Note**: If the `client_id` parameter is included, the
-   * `returnTo` URL that is provided must be listed in the
-   * Application's "Allowed Logout URLs" in the EarthoOne dashboard.
-   * However, if the `client_id` parameter is not included, the
-   * `returnTo` URL must be listed in the "Allowed Logout URLs" at
-   * the account level in the EarthoOne dashboard.
-   *
-   * [Read more about how redirecting after logout works]
-   */
-  returnTo?: string;
-
-  /**
-   * The `client_id` of your application.
-   *
-   * If this property is not set, then the `client_id` that was used during initialization of the SDK is sent to the logout endpoint.
+   * If this property is not set, then the `clientId` that was used during initialization of the SDK is sent to the logout endpoint.
    *
    * If this property is set to `null`, then no client ID value is sent to the logout endpoint.
    *
-   * [Read more about how redirecting after logout works]
+   * [Read more about how redirecting after logout works](https://eartho.com/docs/logout/guides/redirect-users-after-logout)
    */
-  client_id?: string;
+  clientId?: string | null;
 
   /**
-   * When supported by the upstream identity provider,
-   * forces the user to logout of their identity provider
-   * and from EarthoOne.
-   * [Read more about how federated logout works at EarthoOne]
+   * Parameters to pass to the logout endpoint. This can be known parameters defined by Eartho or custom parameters
+   * you wish to provide.
    */
-  federated?: boolean;
+  logoutParams?: {
+    /**
+     * When supported by the upstream identity provider,
+     * forces the user to logout of their identity provider
+     * and from Eartho.
+     * [Read more about how federated logout works at Eartho](https://eartho.com/docs/logout/guides/logout-idps)
+     */
+    federated?: boolean;
+    /**
+     * The URL where Eartho will redirect your browser to after the logout.
+     *
+     * **Note**: If the `client_id` parameter is included, the
+     * `returnTo` URL that is provided must be listed in the
+     * Application's "Allowed Logout URLs" in the Eartho dashboard.
+     * However, if the `client_id` parameter is not included, the
+     * `returnTo` URL must be listed in the "Allowed Logout URLs" at
+     * the account level in the Eartho dashboard.
+     *
+     * [Read more about how redirecting after logout works](https://eartho.com/docs/logout/guides/redirect-users-after-logout)
+     */
+    returnTo?: string;
+
+    /**
+     * If you need to send custom parameters to the logout endpoint, make sure to use the original parameter name.
+     */
+    [key: string]: any;
+  };
 }
 
-export interface LogoutOptions {
+export interface LogoutOptions extends LogoutUrlOptions {
   /**
-   * The URL where EarthoOne will redirect your browser to after the logout.
+   * Used to control the redirect and not rely on the SDK to do the actual redirect.
    *
-   * **Note**: If the `client_id` parameter is included, the
-   * `returnTo` URL that is provided must be listed in the
-   * Application's "Allowed Logout URLs" in the EarthoOne dashboard.
-   * However, if the `client_id` parameter is not included, the
-   * `returnTo` URL must be listed in the "Allowed Logout URLs" at
-   * the account level in the EarthoOne dashboard.
-   *
-   * [Read more about how redirecting after logout works]
+   * @example
+   * await eartho.logout({
+   *   async onRedirect(url) {
+   *     window.location.replace(url);
+   *   }
+   * });
+   * @deprecated since v2.0.1, use `openUrl` instead.
    */
-  returnTo?: string;
+  onRedirect?: (url: string) => Promise<void>;
 
   /**
-   * The `client_id` of your application.
+   * Used to control the redirect and not rely on the SDK to do the actual redirect.
    *
-   * If this property is not set, then the `client_id` that was used during initialization of the SDK is sent to the logout endpoint.
+   * Set to `false` to disable the redirect, or provide a function to handle the actual redirect yourself.
    *
-   * If this property is set to `null`, then no client ID value is sent to the logout endpoint.
+   * @example
+   * await eartho.logout({
+   *   openUrl(url) {
+   *     window.location.replace(url);
+   *   }
+   * });
    *
-   * [Read more about how redirecting after logout works]
+   * @example
+   * import { Browser } from '@capacitor/browser';
+   *
+   * await eartho.logout({
+   *   async openUrl(url) {
+   *     await Browser.open({ url });
+   *   }
+   * });
    */
-  client_id?: string;
-
-  /**
-   * When supported by the upstream identity provider,
-   * forces the user to logout of their identity provider
-   * and from EarthoOne.
-   * This option cannot be specified along with the `localOnly` option.
-   * [Read more about how federated logout works at EarthoOne]
-   */
-  federated?: boolean;
-
-  /**
-   * When `true`, this skips the request to the logout endpoint on the authorization server,
-   * effectively performing a "local" logout of the application. No redirect should take place,
-   * you should update local logged in state.
-   * This option cannot be specified along with the `federated` option.
-   */
-  localOnly?: boolean;
+  openUrl?: false | ((url: string) => Promise<void> | void);
 }
 
 /**
@@ -477,17 +526,13 @@ export interface AuthenticationResult {
 export interface TokenEndpointOptions {
   baseUrl: string;
   client_id: string;
-  access_id: string;
   grant_type: string;
   timeout?: number;
-  earthoOne: any;
+  earthoOneClient: any;
   useFormData?: boolean;
   [key: string]: any;
 }
 
-/**
- * @ignore
- */
 export type TokenEndpointResponse = {
   id_token: string;
   access_token: string;
@@ -524,27 +569,30 @@ export interface JWTVerifyOptions {
   nonce?: string;
   leeway?: number;
   max_age?: number;
+  organization?: string;
   now?: number;
 }
 
-/**
- * @ignore
- */
 export interface IdToken {
   __raw: string;
-  firstName?: string;
-  lastName?: string;
+  name?: string;
+  given_name?: string;
+  family_name?: string;
+  middle_name?: string;
   displayName?: string;
-  photoURL?: string;
+  preferred_username?: string;
+  profile?: string;
+  picture?: string;
+  website?: string;
   email?: string;
-  emailVerified?: boolean;
+  email_verified?: boolean;
   gender?: string;
   birthdate?: string;
+  zoneinfo?: string;
   locale?: string;
-  phoneNumber?: string;
-  updatedAt?: string;
-  access?: string[];
-  providerSource?: string;
+  phone_number?: string;
+  phone_number_verified?: boolean;
+  address?: string;
   updated_at?: string;
   iss?: string;
   aud?: string;
@@ -558,28 +606,38 @@ export interface IdToken {
   at_hash?: string;
   c_hash?: string;
   acr?: string;
-  amr?: string;
+  amr?: string[];
   sub_jwk?: string;
   cnf?: string;
   sid?: string;
   org_id?: string;
+  org_name?: string;
   [key: string]: any;
 }
 
 export class User {
+  uid?: string;
+  name?: string;
   firstName?: string;
   lastName?: string;
+  middleName?: string;
   displayName?: string;
+  preferredUsername?: string;
+  profile?: string;
   photoURL?: string;
+  website?: string;
   email?: string;
   emailVerified?: boolean;
   gender?: string;
   birthdate?: string;
+  zoneinfo?: string;
   locale?: string;
   phoneNumber?: string;
-  access?: string[];
-  providerSource?: string;
+  phoneNumberVerified?: boolean;
+  authSource?: boolean;
+  address?: string;
   updatedAt?: string;
+  sub?: string;
   [key: string]: any;
 }
 
@@ -598,21 +656,3 @@ export type GetTokenSilentlyVerboseResponse = Omit<
   TokenEndpointResponse,
   'refresh_token'
 >;
-
-export class EarthoAuthProvider {
-  static facebook = 'facebook';
-  static google = 'google';
-  static twitter = 'twitter';
-
-  static apple = 'apple';
-  static github = 'github';
-  static microsoft = 'microsoft';
-
-  static vk = 'vk';
-  static phone = 'phone';
-  static metamask = 'metamask';
-
-  static reddit = 'reddit';
-  static snapchat = 'snapchat';
-  static yandex = 'yandex';
-}

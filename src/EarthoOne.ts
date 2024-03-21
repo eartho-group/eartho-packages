@@ -1,92 +1,106 @@
 import Lock from 'browser-tabs-lock';
 
 import {
-    createQueryParams,
-    runPopup,
-    parseQueryResult,
-    encode,
-    createRandomString,
-    runIframe,
-    sha256,
-    bufferToBase64UrlEncoded,
-    validateCrypto,
-    openPopup
+  createQueryParams,
+  runPopup,
+  parseAuthenticationResult,
+  encode,
+  createRandomString,
+  runIframe,
+  sha256,
+  bufferToBase64UrlEncoded,
+  validateCrypto,
+  openPopup,
+  getDomain,
+  getTokenIssuer,
+  parseNumber
 } from './utils';
 
-import { oauthToken } from './core/api';
+import { oauthToken } from './api';
 
-import { getUniqueScopes } from './support/scope';
-
-import {
-    InMemoryCache,
-    ICache,
-    LocalStorageCache,
-    CacheKey,
-    CacheManager
-} from './core/cache';
-
-import TransactionManager from './core/transaction-manager';
-import { verify as verifyIdToken } from './support/jwt';
-import { AuthenticationError, GenericError, TimeoutError } from './errors';
+import { getUniqueScopes } from './scope';
 
 import {
-    ClientStorage,
-    CookieStorage,
-    CookieStorageWithLegacySameSite,
-    SessionStorage
-} from './core/storage';
+  InMemoryCache,
+  ICache,
+  CacheKey,
+  CacheManager,
+  CacheEntry,
+  IdTokenEntry,
+  CACHE_KEY_ID_TOKEN_SUFFIX,
+  DecodedToken
+} from './cache';
+
+import { TransactionManager } from './transaction-manager';
+import { verify as verifyIdToken } from './jwt';
+import {
+  AuthenticationError,
+  GenericError,
+  MissingRefreshTokenError,
+  TimeoutError
+} from './errors';
 
 import {
-    CACHE_LOCATION_MEMORY,
-    DEFAULT_POPUP_CONFIG_OPTIONS,
-    DEFAULT_AUTHORIZE_TIMEOUT_IN_SECONDS,
-    MISSING_REFRESH_TOKEN_ERROR_MESSAGE,
-    DEFAULT_SCOPE,
-    RECOVERABLE_ERRORS,
-    DEFAULT_SESSION_CHECK_EXPIRY_DAYS,
-    DEFAULT_EARTHO_CLIENT,
-    INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
-    DEFAULT_NOW_PROVIDER,
-    DEFAULT_FETCH_TIMEOUT_MS
+  ClientStorage,
+  CookieStorage,
+  CookieStorageWithLegacySameSite,
+  SessionStorage
+} from './storage';
+
+import {
+  CACHE_LOCATION_MEMORY,
+  DEFAULT_AUTHORIZE_TIMEOUT_IN_SECONDS,
+  MISSING_REFRESH_TOKEN_ERROR_MESSAGE,
+  DEFAULT_SCOPE,
+  DEFAULT_SESSION_CHECK_EXPIRY_DAYS,
+  DEFAULT_EARTHO_CLIENT,
+  INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
+  DEFAULT_NOW_PROVIDER,
+  DEFAULT_FETCH_TIMEOUT_MS,
+  DEFAULT_POPUP_CONFIG_OPTIONS
 } from './constants';
 
 import {
-    EarthoOneOptions,
-    BaseLoginOptions,
-    AuthorizeOptions,
-    RedirectConnectOptions,
-    PopupConnectOptions,
-    PopupConfigOptions,
-    GetUserOptions,
-    GetIdTokenClaimsOptions,
-    RedirectLoginResult,
-    GetTokenSilentlyOptions,
-    GetTokenWithPopupOptions,
-    LogoutOptions,
-    RefreshTokenOptions,
-    OAuthTokenOptions,
-    CacheLocation,
-    LogoutUrlOptions,
-    User,
-    IdToken,
-    GetTokenSilentlyVerboseResponse,
-    TokenEndpointResponse
+  EarthoOneOptions,
+  AuthorizationParams,
+  AuthorizeOptions,
+  RedirectConnectOptions,
+  PopupConnectOptions,
+  PopupConfigOptions,
+  RedirectConnectResult,
+  GetTokenSilentlyOptions,
+  GetTokenWithPopupOptions,
+  LogoutOptions,
+  CacheLocation,
+  LogoutUrlOptions,
+  User,
+  IdToken,
+  GetTokenSilentlyVerboseResponse,
+  TokenEndpointResponse
 } from './global';
 
 // @ts-ignore
-import TokenWorker from './core/worker/token.worker.ts';
-import { isIE11 } from './support/user-agent';
-import { singlePromise, retryPromise } from './support/promise-utils';
-import { CacheKeyManifest } from './core/cache/key-manifest';
+import TokenWorker from './worker/token.worker.ts';
+import { singlePromise, retryPromise } from './promise-utils';
+import { CacheKeyManifest } from './cache/key-manifest';
+import {
+  buildIsAuthenticatedCookieName,
+  buildOrganizationHintCookieName,
+  cacheFactory,
+  getAuthorizeParams,
+  GET_TOKEN_SILENTLY_LOCK_KEY,
+  OLD_IS_AUTHENTICATED_COOKIE_NAME,
+  patchOpenUrlWithOnRedirect
+} from './EarthoOne.utils';
 
 /**
  * @ignore
  */
 type GetTokenSilentlyResult = TokenEndpointResponse & {
-    decodedToken: ReturnType<typeof verifyIdToken>;
-    scope: string;
-    oauthTokenScope?: string;
-    audience: string;
+  decodedToken: ReturnType<typeof verifyIdToken>;
+  scope: string;
+  oauthTokenScope?: string;
+  audience: string;
 };
 
 /**
@@ -95,1004 +109,1072 @@ type GetTokenSilentlyResult = TokenEndpointResponse & {
 const lock = new Lock();
 
 /**
- * @ignore
- */
-const GET_TOKEN_SILENTLY_LOCK_KEY = 'earthoOne.lock.getTokenSilently';
+ * Eartho SDK 
+ *  */
+export class EarthoOne {
+  private readonly transactionManager: TransactionManager;
+  private readonly cacheManager: CacheManager;
+  private readonly authDomainUrl: string;
+  private readonly domainUrl: string;
+  private readonly tokenIssuer: string;
+  private readonly scope: string;
+  private readonly cookieStorage: ClientStorage;
+  private readonly sessionCheckExpiryDays: number;
+  private readonly orgHintCookieName: string;
+  private readonly isAuthenticatedCookieName: string;
+  private readonly nowProvider: () => number | Promise<number>;
+  private readonly httpTimeoutMs: number;
+  private readonly options: EarthoOneOptions & {
+    authorizationParams: AuthorizationParams;
+  };
+  private readonly userCache: ICache = new InMemoryCache().enclosedCache;
 
-/**
- * @ignore
- */
-const OLD_IS_AUTHENTICATED_COOKIE_NAME = 'earthoOne.is.authenticated';
+  private worker?: Worker;
 
-/**
- * @ignore
- */
-const buildisConnectedCookieName = (clientId: string) =>
-    `earthoOne.${clientId}.is.authenticated`;
+  private readonly defaultOptions: Partial<EarthoOneOptions> = {
+    authorizationParams: {
+      scope: DEFAULT_SCOPE,
+    },
+    useRefreshTokensFallback: false,
+    useFormData: true
+  };
 
-/**
- * @ignore
- */
-const cacheLocationBuilders: Record<string, () => ICache> = {
-    memory: () => new InMemoryCache().enclosedCache,
-    localstorage: () => new LocalStorageCache()
-};
+  constructor(options: EarthoOneOptions) {
+    this.options = {
+      ...this.defaultOptions,
+      ...options,
+      authorizationParams: {
+        ...this.defaultOptions.authorizationParams,
+        ...options.authorizationParams
+      }
+    };
 
-/**
- * @ignore
- */
-const cacheFactory = (location: string) => {
-    return cacheLocationBuilders[location];
-};
+    const authDomain = 'api.eartho.io'
+    this.options.domain = 'one.eartho.io'
+    this.options.issuer = 'https://one.eartho.world/'
+    this.options.cacheLocation = 'localstorage'
+    this.options.authorizationParams.audience = options.authorizationParams?.audience || options.clientId;
+    this.options.useRefreshTokens = true;
 
-/**
- * @ignore
- */
-const supportWebWorker = () => !isIE11();
+    this.domainUrl = getDomain(this.options.domain);
+    this.authDomainUrl = getDomain(authDomain);
 
-/**
- * @ignore
- */
-const getTokenIssuer = (issuer: string, domainUrl: string) => {
-    if (issuer) {
-        return issuer.startsWith('https://') ? issuer : `https://${issuer}/`;
+    typeof window !== 'undefined' && validateCrypto();
+
+    if (options.cache && options.cacheLocation) {
+      console.warn(
+        'Both `cache` and `cacheLocation` options have been specified in the EarthoOne configuration; ignoring `cacheLocation` and using `cache`.'
+      );
     }
 
-    return `${domainUrl}/`;
-};
+    let cacheLocation: CacheLocation | undefined;
+    let cache: ICache;
 
-/**
- * @ignore
- */
-const getDomain = (domainUrl: string) => {
-    if (!/^https?:\/\//.test(domainUrl)) {
-        return `https://${domainUrl}`;
+    if (options.cache) {
+      cache = options.cache;
+    } else {
+      cacheLocation = options.cacheLocation || CACHE_LOCATION_MEMORY;
+
+      if (!cacheFactory(cacheLocation)) {
+        throw new Error(`Invalid cache location "${cacheLocation}"`);
+      }
+
+      cache = cacheFactory(cacheLocation)();
     }
 
-    return domainUrl;
-};
+    this.httpTimeoutMs = options.httpTimeoutInSeconds
+      ? options.httpTimeoutInSeconds * 1000
+      : DEFAULT_FETCH_TIMEOUT_MS;
 
-/**
- * @ignore
- */
-const getCustomInitialOptions = (
-    options: EarthoOneOptions
-): BaseLoginOptions => {
+    this.cookieStorage =
+      options.legacySameSiteCookie === false
+        ? CookieStorage
+        : CookieStorageWithLegacySameSite;
+
+    this.orgHintCookieName = buildOrganizationHintCookieName(
+      this.options.clientId
+    );
+
+    this.isAuthenticatedCookieName = buildIsAuthenticatedCookieName(
+      this.options.clientId
+    );
+
+    this.sessionCheckExpiryDays =
+      options.sessionCheckExpiryDays || DEFAULT_SESSION_CHECK_EXPIRY_DAYS;
+
+    const transactionStorage = options.useCookiesForTransactions
+      ? this.cookieStorage
+      : SessionStorage;
+
+    // Construct the scopes based on the following:
+    // 1. Always include `openid`
+    // 2. Include the scopes provided in `authorizationParams. This defaults to `profile email`
+    // 3. Add `offline_access` if `useRefreshTokens` is enabled
+    this.scope = getUniqueScopes(
+      'openid',
+      this.options.authorizationParams.scope,
+      this.options.useRefreshTokens ? 'offline_access' : ''
+    );
+
+    this.transactionManager = new TransactionManager(
+      transactionStorage,
+      this.options.clientId,
+      this.options.cookieDomain
+    );
+
+    this.nowProvider = this.options.nowProvider || DEFAULT_NOW_PROVIDER;
+
+    this.cacheManager = new CacheManager(
+      cache,
+      !cache.allKeys
+        ? new CacheKeyManifest(cache, this.options.clientId)
+        : undefined,
+      this.nowProvider
+    );
+
+    this.domainUrl = getDomain(this.options.domain);
+    this.tokenIssuer = getTokenIssuer(this.options.issuer, this.domainUrl);
+
+    // Don't use web workers unless using refresh tokens in memory
+    if (
+      typeof window !== 'undefined' &&
+      window.Worker &&
+      this.options.useRefreshTokens &&
+      cacheLocation === CACHE_LOCATION_MEMORY
+    ) {
+      if (this.options.workerUrl) {
+        this.worker = new Worker(this.options.workerUrl);
+      } else {
+        this.worker = new TokenWorker();
+      }
+    }
+  }
+
+  private _url(path: string, domain?: string) {
+    const earthoOneClient = encodeURIComponent(
+      btoa(JSON.stringify(this.options.earthoOneClient || DEFAULT_EARTHO_CLIENT))
+    );
+    return `${domain || this.domainUrl}${path}&earthoOneClient=${earthoOneClient}`;
+  }
+
+  private _authorizeUrl(authorizeOptions: AuthorizeOptions) {
+    return this._url(`/connect?${createQueryParams(authorizeOptions)}`);
+  }
+
+  private async _verifyIdToken(
+    id_token: string,
+    nonce?: string,
+    organization?: string
+  ) {
+    const now = await this.nowProvider();
+
+    return verifyIdToken({
+      iss: this.tokenIssuer,
+      aud: this.options.clientId,
+      id_token,
+      nonce,
+      organization,
+      leeway: this.options.leeway,
+      max_age: parseNumber(this.options.authorizationParams.max_age),
+      now
+    });
+  }
+
+  private _processOrgHint(organization?: string) {
+    if (organization) {
+      this.cookieStorage.save(this.orgHintCookieName, organization, {
+        daysUntilExpire: this.sessionCheckExpiryDays,
+        cookieDomain: this.options.cookieDomain
+      });
+    } else {
+      this.cookieStorage.remove(this.orgHintCookieName, {
+        cookieDomain: this.options.cookieDomain
+      });
+    }
+  }
+
+  private async _prepareAuthorizeUrl(
+    authorizationParams: AuthorizationParams,
+    authorizeOptions?: Partial<AuthorizeOptions>,
+    fallbackRedirectUri?: string
+  ): Promise<{
+    scope: string;
+    audience: string;
+    redirect_uri?: string;
+    nonce: string;
+    code_verifier: string;
+    state: string;
+    url: string;
+    access_id: string;
+  }> {
+    const state = encode(createRandomString());
+    const nonce = encode(createRandomString());
+    const code_verifier = createRandomString();
+    const code_challengeBuffer = await sha256(code_verifier);
+    const code_challenge = bufferToBase64UrlEncoded(code_challengeBuffer);
+
+    const params = getAuthorizeParams(
+      this.options,
+      this.scope,
+      authorizationParams,
+      state,
+      nonce,
+      code_challenge,
+      authorizationParams.redirect_uri ||
+      this.options.authorizationParams.redirect_uri ||
+      fallbackRedirectUri,
+      authorizeOptions?.response_mode,
+      authorizationParams.access_id || ''
+    );
+
+    const url = this._authorizeUrl(params);
+
+    return {
+      nonce,
+      code_verifier,
+      scope: params.scope,
+      audience: params.audience || 'default',
+      redirect_uri: params.redirect_uri,
+      state,
+      url,
+      access_id: params.access_id || ''
+    };
+  }
+
+  /**
+   * ```js
+   * try {
+   *  await eartho.connectWithPopup(options);
+   * } catch(e) {
+   *  if (e instanceof PopupCancelledError) {
+   *    // Popup was closed before login completed
+   *  }
+   * }
+   * ```
+   *
+   * Opens a popup with the `/connect` URL using the parameters
+   * provided as arguments. Random and secure `state` and `nonce`
+   * parameters will be auto-generated. If the response is successful,
+   * results will be valid according to their expiration times.
+   *
+   * IMPORTANT: This method has to be called from an event handler
+   * that was started by the user like a button click, for example,
+   * otherwise the popup will be blocked in most browsers.
+   *
+   * @param options
+   * @param config
+   */
+  public async connectWithPopup(
+    options: PopupConnectOptions,
+    config?: PopupConfigOptions
+  ) {
+    options = options || {};
+    config = config || {};
+
+    if (!config.popup) {
+      config.popup = openPopup('');
+
+      if (!config.popup) {
+        throw new Error(
+          'Unable to open a popup for connectWithPopup - window.open returned `null`'
+        );
+      }
+    }
+
+    const authorizationParams = options.authorizationParams || {}
+    authorizationParams.access_id = options.accessId
+
+    const params = await this._prepareAuthorizeUrl(
+      authorizationParams,
+      { response_mode: 'web_message' },
+      window.location.origin
+    );
+
+    config.popup.location.href = params.url;
+
+    const codeResult = await runPopup({
+      ...config,
+      timeoutInSeconds:
+        config.timeoutInSeconds ||
+        this.options.authorizeTimeoutInSeconds ||
+        DEFAULT_AUTHORIZE_TIMEOUT_IN_SECONDS
+    });
+
+    if (params.state !== codeResult.state) {
+      throw new GenericError('state_mismatch', 'Invalid state');
+    }
+
+    const organization =
+      options.authorizationParams?.organization ||
+      this.options.authorizationParams.organization;
+
+    await this._requestToken(
+      {
+        audience: params.audience,
+        scope: params.scope,
+        code_verifier: params.code_verifier,
+        grant_type: 'authorization_code',
+        code: codeResult.code as string,
+        redirect_uri: params.redirect_uri
+      },
+      {
+        nonceIn: params.nonce,
+        organization
+      }
+    );
+  }
+
+  /**
+   * ```js
+   * const user = await eartho.getUser();
+   * ```
+   *
+   * Returns the user information if available (decoded
+   * from the `id_token`).
+   *
+   * @typeparam TUser The type to return, has to extend {@link User}.
+   */
+  public async getUser<TUser extends User>(): Promise<TUser | undefined> {
+    const cache = await this._getIdTokenFromCache();
+    return cache?.decodedToken?.user as TUser;
+  }
+
+  /**
+   * ```js
+   * const claims = await eartho.getIdToken();
+   * ```
+   *
+   * Returns all claims from the id_token if available.
+   */
+  public async getIdToken(): Promise<IdToken | undefined> {
+    const cache = await this._getIdTokenFromCache();
+
+    return cache?.decodedToken?.claims;
+  }
+
+  /**
+   * ```js
+   * await eartho.connectWithRedirect(options);
+   * ```
+   *
+   * Performs a redirect to `/connect` using the parameters
+   * provided as arguments. Random and secure `state` and `nonce`
+   * parameters will be auto-generated.
+   *
+   * @param options
+   */
+  public async connectWithRedirect<TAppState = any>(
+    options: RedirectConnectOptions<TAppState>
+  ) {
+    const { accessId, openUrl, fragment, appState, ...urlOptions } =
+      patchOpenUrlWithOnRedirect(options);
+
+    const organization =
+      urlOptions.authorizationParams?.organization ||
+      this.options.authorizationParams.organization;
+      
+    const authorizationParams = urlOptions.authorizationParams || {}
+    authorizationParams.access_id = options.accessId
+
+    const { url, ...transaction } = await this._prepareAuthorizeUrl(
+      authorizationParams
+    );
+
+    this.transactionManager.create({
+      ...transaction,
+      appState,
+      ...(organization && { organization }),
+    });
+
+    const urlWithFragment = fragment ? `${url}#${fragment}` : url;
+
+    if (openUrl) {
+      await openUrl(urlWithFragment);
+    } else {
+      window.location.assign(urlWithFragment);
+    }
+  }
+
+  /**
+   * After the browser redirects back to the callback page,
+   * call `handleRedirectCallback` to handle success and error
+   * responses from Eartho. If the response is successful, results
+   * will be valid according to their expiration times.
+   */
+  public async handleRedirectCallback<TAppState = any>(
+    url: string = window.location.href
+  ): Promise<RedirectConnectResult<TAppState>> {
+    const queryStringFragments = url.split('?').slice(1);
+
+    if (queryStringFragments.length === 0) {
+      throw new Error('There are no query params available for parsing.');
+    }
+
+    const { state, code, error, error_description } = parseAuthenticationResult(
+      queryStringFragments.join('')
+    );
+
+    const transaction = this.transactionManager.get();
+
+    if (!transaction) {
+      throw new GenericError('missing_transaction', 'Invalid state');
+    }
+
+    this.transactionManager.remove();
+
+    if (error) {
+      throw new AuthenticationError(
+        error,
+        error_description || error,
+        state,
+        transaction.appState
+      );
+    }
+
+    // Transaction should have a `code_verifier` to do PKCE for CSRF protection
+    if (
+      !transaction.code_verifier ||
+      (transaction.state && transaction.state !== state)
+    ) {
+      throw new GenericError('state_mismatch', 'Invalid state');
+    }
+
+    const organization = transaction.organization;
+    const nonceIn = transaction.nonce;
+    const redirect_uri = transaction.redirect_uri;
+
+    await this._requestToken(
+      {
+        audience: transaction.audience,
+        scope: transaction.scope,
+        code_verifier: transaction.code_verifier,
+        grant_type: 'authorization_code',
+        code: code as string,
+        ...(redirect_uri ? { redirect_uri } : {})
+      },
+      { nonceIn, organization }
+    );
+
+    return {
+      appState: transaction.appState
+    };
+  }
+
+  /**
+   * ```js
+   * await eartho.checkSession();
+   * ```
+   *
+   * Check if the user is logged in using `getTokenSilently`. The difference
+   * with `getTokenSilently` is that this doesn't return a token, but it will
+   * pre-fill the token cache.
+   *
+   * This method also heeds the `eartho.{clientId}.is.authenticated` cookie, as an optimization
+   *  to prevent calling Eartho unnecessarily. If the cookie is not present because
+   * there was no previous login (or it has expired) then tokens will not be refreshed.
+   *
+   * It should be used for silently logging in the user when you instantiate the
+   * `EarthoOne` constructor. You should not need this if you are using the
+   * `createEarthoOne` factory.
+   *
+   * **Note:** the cookie **may not** be present if running an app using a private tab, as some
+   * browsers clear JS cookie data and local storage when the tab or page is closed, or on page reload. This effectively
+   * means that `checkSession` could silently return without authenticating the user on page refresh when
+   * using a private tab, despite having previously logged in. As a workaround, use `getTokenSilently` instead
+   * and handle the possible `login_required` error  *
+   * @param options
+   */
+  public async checkSession(options?: GetTokenSilentlyOptions) {
+    if (!this.cookieStorage.get(this.isAuthenticatedCookieName)) {
+      if (!this.cookieStorage.get(OLD_IS_AUTHENTICATED_COOKIE_NAME)) {
+        return;
+      } else {
+        // Migrate the existing cookie to the new name scoped by client ID
+        this.cookieStorage.save(this.isAuthenticatedCookieName, true, {
+          daysUntilExpire: this.sessionCheckExpiryDays,
+          cookieDomain: this.options.cookieDomain
+        });
+
+        this.cookieStorage.remove(OLD_IS_AUTHENTICATED_COOKIE_NAME);
+      }
+    }
+
+    try {
+      await this.getTokenSilently(options);
+    } catch (_) { }
+  }
+
+  /**
+   * Fetches a new access token and returns the response from the /oauth/token endpoint, omitting the refresh token.
+   *
+   * @param options
+   */
+  public async getTokenSilently(
+    options: GetTokenSilentlyOptions & { detailedResponse: true }
+  ): Promise<GetTokenSilentlyVerboseResponse>;
+
+  /**
+   * Fetches a new access token and returns it.
+   *
+   * @param options
+   */
+  public async getTokenSilently(
+    options?: GetTokenSilentlyOptions
+  ): Promise<string>;
+
+  /**
+   * Fetches a new access token, and either returns just the access token (the default) or the response from the /oauth/token endpoint, depending on the `detailedResponse` option.
+   *
+   * ```js
+   * const token = await eartho.getTokenSilently(options);
+   * ```
+   *
+   * If there's a valid token stored and it has more than 60 seconds
+   * remaining before expiration, return the token. Otherwise, attempt
+   * to obtain a new token.
+   *
+   * A new token will be obtained either by opening an iframe or a
+   * refresh token (if `useRefreshTokens` is `true`).
+
+   * If iframes are used, opens an iframe with the `/connect` URL
+   * using the parameters provided as arguments. Random and secure `state`
+   * and `nonce` parameters will be auto-generated. If the response is successful,
+   * results will be validated according to their expiration times.
+   *
+   * If refresh tokens are used, the token endpoint is called directly with the
+   * 'refresh_token' grant. If no refresh token is available to make this call,
+   * the SDK will only fall back to using an iframe to the '/connect' URL if 
+   * the `useRefreshTokensFallback` setting has been set to `true`. By default this
+   * setting is `false`.
+   *
+   * This method may use a web worker to perform the token call if the in-memory
+   * cache is used.
+   *
+   * If an `audience` value is given to this function, the SDK always falls
+   * back to using an iframe to make the token exchange.
+   *
+   * Note that in all cases, falling back to an iframe requires access to
+   * the `eartho` cookie.
+   *
+   * @param options
+   */
+  public async getTokenSilently(
+    options: GetTokenSilentlyOptions = {}
+  ): Promise<undefined | string | GetTokenSilentlyVerboseResponse> {
+    const localOptions: GetTokenSilentlyOptions & {
+      authorizationParams: AuthorizationParams & { scope: string };
+    } = {
+      cacheMode: 'on',
+      ...options,
+      authorizationParams: {
+        ...this.options.authorizationParams,
+        ...options.authorizationParams,
+        scope: getUniqueScopes(this.scope, options.authorizationParams?.scope)
+      }
+    };
+
+    const result = await singlePromise(
+      () => this._getTokenSilently(localOptions),
+      `${this.options.clientId}::${localOptions.authorizationParams.audience}::${localOptions.authorizationParams.scope}`
+    );
+
+    return options.detailedResponse ? result : result?.access_token;
+  }
+
+  private async _getTokenSilently(
+    options: GetTokenSilentlyOptions & {
+      authorizationParams: AuthorizationParams & { scope: string };
+    }
+  ): Promise<undefined | GetTokenSilentlyVerboseResponse> {
+    const { cacheMode, ...getTokenOptions } = options;
+
+    // Check the cache before acquiring the lock to avoid the latency of
+    // `lock.acquireLock` when the cache is populated.
+    if (cacheMode !== 'off') {
+      const entry = await this._getEntryFromCache({
+        scope: getTokenOptions.authorizationParams.scope,
+        audience: getTokenOptions.authorizationParams.audience || 'default',
+        clientId: this.options.clientId
+      });
+
+      if (entry) {
+        return entry;
+      }
+    }
+
+    if (cacheMode === 'cache-only') {
+      return;
+    }
+
+    if (
+      await retryPromise(
+        () => lock.acquireLock(GET_TOKEN_SILENTLY_LOCK_KEY, 5000),
+        10
+      )
+    ) {
+      try {
+        window.addEventListener('pagehide', this._releaseLockOnPageHide);
+
+        // Check the cache a second time, because it may have been populated
+        // by a previous call while this call was waiting to acquire the lock.
+        if (cacheMode !== 'off') {
+          const entry = await this._getEntryFromCache({
+            scope: getTokenOptions.authorizationParams.scope,
+            audience: getTokenOptions.authorizationParams.audience || 'default',
+            clientId: this.options.clientId
+          });
+
+          if (entry) {
+            return entry;
+          }
+        }
+
+        const authResult = this.options.useRefreshTokens
+          ? await this._getTokenUsingRefreshToken(getTokenOptions)
+          : await this._getTokenFromIFrame(getTokenOptions);
+
+        const { id_token, access_token, oauthTokenScope, expires_in } =
+          authResult;
+
+        return {
+          id_token,
+          access_token,
+          ...(oauthTokenScope ? { scope: oauthTokenScope } : null),
+          expires_in
+        };
+      } finally {
+        await lock.releaseLock(GET_TOKEN_SILENTLY_LOCK_KEY);
+        window.removeEventListener('pagehide', this._releaseLockOnPageHide);
+      }
+    } else {
+      throw new TimeoutError();
+    }
+  }
+
+  /**
+   * ```js
+   * const token = await eartho.getTokenWithPopup(options);
+   * ```
+   * Opens a popup with the `/connect` URL using the parameters
+   * provided as arguments. Random and secure `state` and `nonce`
+   * parameters will be auto-generated. If the response is successful,
+   * results will be valid according to their expiration times.
+   *
+   * @param options
+   * @param config
+   */
+  public async getTokenWithPopup(
+    options: GetTokenWithPopupOptions,
+    config: PopupConfigOptions = {}
+  ) {
+    const localOptions = {
+      ...options,
+      authorizationParams: {
+        ...this.options.authorizationParams,
+        ...options.authorizationParams,
+        scope: getUniqueScopes(this.scope, options.authorizationParams?.scope)
+      }
+    };
+
+    config = {
+      ...DEFAULT_POPUP_CONFIG_OPTIONS,
+      ...config
+    };
+
+    await this.connectWithPopup(localOptions, config);
+
+    const cache = await this.cacheManager.get(
+      new CacheKey({
+        scope: localOptions.authorizationParams.scope,
+        audience: localOptions.authorizationParams.audience || 'default',
+        clientId: this.options.clientId,
+      })
+    );
+
+    return cache!.access_token;
+  }
+
+  /**
+   * ```js
+   * const isAuthenticated = await eartho.isAuthenticated();
+   * ```
+   *
+   * Returns `true` if there's valid information stored,
+   * otherwise returns `false`.
+   *
+   */
+  public async isAuthenticated() {
+    const user = await this.getUser();
+    return !!user;
+  }
+
+  /**
+   * ```js
+   * await eartho.buildLogoutUrl(options);
+   * ```
+   *
+   * Builds a URL to the logout endpoint using the parameters provided as arguments.
+   * @param options
+   */
+  private _buildLogoutUrl(options: LogoutUrlOptions): string {
+    if (options.clientId !== null) {
+      options.clientId = options.clientId || this.options.clientId;
+    } else {
+      delete options.clientId;
+    }
+
+    const { federated, ...logoutOptions } = options.logoutParams || {};
+    const federatedQuery = federated ? `&federated` : '';
+    const url = this._url(
+      `/v2/logout?${createQueryParams({
+        clientId: options.clientId,
+        ...logoutOptions
+      })}`
+    );
+
+    return url + federatedQuery;
+  }
+
+  /**
+   * ```js
+   * await eartho.logout(options);
+   * ```
+   *
+   * Clears the application session and performs a redirect to `/logout`, using
+   * the parameters provided as arguments, to clear the Eartho session.
+   *
+   * If the `federated` option is specified it also clears the Identity Provider session..
+   *
+   * @param options
+   */
+  public async logout(options: LogoutOptions = {}): Promise<void> {
+    const { openUrl, ...logoutOptions } = patchOpenUrlWithOnRedirect(options);
+
+    if (options.clientId === null) {
+      await this.cacheManager.clear();
+    } else {
+      await this.cacheManager.clear(options.clientId || this.options.clientId);
+    }
+
+    this.cookieStorage.remove(this.orgHintCookieName, {
+      cookieDomain: this.options.cookieDomain
+    });
+    this.cookieStorage.remove(this.isAuthenticatedCookieName, {
+      cookieDomain: this.options.cookieDomain
+    });
+    this.userCache.remove(CACHE_KEY_ID_TOKEN_SUFFIX);
+
+    const url = this._buildLogoutUrl(logoutOptions);
+
+    if (openUrl) {
+      await openUrl(url);
+    } else if (openUrl !== false) {
+      window.location.assign(url);
+    }
+  }
+
+  private async _getTokenFromIFrame(
+    options: GetTokenSilentlyOptions & {
+      authorizationParams: AuthorizationParams & { scope: string };
+    }
+  ): Promise<GetTokenSilentlyResult> {
+    const params: AuthorizationParams & { scope: string } = {
+      ...options.authorizationParams,
+      prompt: 'none'
+    };
+
+    const orgHint = this.cookieStorage.get<string>(this.orgHintCookieName);
+
+    if (orgHint && !params.organization) {
+      params.organization = orgHint;
+    }
+
     const {
-        advancedOptions,
-        audience,
-        earthoOne,
-        authorizeTimeoutInSeconds,
-        cacheLocation,
-        client_id,
-        domain,
-        issuer,
-        leeway,
-        max_age,
+      url,
+      state: stateIn,
+      nonce: nonceIn,
+      code_verifier,
+      redirect_uri,
+      scope,
+      audience
+    } = await this._prepareAuthorizeUrl(
+      params,
+      { response_mode: 'web_message' },
+      window.location.origin
+    );
+
+    try {
+      // When a browser is running in a Cross-Origin Isolated context, using iframes is not possible.
+      // It doesn't throw an error but times out instead, so we should exit early and inform the user about the reason.
+      // https://developer.mozilla.org/en-US/docs/Web/API/crossOriginIsolated
+      if ((window as any).crossOriginIsolated) {
+        throw new GenericError(
+          'login_required',
+          'The application is running in a Cross-Origin Isolated context, silently retrieving a token without refresh token is not possible.'
+        );
+      }
+
+      const authorizeTimeout =
+        options.timeoutInSeconds || this.options.authorizeTimeoutInSeconds;
+
+      const codeResult = await runIframe(url, this.domainUrl, authorizeTimeout);
+
+      if (stateIn !== codeResult.state) {
+        throw new GenericError('state_mismatch', 'Invalid state');
+      }
+
+      const tokenResult = await this._requestToken(
+        {
+          ...options.authorizationParams,
+          code_verifier,
+          code: codeResult.code as string,
+          grant_type: 'authorization_code',
+          redirect_uri,
+          timeout: options.authorizationParams.timeout || this.httpTimeoutMs
+        },
+        {
+          nonceIn,
+          organization: params.organization
+        }
+      );
+
+      return {
+        ...tokenResult,
+        scope: scope,
+        oauthTokenScope: tokenResult.scope,
+        audience: audience
+      };
+    } catch (e) {
+      if (e.error === 'login_required') {
+        this.logout({
+          openUrl: false
+        });
+      }
+      throw e;
+    }
+  }
+
+  private async _getTokenUsingRefreshToken(
+    options: GetTokenSilentlyOptions & {
+      authorizationParams: AuthorizationParams & { scope: string };
+    }
+  ): Promise<GetTokenSilentlyResult> {
+    const cache = await this.cacheManager.get(
+      new CacheKey({
+        scope: options.authorizationParams.scope,
+        audience: options.authorizationParams.audience || 'default',
+        clientId: this.options.clientId
+      })
+    );
+
+    // If you don't have a refresh token in memory
+    // and you don't have a refresh token in web worker memory
+    // and useRefreshTokensFallback was explicitly enabled
+    // fallback to an iframe
+    if ((!cache || !cache.refresh_token) && !this.worker) {
+      if (this.options.useRefreshTokensFallback) {
+        return await this._getTokenFromIFrame(options);
+      }
+
+      throw new MissingRefreshTokenError(
+        options.authorizationParams.audience || 'default',
+        options.authorizationParams.scope
+      );
+    }
+
+    const redirect_uri =
+      options.authorizationParams.redirect_uri ||
+      this.options.authorizationParams.redirect_uri ||
+      window.location.origin;
+
+    const timeout =
+      typeof options.timeoutInSeconds === 'number'
+        ? options.timeoutInSeconds * 1000
+        : null;
+
+    try {
+      const tokenResult = await this._requestToken({
+        ...options.authorizationParams,
+        grant_type: 'refresh_token',
+        refresh_token: cache && cache.refresh_token,
         redirect_uri,
-        scope,
-        useRefreshTokens,
-        useCookiesForTransactions,
-        useFormData,
-        ...customParams
-    } = options;
-    return customParams;
-};
-
-/**
- */
-export default class EarthoOne {
-    private readonly transactionManager: TransactionManager;
-    private readonly cacheManager: CacheManager;
-    private readonly customOptions: BaseLoginOptions;
-    private readonly domainUrl: string;
-    private readonly tokenIssuer: string;
-    private readonly defaultScope: string;
-    private readonly scope: string;
-    private readonly cookieStorage: ClientStorage;
-    private readonly sessionCheckExpiryDays: number;
-    private readonly orgHintCookieName: string;
-    private readonly isConnectedCookieName: string;
-    private readonly nowProvider: () => number | Promise<number>;
-    private readonly httpTimeoutMs: number;
-
-    cacheLocation: CacheLocation;
-    private worker: Worker;
-
-    constructor(private options: EarthoOneOptions) {
-        typeof window !== 'undefined' && validateCrypto();
-
-        options.domain = options.domain || "one.eartho.io";
-        this.domainUrl = getDomain(this.options.domain);
-        this.tokenIssuer = options.issuer || 'https://one.eartho.world/';
-        this.options.audience = options.audience || options.client_id;
-        this.options.useRefreshTokens = true;
-        this.options.cacheLocation = 'localstorage';
-        this.options.redirect_uri = this.options.redirect_uri || window?.location?.href
-        this.defaultScope = getUniqueScopes(
-            'openid',
-            this.options?.advancedOptions?.defaultScope !== undefined
-                ? this.options.advancedOptions.defaultScope
-                : DEFAULT_SCOPE
-        );
-
-
-        if (options.cache && options.cacheLocation) {
-            console.warn(
-                'Both `cache` and `cacheLocation` options have been specified in the earthoOne configuration; ignoring `cacheLocation` and using `cache`.'
-            );
-        }
-
-        let cache: ICache;
-
-        if (options.cache) {
-            cache = options.cache;
-        } else {
-            this.cacheLocation = options.cacheLocation || CACHE_LOCATION_MEMORY;
-
-            if (!cacheFactory(this.cacheLocation)) {
-                throw new Error(`Invalid cache location "${this.cacheLocation}"`);
-            }
-
-            cache = cacheFactory(this.cacheLocation)();
-        }
-
-        this.httpTimeoutMs = options.httpTimeoutInSeconds
-            ? options.httpTimeoutInSeconds * 1000
-            : DEFAULT_FETCH_TIMEOUT_MS;
-
-        this.cookieStorage =
-            options.legacySameSiteCookie === false
-                ? CookieStorage
-                : CookieStorageWithLegacySameSite;
-
-        this.isConnectedCookieName = buildisConnectedCookieName(
-            this.options.client_id
-        );
-
-        this.sessionCheckExpiryDays =
-            options.sessionCheckExpiryDays || DEFAULT_SESSION_CHECK_EXPIRY_DAYS;
-
-        const transactionStorage = options.useCookiesForTransactions
-            ? this.cookieStorage
-            : SessionStorage;
-
-        this.scope = this.options.scope;
-
-        this.transactionManager = new TransactionManager(
-            transactionStorage,
-            this.options.client_id
-        );
-
-        this.nowProvider = this.options.nowProvider || DEFAULT_NOW_PROVIDER;
-
-        this.cacheManager = new CacheManager(
-            cache,
-            !cache.allKeys
-                ? new CacheKeyManifest(cache, this.options.client_id)
-                : null,
-            this.nowProvider
-        );
-
-        
-        // If using refresh tokens, automatically specify the `offline_access` scope.
-        // Note we cannot add this to 'defaultScope' above as the scopes are used in the
-        // cache keys - changing the order could invalidate the keys
-        if (this.options.useRefreshTokens) {
-            this.scope = getUniqueScopes(this.scope, 'offline_access');
-        }
-
-        // Don't use web workers unless using refresh tokens in memory and not IE11
-        if (
-            typeof window !== 'undefined' &&
-            window.Worker &&
-            this.options.useRefreshTokens &&
-            this.cacheLocation === CACHE_LOCATION_MEMORY &&
-            supportWebWorker()
-        ) {
-            this.worker = new TokenWorker();
-        }
-
-        this.customOptions = getCustomInitialOptions(options);
-    }
-
-    private _url(path: string) {
-        const earthoOne = encodeURIComponent(
-            btoa(JSON.stringify(this.options.earthoOne || DEFAULT_EARTHO_CLIENT))
-        );
-        return `${this.domainUrl}${path}&earthoOne=${earthoOne}`;
-    }
-
-    /**
-     * ```js
-     * try {
-     *  await earthoOne.connectWithPopup(options);
-     * } catch(e) {
-     *  if (e instanceof PopupCancelledError) {
-     *    // Popup was closed before login completed
-     *  }
-     * }
-     * ```
-     *
-     * Opens a popup with the `/authorize` URL using the parameters
-     * provided as arguments. Random and secure `state` and `nonce`
-     * parameters will be auto-generated. If the response is successful,
-     * results will be valid according to their expiration times.
-     *
-     * IMPORTANT: This method has to be called from an event handler
-     * that was started by the user like a button click, for example,
-     * otherwise the popup will be blocked in most browsers.
-     *
-     * @param options
-     * @param config
-     */
-    public async connectWithPopup(
-        options?: PopupConnectOptions,
-        config?: PopupConfigOptions
-    ) {
-        //options = options || {};
-        config = config || {};
-
-        if (!options.access_id) {
-            throw new Error('PopupConnectOptions.accessId must be defined');
-        }
-
-        if (!config.popup) {
-            config.popup = openPopup('');
-
-            if (!config.popup) {
-                throw new Error(
-                    'Unable to open a popup for connectWithPopup - window.open returned `null`'
-                );
-            }
-        }
-
-        const { ...authorizeOptions } = options;
-        const stateIn = encode(createRandomString());
-        const nonceIn = encode(createRandomString());
-        const code_verifier = createRandomString();
-        const code_challengeBuffer = await sha256(code_verifier);
-        const code_challenge = bufferToBase64UrlEncoded(code_challengeBuffer);
-
-        const params = this._getParams(
-            authorizeOptions,
-            stateIn,
-            nonceIn,
-            code_challenge,
-            this.options.redirect_uri || window.location.origin,
-            options.access_id
-        );
-
-        const url = this._connectUrl({
-            ...params,
-            response_mode: 'web_message'
-        });
-
-        config.popup.location.href = url;
-
-        const codeResult = await runPopup({
-            ...config,
-            timeoutInSeconds:
-                config.timeoutInSeconds ||
-                this.options.authorizeTimeoutInSeconds ||
-                DEFAULT_AUTHORIZE_TIMEOUT_IN_SECONDS
-        });
-
-        if (stateIn !== codeResult.state) {
-            throw new Error('Invalid state');
-        }
-
-        const authResult = await oauthToken(
-            {
-                audience: params.audience,
-                scope: params.scope,
-                baseUrl: `https://api.eartho.io/access/oauth/token`,
-                client_id: this.options.client_id,
-                code_verifier,
-                code: codeResult.code,
-                access_id: options.access_id,
-                grant_type: 'authorization_code',
-                redirect_uri: params.redirect_uri,
-                earthoOne: this.options.earthoOne,
-                useFormData: this.options.useFormData,
-                timeout: this.httpTimeoutMs
-            } as OAuthTokenOptions,
-            this.worker
-        );
-
-        const decodedToken = await this._verifyIdToken(
-            authResult.id_token,
-            nonceIn
-        );
-
-        const cacheEntry = {
-            ...authResult,
-            decodedToken,
-            scope: params.scope,
-            audience: params.audience || 'default',
-            client_id: this.options.client_id
-        };
-
-        await this.cacheManager.set(cacheEntry);
-
-        this.cookieStorage.save(this.isConnectedCookieName, true, {
-            daysUntilExpire: this.sessionCheckExpiryDays,
-            cookieDomain: this.options.cookieDomain
-        });
-    }
-
-    /**
-     * After the browser redirects back to the callback page,
-     * call `handleRedirectCallback` to handle success and error
-     * responses from EarthoOne. If the response is successful, results
-     * will be valid according to their expiration times.
-     */
-    public async handleRedirectCallback<TAppState = any>(
-        url: string = window.location.href
-    ): Promise<RedirectLoginResult<TAppState>> {
-        const queryStringFragments = url.split('?').slice(1);
-
-        if (queryStringFragments.length === 0) {
-            // throw new Error('There are no query params available for parsing.');
-            return;
-        }
-
-        const { state, code, error, error_description } = parseQueryResult(
-            queryStringFragments.join('')
-        );
-
-        if (!state || !code) {
-            // throw new Error('There are no query params available for parsing.');
-            return;
-        }
-
-        const transaction = this.transactionManager.get();
-
-        if (!transaction) {
-            throw new Error('Invalid transactionManager state');
-        }
-
-        this.transactionManager.remove();
-
-        if (error) {
-            throw new AuthenticationError(
-                error,
-                error_description,
-                state,
-                transaction.appState
-            );
-        }
-
-        // Transaction should have a `code_verifier` to do PKCE for CSRF protection
-        if (
-            !transaction.code_verifier ||
-            (transaction.state && transaction.state !== state)
-        ) {
-            throw new Error('Invalid state ' + transaction.state + " ~~ " + state);
-        }
-
-        const tokenOptions = {
-            audience: transaction.audience,
-            scope: transaction.scope,
-            baseUrl: `https://api.eartho.io/access/oauth/token`,
-            client_id: this.options.client_id,
-            code_verifier: transaction.code_verifier,
-            code: code,
-            access_id: transaction.access_id,
-            grant_type: 'authorization_code',
-            earthoOne: this.options.earthoOne,
-            useFormData: this.options.useFormData,
-            timeout: this.httpTimeoutMs
-        } as OAuthTokenOptions;
-        // some old versions of the SDK might not have added redirect_uri to the
-        // transaction, we dont want the key to be set to undefined.
-        if (undefined !== transaction.redirect_uri) {
-            tokenOptions.redirect_uri = transaction.redirect_uri;
-        }
-
-        const authResult = await oauthToken(tokenOptions, this.worker);
-
-        const decodedToken = await this._verifyIdToken(
-            authResult.id_token,
-            transaction.nonce
-        );
-
-        await this.cacheManager.set({
-            ...authResult,
-            decodedToken,
-            audience: transaction.audience,
-            scope: transaction.scope,
-            ...(authResult.scope ? { oauthTokenScope: authResult.scope } : null),
-            client_id: this.options.client_id
-        });
-
-        this.cookieStorage.save(this.isConnectedCookieName, true, {
-            daysUntilExpire: this.sessionCheckExpiryDays,
-            cookieDomain: this.options.cookieDomain
-        });
-        var newURL = location.href.split("?")[0];
-        window.history.pushState('object', document.title, newURL);
-
-        return {
-            appState: transaction.appState
-        };
-    }
-
-
-    /**
-     * ```js
-     * await earthoOne.connectWithRedirect(options);
-     * ```
-     *
-     * Performs a redirect to `/authorize` using the parameters
-     * provided as arguments. Random and secure `state` and `nonce`
-     * parameters will be auto-generated.
-     *
-     * @param options
-     */
-    public async connectWithRedirect<TAppState = any>(
-        options: RedirectConnectOptions<TAppState> = {}
-    ) {
-        const { redirectMethod, ...urlOptions } = options;
-        const url = await this.buildConnectUrl(urlOptions);
-        window.location[redirectMethod || 'assign'](url);
-    }
-
-    /**
-     * Fetches a new access token and returns it.
-     *
-     * @param options
-     */
-    public async getIdToken(
-        options?: GetTokenSilentlyOptions
-    ): Promise<string>;
-
-    /**
-     * Fetches a new access token, and either returns just the access token (the default) or the response from the /oauth/token endpoint, depending on the `detailedResponse` option.
-     *
-     * ```js
-     * const token = await earthoOne.getTokenSilently(options);
-     * ```
-     *
-     * If there's a valid token stored and it has more than 60 seconds
-     * remaining before expiration, return the token. Otherwise, attempt
-     * to obtain a new token.
-     *
-     * A new token will be obtained either by opening an iframe or a
-     * refresh token (if `useRefreshTokens` is `true`)
-
-     * If iframes are used, opens an iframe with the `/authorize` URL
-     * using the parameters provided as arguments. Random and secure `state`
-     * and `nonce` parameters will be auto-generated. If the response is successful,
-     * results will be validated according to their expiration times.
-     *
-     * If refresh tokens are used, the token endpoint is called directly with the
-     * 'refresh_token' grant. If no refresh token is available to make this call,
-     * the SDK falls back to using an iframe to the '/authorize' URL.
-     *
-     * This method may use a web worker to perform the token call if the in-memory
-     * cache is used.
-     *
-     * If an `audience` value is given to this function, the SDK always falls
-     * back to using an iframe to make the token exchange.
-     *
-     * Note that in all cases, falling back to an iframe requires access to
-     * the `earthoOne` cookie.
-     *
-     * @param options
-     */
-    public async getIdToken(
-        options: GetTokenSilentlyOptions = {}
-    ): Promise<string | GetTokenSilentlyVerboseResponse> {
-        const { ignoreCache, ...getTokenOptions } = {
-            audience: this.options.audience,
-            ignoreCache: false,
-            ...options,
-            scope: getUniqueScopes(this.defaultScope, this.scope, options.scope)
-        };
-
-        return singlePromise(
-            () =>
-                this._connectSilently({
-                    ignoreCache,
-                    ...getTokenOptions
-                }),
-            `${this.options.client_id}::${getTokenOptions.audience}::${getTokenOptions.scope}`
-        );
-    }
-
-    public async connectSilently(
-        options: GetTokenSilentlyOptions = {}
-    ): Promise<string | GetTokenSilentlyVerboseResponse> {
-        const { ignoreCache, ...getTokenOptions } = {
-            audience: this.options.audience,
-            ignoreCache: false,
-            ...options,
-            scope: getUniqueScopes(this.defaultScope, this.scope, options.scope)
-        };
-
-        return singlePromise(
-            () =>
-                this._connectSilently({
-                    ignoreCache,
-                    ...getTokenOptions
-                }),
-            `${this.options.client_id}::${getTokenOptions.audience}::${getTokenOptions.scope}`
-        );
-    }
-
-
-    private async _connectSilently(
-        options: GetTokenSilentlyOptions = {}
-    ): Promise<string | GetTokenSilentlyVerboseResponse> {
-        const { ignoreCache, ...getTokenOptions } = options;
-
-        // Check the cache before acquiring the lock to avoid the latency of
-        // `lock.acquireLock` when the cache is populated.
-        if (!ignoreCache) {
-            const entry = await this._getEntryFromCache({
-                scope: getTokenOptions.scope,
-                audience: getTokenOptions.audience || 'default',
-                client_id: this.options.client_id,
-                getDetailedEntry: options.detailedResponse
-            });
-
-            if (entry) {
-                return entry;
-            }
-        }
-
-        if (
-            await retryPromise(
-                () => lock.acquireLock(GET_TOKEN_SILENTLY_LOCK_KEY, 5000),
-                10
-            )
-        ) {
-            try {
-                // Check the cache a second time, because it may have been populated
-                // by a previous call while this call was waiting to acquire the lock.
-                if (!ignoreCache) {
-                    const entry = await this._getEntryFromCache({
-                        scope: getTokenOptions.scope,
-                        audience: getTokenOptions.audience || 'default',
-                        client_id: this.options.client_id,
-                        getDetailedEntry: options.detailedResponse
-                    });
-
-                    if (entry) {
-                        return entry;
-                    }
-                }
-
-                const authResult = await this._getTokenUsingRefreshToken(getTokenOptions);
-
-                await this.cacheManager.set({
-                    client_id: this.options.client_id,
-                    ...authResult
-                });
-
-                this.cookieStorage.save(this.isConnectedCookieName, true, {
-                    daysUntilExpire: this.sessionCheckExpiryDays,
-                    cookieDomain: this.options.cookieDomain
-                });
-
-                if (options.detailedResponse) {
-                    const {
-                        id_token,
-                        access_token,
-                        oauthTokenScope,
-                        expires_in
-                    } = authResult;
-
-                    return {
-                        id_token,
-                        access_token,
-                        ...(oauthTokenScope ? { scope: oauthTokenScope } : null),
-                        expires_in
-                    };
-                }
-
-                return authResult.id_token;
-            } finally {
-                await lock.releaseLock(GET_TOKEN_SILENTLY_LOCK_KEY);
-            }
-        } else {
-            throw new TimeoutError();
-        }
-    }
-
-    /**
-     * ```js
-     * const user = await earthoOne.getUser();
-     * ```
-     *
-     * Returns the user information if available (decoded
-     * from the `id_token`).
-     *
-     * If you provide an audience or scope, they should match an existing Access Token
-     * (the SDK stores a corresponding ID Token with every Access Token, and uses the
-     * scope and audience to look up the ID Token)
-     *
-     * @typeparam TUser The type to return, has to extend {@link User}.
-     * @param options
-     */
-    public async getUser<TUser extends User>(
-        options: GetUserOptions = {}
-    ): Promise<TUser | undefined> {
-        const audience = options.audience || this.options.audience || 'default';
-        const scope = getUniqueScopes(this.defaultScope, this.scope, options.scope);
-
-        const cache = await this.cacheManager.get(
-            new CacheKey({
-                client_id: this.options.client_id,
-                audience,
-                scope
-            })
-        );
-
-        return cache && cache.decodedToken && (cache.decodedToken.user as TUser);
-    }
-
-    /**
-     * ```js
-     * const isConnected = await earthoOne.isConnected();
-     * ```
-     *
-     * Returns `true` if there's valid information stored,
-     * otherwise returns `false`.
-     *
-     */
-    public async isConnected() {
-        const user = await this.getUser();
-        return !!user;
-    }
-
-    public async checkSession(options?: GetTokenSilentlyOptions) {
-        if (!this.cookieStorage.get(this.isConnectedCookieName)) {
-            if (!this.cookieStorage.get(OLD_IS_AUTHENTICATED_COOKIE_NAME)) {
-                return;
-            } else {
-                // Migrate the existing cookie to the new name scoped by client ID
-                this.cookieStorage.save(this.isConnectedCookieName, true, {
-                    daysUntilExpire: this.sessionCheckExpiryDays,
-                    cookieDomain: this.options.cookieDomain
-                });
-
-                this.cookieStorage.remove(OLD_IS_AUTHENTICATED_COOKIE_NAME);
-            }
-        }
-
-        try {
-            await this.connectSilently(options);
-        } catch (error) {
-            if (!RECOVERABLE_ERRORS.includes(error.error)) {
-                throw error;
-            }
-        }
-    }
-
-    /**
-     * ```js
-     * await earthoOne.buildLogoutUrl(options);
-     * ```
-     *
-     * Builds a URL to the logout endpoint using the parameters provided as arguments.
-     * @param options
-     */
-    public buildLogoutUrl(options: LogoutUrlOptions = {}): string {
-        if (options.client_id !== null) {
-            options.client_id = options.client_id || this.options.client_id;
-        } else {
-            delete options.client_id;
-        }
-
-        const { federated, ...logoutOptions } = options;
-        const federatedQuery = federated ? `&federated` : '';
-        const url = this._url(`/v2/logout?${createQueryParams(logoutOptions)}`);
-
-        return url + federatedQuery;
-    }
-
-    /**
-     * ```js
-     * earthoOne.logout();
-     * ```
-     *
-     * Clears the application session and performs a redirect to `/v2/logout`, using
-     * the parameters provided as arguments, to clear the EarthoOne session.
-     *
-     * **Note:** If you are using a custom cache, and specifying `localOnly: true`, and you want to perform actions or read state from the SDK immediately after logout, you should `await` the result of calling `logout`.
-     *
-     * If the `federated` option is specified it also clears the Identity Provider session.
-     * If the `localOnly` option is specified, it only clears the application session.
-     * It is invalid to set both the `federated` and `localOnly` options to `true`,
-     * and an error will be thrown if you do.
-     * [Read more about how Logout works at EarthoOne]EarthoOne.
-     *
-     * @param options
-     */
-    public logout(options: LogoutOptions = {}): Promise<void> | void {
-        const { localOnly, ...logoutOptions } = options;
-
-        if (localOnly && logoutOptions.federated) {
-            throw new Error(
-                'It is invalid to set both the `federated` and `localOnly` options to `true`'
-            );
-        }
-
-        const postCacheClear = () => {
-            this.cookieStorage.remove(this.orgHintCookieName);
-            this.cookieStorage.remove(this.isConnectedCookieName);
-
-            if (localOnly) {
-                return;
-            }
-
-            const url = this.buildLogoutUrl(logoutOptions);
-
-            // window.location.assign(url);
-        };
-
-        if (this.options.cache) {
-            return this.cacheManager.clear().then(() => postCacheClear());
-        } else {
-            this.cacheManager.clearSync();
-            postCacheClear();
-        }
-    }
-
-    private async _getTokenUsingRefreshToken(
-        options: GetTokenSilentlyOptions
-    ): Promise<GetTokenSilentlyResult> {
-        options.scope = getUniqueScopes(
-            this.defaultScope,
-            this.options.scope,
-            options.scope
-        );
-
-        const cache = await this.cacheManager.get(
-            new CacheKey({
-                scope: options.scope,
-                audience: options.audience || 'default',
-                client_id: this.options.client_id
-            })
-        );
-
-        // If you don't have a refresh token in memory
-        // and you don't have a refresh token in web worker memory
+        ...(timeout && { timeout })
+      });
+
+      return {
+        ...tokenResult,
+        scope: options.authorizationParams.scope,
+        oauthTokenScope: tokenResult.scope,
+        audience: options.authorizationParams.audience || 'default'
+      };
+    } catch (e) {
+      if (
+        // The web worker didn't have a refresh token in memory so
         // fallback to an iframe.
-        if ((!cache || !cache.refresh_token) && !this.worker) {
-            throw {
-                error: 'login_required',
-                error_message: 'Login required'
-            };
-        }
+        (e.message.indexOf(MISSING_REFRESH_TOKEN_ERROR_MESSAGE) > -1 ||
+          // A refresh token was found, but is it no longer valid
+          // and useRefreshTokensFallback is explicitly enabled. Fallback to an iframe.
+          (e.message &&
+            e.message.indexOf(INVALID_REFRESH_TOKEN_ERROR_MESSAGE) > -1)) &&
+        this.options.useRefreshTokensFallback
+      ) {
+        return await this._getTokenFromIFrame(options);
+      }
 
-        const redirect_uri =
-            options.redirect_uri ||
-            this.options.redirect_uri ||
-            window.location.origin;
+      throw e;
+    }
+  }
 
-        let tokenResult: TokenEndpointResponse;
+  private async _saveEntryInCache(
+    entry: CacheEntry & { id_token: string; decodedToken: DecodedToken }
+  ) {
+    const { id_token, decodedToken, ...entryWithoutIdToken } = entry;
 
-        const {
-            scope,
-            audience,
-            ignoreCache,
-            timeoutInSeconds,
-            detailedResponse,
-            ...customOptions
-        } = options;
+    this.userCache.set(CACHE_KEY_ID_TOKEN_SUFFIX, {
+      id_token,
+      decodedToken
+    });
 
-        const timeout =
-            typeof options.timeoutInSeconds === 'number'
-                ? options.timeoutInSeconds * 1000
-                : null;
+    await this.cacheManager.setIdToken(
+      this.options.clientId,
+      entry.id_token,
+      entry.decodedToken
+    );
 
-        try {
-            tokenResult = await oauthToken(
-                {
-                    ...this.customOptions,
-                    ...customOptions,
-                    audience,
-                    scope,
-                    baseUrl: `https://api.eartho.io/access/oauth/refreshtoken`,
-                    client_id: this.options.client_id,
-                    grant_type: 'refresh_token',
-                    access_id: '',
-                    refresh_token: cache && cache.refresh_token,
-                    redirect_uri,
-                    ...(timeout && { timeout }),
-                    earthoOne: this.options.earthoOne,
-                    useFormData: this.options.useFormData,
-                    timeout: this.httpTimeoutMs
-                } as RefreshTokenOptions,
-                this.worker
-            );
-        } catch (e) {
-            if (
-                // The web worker didn't have a refresh token in memory so
-                // fallback to an iframe.
-                e.message === MISSING_REFRESH_TOKEN_ERROR_MESSAGE ||
-                // A refresh token was found, but is it no longer valid.
-                // Fallback to an iframe.
-                (e.message &&
-                    e.message.indexOf(INVALID_REFRESH_TOKEN_ERROR_MESSAGE) > -1)
-            ) {
-                // return await this._getTokenFromIFrame(options);
-            }
+    await this.cacheManager.set(entryWithoutIdToken);
+  }
 
-            throw e;
-        }
+  private async _getIdTokenFromCache() {
+    const audience = this.options.authorizationParams.audience || 'default';
 
-        const decodedToken = await this._verifyIdToken(tokenResult.id_token);
+    const cache = await this.cacheManager.getIdToken(
+      new CacheKey({
+        clientId: this.options.clientId,
+        audience,
+        scope: this.scope
+      })
+    );
 
-        return {
-            ...tokenResult,
-            decodedToken,
-            scope: options.scope,
-            oauthTokenScope: tokenResult.scope,
-            audience: options.audience || 'default'
-        };
+    const currentCache = this.userCache.get<IdTokenEntry>(
+      CACHE_KEY_ID_TOKEN_SUFFIX
+    ) as IdTokenEntry;
+
+    // If the id_token in the cache matches the value we previously cached in memory return the in-memory
+    // value so that object comparison will work
+    if (cache && cache.id_token === currentCache?.id_token) {
+      return currentCache;
     }
 
-    private async _getEntryFromCache({
+    this.userCache.set(CACHE_KEY_ID_TOKEN_SUFFIX, cache);
+    return cache;
+  }
+
+  private async _getEntryFromCache({
+    scope,
+    audience,
+    clientId
+  }: {
+    scope: string;
+    audience: string;
+    clientId: string;
+  }): Promise<undefined | GetTokenSilentlyVerboseResponse> {
+    const entry = await this.cacheManager.get(
+      new CacheKey({
         scope,
         audience,
-        client_id,
-        getDetailedEntry = false
-    }: {
-        scope: string;
-        audience: string;
-        client_id: string;
-        getDetailedEntry?: boolean;
-    }) {
-        const entry = await this.cacheManager.get(
-            new CacheKey({
-                scope,
-                audience,
-                client_id
-            }),
-            60 // get a new token if within 60 seconds of expiring
-        );
+        clientId
+      }),
+      60 // get a new token if within 60 seconds of expiring
+    );
 
-        if (entry && entry.id_token) {
-            if (getDetailedEntry) {
-                const { id_token, access_token, oauthTokenScope, expires_in } = entry;
-
-                return {
-                    id_token,
-                    access_token,
-                    ...(oauthTokenScope ? { scope: oauthTokenScope } : null),
-                    expires_in
-                };
-            }
-
-            return entry.id_token;
+    if (entry && entry.access_token) {
+      const { access_token, oauthTokenScope, expires_in } = entry as CacheEntry;
+      const cache = await this._getIdTokenFromCache();
+      return (
+        cache && {
+          id_token: cache.id_token,
+          access_token,
+          ...(oauthTokenScope ? { scope: oauthTokenScope } : null),
+          expires_in
         }
+      );
     }
+  }
 
-    private _getParams(
-        authorizeOptions: BaseLoginOptions,
-        state: string,
-        nonce: string,
-        code_challenge: string,
-        redirect_uri: string,
-        access_id: string
-    ): AuthorizeOptions {
-        // These options should be excluded from the authorize URL,
-        // as they're options for the client and not for the IdP.
-        // ** IMPORTANT ** If adding a new client option, include it in this destructure list.
-        const {
-            useRefreshTokens,
-            useCookiesForTransactions,
-            useFormData,
-            earthoOne,
-            enabledProviders,
-            cacheLocation,
-            advancedOptions,
-            detailedResponse,
-            nowProvider,
-            authorizeTimeoutInSeconds,
-            legacySameSiteCookie,
-            sessionCheckExpiryDays,
-            domain,
-            leeway,
-            httpTimeoutInSeconds,
-            ...loginOptions
-        } = this.options;
+  /**
+   * Releases any lock acquired by the current page that's not released yet
+   *
+   * Get's called on the `pagehide` event.
+   * https://developer.mozilla.org/en-US/docs/Web/API/Window/pagehide_event
+   */
+  private _releaseLockOnPageHide = async () => {
+    await lock.releaseLock(GET_TOKEN_SILENTLY_LOCK_KEY);
 
-        return {
-            ...loginOptions,
-            ...authorizeOptions,
-            scope: getUniqueScopes(
-                this.defaultScope,
-                this.scope,
-                authorizeOptions.scope
-            ),
-            response_type: 'code',
-            response_mode: 'query',
-            state,
-            nonce,
-            redirect_uri: redirect_uri || this.options.redirect_uri,
-            access_id,
-            enabled_providers: enabledProviders,
-            code_challenge,
-            code_challenge_method: 'S256'
-        };
-    }
+    window.removeEventListener('pagehide', this._releaseLockOnPageHide);
+  };
 
-    private _connectUrl(authorizeOptions: AuthorizeOptions) {
-        return this._url(`/connect?${createQueryParams(authorizeOptions)}`);
-    }
+  private async _requestToken(
+    options: PKCERequestTokenOptions | RefreshTokenRequestTokenOptions,
+    additionalParameters?: RequestTokenAdditionalParameters
+  ) {
+    const { nonceIn, organization } = additionalParameters || {};
+    const authResult = await oauthToken(
+      {
+        baseUrl: this.authDomainUrl,
+        client_id: this.options.clientId,
+        earthoOneClient: this.options.earthoOneClient,
+        useFormData: this.options.useFormData,
+        timeout: this.httpTimeoutMs,
+        ...options
+      },
+      this.worker
+    );
 
-    private async _verifyIdToken(id_token: string, nonce?: string) {
-        const now = await this.nowProvider();
+    const decodedToken = await this._verifyIdToken(
+      authResult.id_token,
+      nonceIn,
+      organization
+    );
 
-        return verifyIdToken({
-            iss: this.tokenIssuer,
-            aud: this.options.audience,
-            id_token,
-            nonce,
-            leeway: this.options.leeway,
-            max_age: this._parseNumber(this.options.max_age),
-            now
-        });
-    }
+    await this._saveEntryInCache({
+      ...authResult,
+      decodedToken,
+      scope: options.scope,
+      audience: options.audience || 'default',
+      ...(authResult.scope ? { oauthTokenScope: authResult.scope } : null),
+      client_id: this.options.clientId,
+    });
 
-    private _parseNumber(value: any): number {
-        if (typeof value !== 'string') {
-            return value;
-        }
-        return parseInt(value, 10) || undefined;
-    }
+    this.cookieStorage.save(this.isAuthenticatedCookieName, true, {
+      daysUntilExpire: this.sessionCheckExpiryDays,
+      cookieDomain: this.options.cookieDomain
+    });
 
-    /**
-     * ```js
-     * await earthoOne.buildAuthorizeUrl(options);
-     * ```
-     *
-     * Builds an `/authorize` URL for loginWithRedirect using the parameters
-     * provided as arguments. Random and secure `state` and `nonce`
-     * parameters will be auto-generated.
-     *
-     * @param options
-     */
-    public async buildConnectUrl(
-        options: RedirectConnectOptions = {}
-    ): Promise<string> {
-        const { redirect_uri, access_id, appState, ...authorizeOptions } = options;
+    this._processOrgHint(organization || decodedToken.claims.org_id);
 
-        const stateIn = encode(createRandomString());
-        const nonceIn = encode(createRandomString());
-        const code_verifier = createRandomString();
-        const code_challengeBuffer = await sha256(code_verifier);
-        const code_challenge = bufferToBase64UrlEncoded(code_challengeBuffer);
-        const fragment = options.fragment ? `#${options.fragment}` : '';
+    return { ...authResult, decodedToken };
+  }
+}
 
-        const params = this._getParams(
-            authorizeOptions,
-            stateIn,
-            nonceIn,
-            code_challenge,
-            redirect_uri,
-            access_id
-        );
+interface BaseRequestTokenOptions {
+  audience?: string;
+  scope: string;
+  timeout?: number;
+  redirect_uri?: string;
+}
 
-        const url = this._connectUrl(params);
+interface PKCERequestTokenOptions extends BaseRequestTokenOptions {
+  code: string;
+  grant_type: 'authorization_code';
+  code_verifier: string;
+}
 
-        this.transactionManager.create({
-            nonce: nonceIn,
-            code_verifier,
-            appState,
-            access_id: access_id,
-            scope: params.scope,
-            audience: params.audience || 'default',
-            redirect_uri: params.redirect_uri,
-            state: stateIn
-        });
+interface RefreshTokenRequestTokenOptions extends BaseRequestTokenOptions {
+  grant_type: 'refresh_token';
+  refresh_token?: string;
+}
 
-        return url + fragment;
-    }
-
+interface RequestTokenAdditionalParameters {
+  nonceIn?: string;
+  organization?: string;
 }

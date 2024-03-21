@@ -1,537 +1,820 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Eartho</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-</head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
 
-<body>
+  <body>
     <div id="app" class="container">
-        <div v-if="!loading" style="visibility: hidden">
-            <span id="loaded">loaded</span>
+      <div v-if="!loading" style="visibility: hidden">
+        <span id="loaded">loaded</span>
+      </div>
+
+      <h1 class="mb-5">Eartho Playground</h1>
+
+      <p>
+        <strong>Is authenticated:</strong>&nbsp;<span data-cy="authenticated"
+          >{{ isAuthenticated }}</span
+        >
+      </p>
+
+      <div v-if="!loading">
+        <div class="btn-toolbar justify-content-between">
+          <div class="btn-group mb-3">
+            <button class="btn btn-info" @click="useEartho" data-cy="use-eartho">
+              Use Eartho
+            </button>
+
+            <button
+              class="btn btn-info"
+              @click="useNodeOidcProvider"
+              data-cy="use-node-oidc-provider"
+            >
+              Use Node OIDC Provider
+            </button>
+          </div>
+          <div class="btn-group mb-3">
+            <button class="btn btn-info" @click="checkSession">
+              Check session
+            </button>
+
+            <button class="btn btn-primary" @click="loginPopup">
+              Login popup
+            </button>
+
+            <button
+              class="btn btn-primary"
+              @click="loginRedirect"
+              id="login_redirect"
+            >
+              Login redirect
+            </button>
+
+            <button
+              class="btn btn-success"
+              @click="loginHandleRedirectCallback"
+              id="handle_redirect_callback"
+              data-cy="handle-redirect-callback"
+            >
+              Login redirect callback
+            </button>
+
+            <button
+              class="btn btn-dark"
+              id="handle_invite_url"
+              @click="loginHandleInvitationUrl"
+            >
+              Handle User Invitation
+            </button>
+          </div>
+
+          <div class="btn-group mb-3">
+            <button
+              class="btn btn-outline-primary"
+              @click="logout"
+              id="logout"
+              data-cy="logout"
+            >
+              logout (default)
+            </button>
+
+            <button class="btn btn-outline-primary" @click="logoutNoClient">
+              logout (no client id)
+            </button>
+          </div>
         </div>
 
-        <h1 class="mb-5">Eartho One JS Playground</h1>
-        <p>
-            <strong>Is connected:</strong>&nbsp;<span data-cy="connected">{{ isConnected }}</span>
-        </p>
-
-        <div v-if="!loading">
-            <div class="btn-toolbar justify-content-between">
-                <div class="btn-group mb-3">
-                    <button class="btn btn-info" @click="useEartho" data-cy="use-earthoOne">
-                        Use Eartho
-                    </button>
-
-                    <button class="btn btn-info" @click="useNodeOidcProvider" data-cy="use-node-oidc-provider">
-                        Use Node OIDC Provider
-                    </button>
-                </div>
-                <div class="btn-group mb-3">
-                    <button class="btn btn-info" @click="checkSession">
-                        Check session
-                    </button>
-
-                    <button class="btn btn-primary" @click="loginPopup">
-                        Login popup
-                    </button>
-
-                    <button class="btn btn-primary" @click="loginRedirect" id="login_redirect">
-                        Login redirect
-                    </button>
-
-                    <button class="btn btn-success" @click="loginHandleRedirectCallback" id="handle_redirect_callback"
-                        data-cy="handle-redirect-callback">
-                        Login redirect callback
-                    </button>
-
-                    <button class="btn btn-dark" id="handle_invite_url" @click="loginHandleInvitationUrl">
-                        Handle User Invitation
-                    </button>
-                </div>
-
-                <div class="btn-group mb-3">
-                    <button class="btn btn-outline-primary" @click="logout" id="logout" data-cy="logout">
-                        logout (default)
-                    </button>
-
-                    <button class="btn btn-outline-primary" @click="logoutNoClient">
-                        logout (no client id)
-                    </button>
-                </div>
+        <div v-for="current in scopesWithSuffix">
+          <div class="card mb-3 bg-light">
+            <div class="card-header">
+              <strong>{{current.audience || 'default'}}</strong>
+              <span
+                v-for="s of current.scope.split(' ')"
+                class="badge badge-success ml-1"
+                >{{s}}</span
+              >
             </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="scope">Scope</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="scope"
+                  v-model="current.scope"
+                  :data-cy="'scope' + current.suffix"
+                />
+              </div>
 
+              <div class="btn-group mb-0">
+                <button
+                  class="btn btn-outline-info"
+                  @click="getToken(current.audience, current.scope, current.access_tokens)"
+                  :data-cy="'get-token' + current.suffix"
+                >
+                  Get access token
+                </button>
 
-            <template v-if="error">
-                <hr />
-                <h3>Last error</h3>
-                <pre><code data-cy="error">
+                <button
+                  class="btn btn-outline-info"
+                  @click="getTokenPopup(current.audience, current.scope, current.access_tokens)"
+                >
+                  Get access token with a popup
+                </button>
+              </div>
+
+              <div
+                class="card mb-0 mt-3"
+                v-if="current.access_tokens.length > 0"
+              >
+                <div class="card-header">Access Tokens</div>
+                <div class="card-body">
+                  <ul v-for="token in current.access_tokens">
+                    <li :data-cy="'access-token' + current.suffix">
+                      {{token | concat}} (<a
+                        :href="'https://jwt.io?token=' + token"
+                        target="_blank"
+                        >view</a
+                      >)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <template v-if="error">
+          <hr />
+          <h3>Last error</h3>
+          <pre><code data-cy="error">
 {{JSON.stringify(error, null, 2)}}
               </code>
           </pre>
-            </template>
+        </template>
 
-            <hr />
+        <hr />
 
-            <div class="card mb-3" v-if="profile">
-                <div class="card-header">Profile</div>
-                <div class="card-body">
-                    <pre>
+        <div class="card mb-3" v-if="profile">
+          <div class="card-header">Profile</div>
+          <div class="card-body">
+            <pre>
               <code data-cy="profile">
 {{ JSON.stringify(profile, null, 2) }}
               </code>
             </pre>
-                </div>
-            </div>
-
-            <div class="card mb-3" v-if="id_token">
-                <div class="card-header">ID Token</div>
-                <div class="card-body">
-                    {{ id_token | concat }} (<a :href="'https://jwt.io?token=' + id_token" target="_blank">view</a>)
-                </div>
-            </div>
+          </div>
         </div>
 
-        <form action="/" @submit.prevent="saveForm">
-            <div class="form-group">
-                <label for="domain">Domain</label>
-                <input type="text" class="form-control" id="domain" v-model="domain" />
+        <div class="card mb-3" v-if="id_token">
+          <div class="card-header">ID Token</div>
+          <div class="card-body">
+            {{ id_token | concat }} (<a
+              :href="'https://jwt.io?token=' + id_token"
+              target="_blank"
+              >view</a
+            >)
+          </div>
+        </div>
+      </div>
+
+      <form action="/" @submit.prevent="saveForm">
+       
+        <div class="form-group">
+          <label for="clientId">Client ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="clientId"
+            v-model="clientId"
+            data-cy="client-id"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="audience">Audience</label>
+          <input
+            type="text"
+            class="form-control"
+            id="audience"
+            v-model="audience"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="organization">Organization</label>
+          <input
+            type="text"
+            v-model="organization"
+            class="form-control"
+            id="organization"
+            data-cy="organization"
+          />
+          <div class="form-check mt-3">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="org-login-check"
+              v-model="useOrgAtLogin"
+              data-cy="useOrgAtLogin"
+            />
+            <label for="org-login-check" class="form-check-label"
+              >Apply only at connectWithRedirect</label
+            >
+          </div>
+        </div>
+
+        <div class="btn-group mb-5">
+          <button
+            @click="saveForm"
+            class="btn btn-primary"
+            id="save-config"
+            data-cy="saveSettings"
+          >
+            Save
+          </button>
+
+          <button
+            @click="resetForm"
+            class="btn btn-outline-primary"
+            id="reset-config"
+          >
+            Reset
+          </button>
+        </div>
+
+        <h3 class="mb-5">Other switches</h3>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="storage-switch"
+                v-model="useLocalStorage"
+              />
+              <label
+                for="storage-switch"
+                class="custom-control-label"
+                data-cy="switch-local-storage"
+                >Use local storage</label
+              >
             </div>
 
-            <div class="form-group">
-                <label for="client_id">Client ID</label>
-                <input type="text" class="form-control" id="client_id" v-model="clientId" data-cy="client-id" />
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="custom-storage-switch"
+                v-model="useCustomStorage"
+              />
+              <label
+                for="custom-storage-switch"
+                class="custom-control-label"
+                data-cy="switch-custom-storage"
+                >Use custom (session) storage</label
+              >
             </div>
 
-
-            <div class="form-group">
-                <label for="audience">Audience</label>
-                <input type="text" class="form-control" id="audience" v-model="audience" />
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="cache-switch"
+                v-model="useCache"
+              />
+              <label
+                for="cache-switch"
+                class="custom-control-label"
+                data-cy="switch-use-cache"
+                >Use token cache when fetching new tokens</label
+              >
             </div>
 
-            <div class="form-check mt-3">
-                <input type="checkbox" class="form-check-input" id="org-login-check" v-model="useOrgAtLogin"
-                    data-cy="useOrgAtLogin" />
-                <label for="org-login-check" class="form-check-label">Apply only at loginWithRedirect</label>
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="refresh-token-fallback-switch"
+                v-model="useRefreshTokensFallback"
+              />
+              <label
+                for="refresh-token-fallback-switch"
+                class="custom-control-label"
+                data-cy="switch-refresh-token-fallback"
+                >Use iframe as a fallback for refresh tokens</label
+              >
             </div>
 
-            <div class="btn-group mb-5">
-                <button @click="saveForm" class="btn btn-primary" id="save-config" data-cy="saveSettings">
-                    Save
-                </button>
-
-                <button @click="resetForm" class="btn btn-outline-primary" id="reset-config">
-                    Reset
-                </button>
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="worker_url_switch"
+                v-model="useWorkerUrl"
+              />
+              <label
+                for="worker_url_switch"
+                class="custom-control-label"
+                data-cy="switch-use-worker-url"
+                >Use Hosted Worker URL</label
+              >
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="refresh_token_switch"
+                v-model="useRefreshTokens"
+              />
+              <label
+                for="refresh_token_switch"
+                class="custom-control-label"
+                data-cy="switch-refresh-tokens"
+                >Use refresh tokens</label
+              >
             </div>
 
-            <h3 class="mb-5">Other switches</h3>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="storage-switch"
-                            v-model="useLocalStorage" />
-                        <label for="storage-switch" class="custom-control-label" data-cy="switch-local-storage">Use
-                            local
-                            storage</label>
-                    </div>
-
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="custom-storage-switch"
-                            v-model="useCustomStorage" />
-                        <label for="custom-storage-switch" class="custom-control-label"
-                            data-cy="switch-custom-storage">Use
-                            custom
-                            (session) storage</label>
-                    </div>
-
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="cache-switch" v-model="useCache" />
-                        <label for="cache-switch" class="custom-control-label" data-cy="switch-use-cache">Use token
-                            cache
-                            when
-                            fetching new tokens</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="refresh_token_switch"
-                            v-model="useRefreshTokens" />
-                        <label for="refresh_token_switch" class="custom-control-label"
-                            data-cy="switch-refresh-tokens">Use
-                            refresh
-                            tokens</label>
-                    </div>
-
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="constructor-switch"
-                            v-model="useConstructor" />
-                        <label for="constructor-switch" class="custom-control-label"
-                            data-cy="switch-use-constructor">Use
-                            earthoOne constructor</label>
-                    </div>
-
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="cookie-txn-switch"
-                            v-model="useCookiesForTransactions" />
-                        <label for="cookie-txn-switch" class="custom-control-label" data-cy="switch-cookie-txns">Use
-                            cookies
-                            for
-                            transactions</label>
-                    </div>
-
-                    <div class="custom-control custom-switch mb-5">
-                        <input type="checkbox" class="custom-control-input" id="form-data-switch"
-                            v-model="useFormData" />
-                        <label for="form-data-switch" class="custom-control-label" data-cy="switch-use-form-data">Use
-                            form
-                            data for
-                            token endpoint call</label>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <h3 class="mb-3">Client Options</h3>
-
-                    <pre><code>{{ clientOptions }}</code></pre>
-                </div>
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="constructor-switch"
+                v-model="useConstructor"
+              />
+              <label
+                for="constructor-switch"
+                class="custom-control-label"
+                data-cy="switch-use-constructor"
+                >Use EarthoOne constructor</label
+              >
             </div>
-        </form>
+
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="cookie-txn-switch"
+                v-model="useCookiesForTransactions"
+              />
+              <label
+                for="cookie-txn-switch"
+                class="custom-control-label"
+                data-cy="switch-cookie-txns"
+                >Use cookies for transactions</label
+              >
+            </div>
+
+            <div class="custom-control custom-switch mb-5">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="form-data-switch"
+                v-model="useFormData"
+              />
+              <label
+                for="form-data-switch"
+                class="custom-control-label"
+                data-cy="switch-use-form-data"
+                >Use form data for token endpoint call</label
+              >
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <h3 class="mb-3">Client Options</h3>
+
+            <pre><code>{{ clientOptions }}</code></pre>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <script src="../dist/eartho-one-js.development.js"></script>
+    <script src="one-client-js.development.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script type="text/javascript">
-        const defaultDomain = 'http://localhost:3333';
-        const defaultClientId = 'x5wNs5h7EiyhxzODBe1X';
-        const defaultAudience = '';
+      const defaultDomain = 'http://localhost:3333';
+      var defaultClientId = 'x5wNs5h7EiyhxzODBe1X';
+      var defaultAccessId = 'QJkg3evAtIqJgF80iB1o';
+      var defaultAudience = '';
+      var defaultOrganization = '';
 
-        const GenericError = createEarthoOne.GenericError;
+      var GenericError = eartho.GenericError;
 
-        Vue.filter('concat', function (value) {
-            if (value && value.length > 35) {
-                return value.substr(0, 16) + '…  …' + value.substr(-16, 16);
+      Vue.filter('concat', function (value) {
+        if (value && value.length > 35) {
+          return value.substr(0, 16) + '…  …' + value.substr(-16, 16);
+        }
+
+        return value;
+      });
+
+      // An example of a custom cache that could be constructed by a developer.
+      const sessionStorageCache = {
+        get: function (key) {
+          return JSON.parse(sessionStorage.getItem(key));
+        },
+
+        set: function (key, value) {
+          sessionStorage.setItem(key, JSON.stringify(value));
+        },
+
+        remove: function (key) {
+          sessionStorage.removeItem(key);
+        }
+      };
+
+      var app = new Vue({
+        el: '#app',
+        data: function () {
+          var savedData = localStorage.getItem('spa-playground-data');
+          var data = savedData ? JSON.parse(savedData) : {};
+
+          return {
+            eartho: null,
+            loading: true,
+            useLocalStorage: data.useLocalStorage || false,
+            useCustomStorage: data.useCustomStorage || false,
+            useRefreshTokens: data.useRefreshTokens || false,
+            useCache: data.useCache === false ? false : true,
+            useConstructor: data.useConstructor === false ? false : true,
+            useCookiesForTransactions: data.useCookiesForTransactions || false,
+            profile: null,
+            id_token: '',
+            domain: defaultDomain,
+            isAuthenticated: false,
+            clientId: data.clientId || defaultClientId,
+            audience: data.audience || defaultAudience,
+            organization: data.organization || defaultOrganization,
+            useFormData: data.useFormData || false,
+            useOrgAtLogin: data.useOrgAtLogin || false,
+            useRefreshTokensFallback: data.useRefreshTokensFallback || false,
+            clientOptions: '',
+            useWorkerUrl: data.useWorkerUrl || false,
+            audienceScopes: [
+              {
+                audience: data.audience || defaultAudience,
+                scope: 'openid profile email',
+                access_tokens: []
+              },
+            ],
+            error: null
+          };
+        },
+        created: function () {
+          this.initializeClient();
+        },
+        watch: {
+          useLocalStorage: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useCustomStorage: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useRefreshTokens: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useCache: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useConstructor: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useCookiesForTransactions: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useFormData: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useRefreshTokensFallback: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+          useWorkerUrl: function () {
+            this.initializeClient();
+            this.saveForm();
+          },
+        },
+        computed: {
+          scopesWithSuffix: function () {
+            return this.audienceScopes.map(function (scope, index) {
+              scope.suffix = index > 0 ? '-' + index : '';
+              return scope;
+            });
+          }
+        },
+        methods: {
+          initializeClient: function () {
+            var _self = this;
+
+            var clientOptions = {
+              clientId: _self.clientId,
+              cacheLocation: _self.useLocalStorage ? 'localstorage' : 'memory',
+              useRefreshTokens: _self.useRefreshTokens,
+              useCookiesForTransactions: _self.useCookiesForTransactions,
+              useFormData: _self.useFormData,
+              useRefreshTokensFallback: _self.useRefreshTokensFallback,
+              workerUrl: _self.useWorkerUrl ? '/one-client-js.worker.development.js' : undefined,
+              authorizationParams: {
+                redirect_uri: window.location.origin
+              }
+            };
+
+            if (_self.audience) {
+              clientOptions.authorizationParams.audience = _self.audience;
             }
 
-            return value;
-        });
-
-        // An example of a custom cache that could be constructed by a developer.
-        const sessionStorageCache = {
-            get: function (key) {
-                return JSON.parse(localStorage.getItem(key));
-            },
-
-            set: function (key, value) {
-                localStorage.setItem(key, JSON.stringify(value));
-            },
-
-            remove: function (key) {
-                localStorage.removeItem(key);
-            },
-
-            // Optional
-            allKeys: function () {
-                return Object.keys(localStorage);
+            if (_self.organization && !_self.useOrgAtLogin) {
+              clientOptions.authorizationParams.organization =
+                _self.organization;
             }
-        };
 
-        var app = new Vue({
-            el: '#app',
-            data: function () {
-                var savedData = localStorage.getItem('spa-playground-data');
-                var data = savedData ? JSON.parse(savedData) : {};
+            if (_self.useCustomStorage) {
+              clientOptions.cache = sessionStorageCache;
+            }
 
-                return {
-                    earthoOne: null,
-                    loading: true,
-                    useLocalStorage: data.useLocalStorage || false,
-                    useCustomStorage: data.useCustomStorage || false,
-                    useRefreshTokens: data.useRefreshTokens || false,
-                    useCache: data.useCache === false ? false : true,
-                    useConstructor: data.useConstructor === false ? false : true,
-                    useCookiesForTransactions: data.useCookiesForTransactions || false,
-                    profile: null,
-                    id_token: '',
-                    isConnected: false,
-                    domain: defaultDomain,
-                    clientId: data.clientId || defaultClientId,
-                    audience: data.audience || defaultAudience,
-                    useFormData: data.useFormData || false,
-                    useOrgAtLogin: data.useOrgAtLogin || false,
-                    clientOptions: '',
-                    error: null
-                };
-            },
-            created: function () {
-                this.initializeClient();
-            },
-            watch: {
-                useLocalStorage: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useCustomStorage: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useRefreshTokens: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useCache: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useConstructor: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useCookiesForTransactions: function () {
-                    this.initializeClient();
-                    this.saveForm();
-                },
-                useFormData: function () {
-                    this.initializeClient();
-                    this.saveForm();
+            _self.clientOptions = JSON.stringify(clientOptions, null, 2);
+
+            if (_self.organization) {
+              const claims = {
+                id_token: {
+                  org_id: { values: [_self.organization] }
                 }
-            },
-            computed: {},
-            methods: {
-                initializeClient: function () {
-                    var _self = this;
+              };
 
-                    var clientOptions = {
-                        domain: _self.domain,
-                        client_id: _self.clientId,
-                        useCookiesForTransactions: _self.useCookiesForTransactions,
-                        useFormData: _self.useFormData,
-                        useRefreshTokens: true,
-                    };
-
-                    if (_self.audience) {
-                        clientOptions.audience = _self.audience;
-                    }
-
-
-                    if (_self.useCustomStorage) {
-                        clientOptions.cache = sessionStorageCache;
-                    }
-
-                    _self.clientOptions = JSON.stringify(clientOptions, null, 2);
-
-
-                    var _init = function (earthoOne) {
-                        _self.earthoOne = earthoOne;
-                        window.earthoOne = earthoOne; // Cypress integration tests support
-                        _self.loading = false;
-
-                        earthoOne.isConnected().then(function (isConnected) {
-                            _self.isConnected = isConnected;
-                        });
-
-                    };
-
-                    // if (_self.useConstructor) {
-                    //   console.log('Initializing using the constructor');
-                    //   _init(new earthoOne(clientOptions));
-                    // } else {
-                    console.log('Initializing using the factory function');
-                    createEarthoOne(clientOptions).then(_init);
-                    //}
-                },
-                saveForm: function () {
-                    localStorage.setItem(
-                        'spa-playground-data',
-                        JSON.stringify({
-                            domain: this.domain,
-                            clientId: this.clientId,
-                            useLocalStorage: this.useLocalStorage,
-                            useCustomStorage: this.useCustomStorage,
-                            useRefreshTokens: this.useRefreshTokens,
-                            useConstructor: this.useConstructor,
-                            useCookiesForTransactions: this.useCookiesForTransactions,
-                            useCache: this.useCache,
-                            audience: this.audience,
-                            useFormData: this.useFormData,
-                            useOrgAtLogin: this.useOrgAtLogin
-                        })
-                    );
-
-                    this.initializeClient();
-                },
-                resetForm: function () {
-                    this.domain = defaultDomain;
-                    this.clientId = defaultClientId;
-                    this.useLocalStorage = false;
-                    this.useCustomStorage = false;
-                    this.useRefreshTokens = false;
-                    this.useCache = true;
-                    this.audience = defaultAudience;
-                    this.useConstructor = false;
-                    this.useCookiesForTransactions = false;
-                    this.useFormData = false;
-                    this.useOrgAtLogin = false;
-                    this.saveForm();
-                },
-                showEarthoInfo: function () {
-                    var _self = this;
-                    _self.access_tokens = [];
-
-                    return _self.earthoOne.getIdToken().then(function (token) {
-                        //
-                        _self.earthoOne.getUser().then(function (user) {
-                            _self.profile = user;
-                        });
-
-                        // _self.earthoOne.getIdTokenClaims().then(function (claims) {
-                        //   _self.id_token = claims.__raw;
-                        // });
-                    });
-                },
-                useEartho: function () {
-                    this.domain = defaultDomain;
-                    this.clientId = defaultClientId;
-                    this.audience = defaultAudience;
-                    this.useFormData = false;
-                    this.saveForm();
-                },
-                useNodeOidcProvider() {
-                    this.domain = 'http://127.0.0.1:3000';
-                    this.clientId = 'testing';
-                    this.audience = '';
-                    this.useFormData = true;
-                    this.saveForm();
-                },
-                checkSession: function () {
-                    var _self = this;
-
-                    // _self.earthoOne
-                    //     .checkSession()
-                    //     .then(function () {
-                    //         return earthoOne.isConnected().then(function (isConnected) {
-                    //             _self.isConnected = isConnected;
-                    //             _self.showEarthoInfo();
-                    //         });
-                    //     })
-                    //     .catch(function (e) {
-                    //         console.log(e);
-                    //         _self.error = e;
-                    //     });
-                },
-                loginPopup: function () {
-                    var _self = this;
-
-                    var options = {
-                        access_id: 'QJkg3evAtIqJgF80iB1o'
-                    };
-
-                    _self.earthoOne
-                        .connectWithPopup(options)
-                        .then(function () {
-                            earthoOne.isConnected().then(function (isConnected) {
-                                _self.isConnected = isConnected;
-                                _self.showEarthoInfo();
-                            });
-                        })
-                        .catch(function (err) {
-                            _self.error = err;
-                            console.log(err);
-                        });
-                },
-                loginRedirect: function () {
-                    var _self = this;
-
-                    var options = {
-                        access_id: 'QJkg3evAtIqJgF80iB1o'
-                    };
-                    this.earthoOne.connectWithRedirect(options);
-                },
-                loginHandleRedirectCallback: function () {
-                    var _self = this;
-
-                    _self.earthoOne.handleRedirectCallback().then(function () {
-                        window.history.replaceState(
-                            {},
-                            document.title,
-                            window.location.origin + '/'
-                        );
-
-                        earthoOne.isConnected().then(function (isConnected) {
-                            _self.isConnected = isConnected;
-                            _self.showEarthoInfo();
-                        });
-                    });
-                },
-                getToken: function (audience, access_tokens) {
-                    var _self = this;
-
-                    _self.earthoOne
-                        .connectSilently({
-                            audience: audience,
-
-
-                        })
-                        .then(function (token) {
-                            access_tokens.push(token);
-                            _self.error = null;
-
-                            earthoOne.isConnected().then(function (isConnected) {
-                                _self.isConnected = isConnected;
-                            });
-                        })
-                        .catch(function (e) {
-                            console.error(e);
-
-                            if (e.message) {
-                                _self.error = e.message;
-                            } else {
-                                _self.error = e;
-                            }
-
-                            if (e instanceof GenericError && e.error === 'login_required') {
-                                _self.isConnected = false;
-                            }
-                        });
-                },
-                getTokenPopup: function (audience, access_tokens) {
-                    var _self = this;
-
-                    _self.earthoOne
-                        .getTokenWithPopup({ audience: audience })
-                        .then(function (token) {
-                            access_tokens.push(token);
-                        })
-                        .catch(function (err) {
-                            _self.error = err;
-                        });
-                },
-                logout: function () {
-                    this.earthoOne.logout({
-                        returnTo: window.location.origin
-                    });
-                },
-                logoutNoClient: function () {
-                    this.earthoOne.logout({
-                        client_id: null,
-                        returnTo: window.location.origin
-                    });
-                },
-                loginHandleInvitationUrl: function () {
-                    var url = prompt('Your invitation URL');
-
-                    if (url) {
-                        const inviteMatches = url.match(/invitation=([a-zA-Z0-9_]+)/);
-
-                    }
-                }
+              clientOptions.claims = JSON.stringify(claims);
             }
-        });
+
+            var _init = function (eartho) {
+              _self.eartho = eartho;
+              window.earthoInstance = eartho; // Cypress integration tests support
+              _self.loading = false;
+
+              _self.eartho.isAuthenticated().then(function (isAuthenticated) {
+                _self.isAuthenticated = isAuthenticated;
+              });
+            };
+
+            if (_self.useConstructor) {
+              console.log('Initializing using the constructor');
+              _init(new eartho.EarthoOne(clientOptions));
+            } else {
+              console.log('Initializing using the factory function');
+              eartho.createEarthoOne(clientOptions).then(_init);
+            }
+          },
+          saveForm: function () {
+            localStorage.setItem(
+              'spa-playground-data',
+              JSON.stringify({
+                authorizationParams: {
+                  audience: this.audience,
+                  organization: this.organization
+                },
+                clientId: this.clientId,
+                useLocalStorage: this.useLocalStorage,
+                useCustomStorage: this.useCustomStorage,
+                useRefreshTokens: this.useRefreshTokens,
+                useConstructor: this.useConstructor,
+                useCookiesForTransactions: this.useCookiesForTransactions,
+                useCache: this.useCache,
+                useFormData: this.useFormData,
+                useOrgAtLogin: this.useOrgAtLogin,
+                useRefreshTokensFallback: this.useRefreshTokensFallback,
+                useWorkerUrl: this.useWorkerUrl,
+              })
+            );
+
+            this.initializeClient();
+          },
+          resetForm: function () {
+            this.clientId = defaultClientId;
+            this.useLocalStorage = false;
+            this.useCustomStorage = false;
+            this.useRefreshTokens = false;
+            this.useCache = true;
+            this.audience = defaultAudience;
+            this.useConstructor = false;
+            this.useCookiesForTransactions = false;
+            this.organization = defaultOrganization;
+            this.useFormData = true;
+            this.useOrgAtLogin = false;
+            this.useRefreshTokensFallback = false;
+            this.useWorkerUrl = false;
+            this.saveForm();
+          },
+          showEarthoInfo: function () {
+            var _self = this;
+            _self.access_tokens = [];
+
+            return _self.eartho.getTokenSilently().then(function (token) {
+              _self.audienceScopes[0].access_tokens.push(token);
+
+              _self.eartho.getUser().then(function (user) {
+                _self.profile = user;
+                console.log(user)
+              });
+
+              _self.eartho.getIdToken().then(function (claims) {
+                _self.id_token = claims.__raw;
+              });
+            });
+          },
+          useEartho: function () {
+            this.clientId = defaultClientId;
+            this.audience = defaultAudience;
+            this.organization = defaultOrganization;
+            this.useFormData = true;
+            this.saveForm();
+          },
+          useNodeOidcProvider() {
+            this.clientId = 'testing';
+            this.audience = '';
+            this.organization = '';
+            this.useFormData = true;
+            this.saveForm();
+          },
+          checkSession: function () {
+            var _self = this;
+
+            _self.eartho
+              .checkSession()
+              .then(function () {
+                return _self.eartho
+                  .isAuthenticated()
+                  .then(function (isAuthenticated) {
+                    _self.isAuthenticated = isAuthenticated;
+                    _self.showEarthoInfo();
+                  });
+              })
+              .catch(function (e) {
+                _self.error = e;
+              });
+          },
+          loginPopup: function () {
+            var _self = this;
+
+            var options = {
+              accessId: defaultAccessId,
+              authorizationParams: {
+                redirect_uri: window.location.origin + '/callback.html'
+              }
+            };
+
+            if (_self.organization) {
+              options.authorizationParams.organization = _self.organization;
+            }
+
+            _self.eartho
+              .connectWithPopup(options)
+              .then(function () {
+                _self.eartho.isAuthenticated().then(function (isAuthenticated) {
+                  _self.isAuthenticated = isAuthenticated;
+                  _self.showEarthoInfo();
+                });
+              })
+              .catch(function () {
+                _self.error = err;
+              });
+          },
+          loginRedirect: function () {
+            var _self = this;
+            var options = {
+              accessId: defaultAccessId,
+              authorizationParams: {
+                scope: _self.audienceScopes[0].scope
+              }
+            };
+
+            if (_self.organization) {
+              if (_self.useOrgAtLogin) {
+                options.authorizationParams.organization = _self.organization;
+              }
+            }
+
+            this.eartho.connectWithRedirect(options);
+          },
+          loginHandleRedirectCallback: function () {
+            var _self = this;
+              
+            _self.eartho.handleRedirectCallback().then(function () {
+              window.history.replaceState(
+                {},
+                document.title,
+                window.location.origin + '/'
+              );
+
+              _self.eartho.isAuthenticated().then(function (isAuthenticated) {
+                _self.isAuthenticated = isAuthenticated;
+                _self.showEarthoInfo();
+              });
+            });
+          },
+          getToken: function (audience, scope, access_tokens) {
+            var _self = this;
+
+            _self.eartho
+              .getTokenSilently({
+                authorizationParams: {
+                  audience: audience,
+                  scope: scope
+                },
+                cacheMode: _self.useCache ? 'on' : 'off'
+              })
+              .then(function (token) {
+                access_tokens.push(token);
+                _self.error = null;
+
+                _self.eartho.isAuthenticated().then(function (isAuthenticated) {
+                  _self.isAuthenticated = isAuthenticated;
+                });
+              })
+              .catch(function (e) {
+                console.error(e);
+
+                if (e.message) {
+                  _self.error = e.message;
+                } else {
+                  _self.error = e;
+                }
+
+                if (e instanceof GenericError && e.error === 'login_required') {
+                  _self.isAuthenticated = false;
+                }
+              });
+          },
+          getTokenPopup: function (audience, scope, access_tokens) {
+            var _self = this;
+
+            _self.eartho
+              .getTokenWithPopup({
+                authorizationParams: {
+                  audience: audience,
+                  scope: scope
+                }
+              })
+              .then(function (token) {
+                access_tokens.push(token);
+              })
+              .catch(function (err) {
+                _self.error = err;
+              });
+          },
+          logout: function () {
+            this.eartho.logout({
+              logoutParams: {
+                returnTo: window.location.origin
+              }
+            });
+          },
+          logoutNoClient: function () {
+            this.eartho.logout({
+              clientId: null,
+              logoutParams: {
+                returnTo: window.location.origin
+              }
+            });
+          },
+          loginHandleInvitationUrl: function () {
+            var url = prompt('Your invitation URL');
+
+            if (url) {
+              const inviteMatches = url.match(/invitation=([a-zA-Z0-9_]+)/);
+
+              if (inviteMatches) {
+                var orgMatches = url.match(/organization=([a-zA-Z0-9_]+)/);
+
+                if (orgMatches) {
+                  this.eartho.connectWithRedirect({
+                    accessId: defaultAccessId,
+                    authorizationParams: {
+                      organization: orgMatches[1],
+                      invitation: inviteMatches[1]
+                    }
+                  });
+                }
+              }
+            }
+          }
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,34 +1,33 @@
 {
   "author": "Eartho",
   "name": "@eartho/one-client-js",
-  "description": "Login and authentication from all sources with 1 line of code ! Login from Google, Twitter, Github, Facebook, Apple, Microsoft, Twitch and VK at once with not extra steps or extra effort.",
-  "license": "Eartho Inc.",
-  "version": "1.3.6",
-  "main": "dist/lib/eartho-one.cjs.js",
+  "description": "Eartho SDK for authentication, verification and payments",
+  "license": "Eartho",
+  "version": "2.0.0",
+  "main": "dist/lib/one-client-js.cjs.js",
   "types": "dist/typings/index.d.ts",
-  "module": "dist/eartho-one-js.production.esm.js",
-  "private": false,
+  "module": "dist/one-client-js.production.esm.js",
   "scripts": {
     "dev": "rimraf dist && rollup -c --watch",
     "start": "npm run dev",
-    "docs": "typedoc --options ./typedoc.js --module commonjs",
+    "docs": "typedoc --options ./typedoc.js src",
     "build": "rimraf dist && rollup -m -c --environment NODE_ENV:production && npm run test:es-check",
-    "build:stats": "npm run build -- --environment WITH_STATS:true && open stats.html",
+    "build:stats": "rimraf dist && rollup -m -c --environment NODE_ENV:production --environment WITH_STATS:true && npm run test:es-check && open bundle-stats/index.html",
     "lint:security": "eslint ./src --ext ts --no-eslintrc --config ./.eslintrc.security",
     "test": "jest --coverage --silent",
     "test:watch": "jest --coverage --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "test:open:integration": "cypress open",
     "test:watch:integration": "concurrently --raw npm:dev 'npm:test:open:integration'",
-    "test:es-check": "npm run test:es-check:es5 && npm run test:es-check:es2015:module",
-    "test:es-check:es5": "es-check es5 'dist/eartho-one-js.production.js'",
-    "test:es-check:es2015:module": "es-check es2015 'dist/eartho-one-js.production.esm.js' --module ",
+    "test:es-check": "npm run test:es-check:es2017 && npm run test:es-check:es2017:module",
+    "test:es-check:es2017": "es-check es2017 'dist/one-client-js.production.js'",
+    "test:es-check:es2017:module": "es-check es2017 'dist/one-client-js.production.esm.js' --module ",
     "test:integration:server": "npm run dev",
     "test:integration:tests": "wait-on http://localhost:3000/ && cypress run",
     "test:integration": "concurrently --raw --kill-others --success first npm:test:integration:server npm:test:integration:tests",
     "serve:coverage": "serve coverage/lcov-report -n",
     "serve:stats": "serve bundle-stats -n",
-    "print-bundle-size": "node ./scripts/print-bundle-size",
+    "print-bundle-size": "node ./scripts/print-bundle-size.mjs",
     "prepack": "npm run build && node ./scripts/prepack",
     "publish:cdn": "ccu --trace"
   },
@@ -78,13 +77,13 @@
     "typescript": "^4.7.4",
     "wait-on": "^7.2.0"
   },
-
   "files": [
     "src",
     "dist"
   ],
   "repository": {
-    "url": "https://github.com/eartho-group/one-client-js"
+    "type": "git",
+    "url": "git://github.com/eartho-group/one-client-js.git"
   },
   "bugs": {
     "url": "https://github.com/eartho-group/one-client-js/issues"
@@ -93,37 +92,11 @@
   "keywords": [
     "eartho",
     "login",
-    "authorization",
-    "authenticatoion",
-    "access",
-    "auth",
-    "pkce",
-    "ui",
-    "auth dialog",
-    "dialog",
-    "firebase auth",
-    "firebase",
-    "cognito",
-    "Eartho One"
-  ],
-  "ccu": {
-    "name": "eartho-one",
-    "cdn": "https://cdn.eartho.io",
-    "mainBundleFile": "eartho-one-js.production.js",
-    "bucket": "assets.us.eartho.io",
-    "localPath": "dist",
-    "digest": {
-      "hashes": [
-        "sha384"
-      ],
-      "extensions": [
-        ".js"
-      ]
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  }
+    "authentication",
+    "payments",
+    "Authorization Code Grant Flow",
+    "PKCE",
+    "Single Page Application authentication",
+    "SPA authentication"
+  ]
 }

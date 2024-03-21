@@ -1,13 +1,7 @@
 /**
- * For context on the istanbul ignore statements below, see:
- * https://github.com/gotwarlost/istanbul/issues/690
- */
-
-/**
  * Thrown when network requests to the Auth server fail.
  */
 export class GenericError extends Error {
-  /* istanbul ignore next */
   constructor(public error: string, public error_description: string) {
     super(error_description);
     Object.setPrototypeOf(this, GenericError.prototype);
@@ -25,11 +19,10 @@ export class GenericError extends Error {
 }
 
 /**
- * Thrown when handling the redirect callback fails, will be one of EarthoOne's
- * Authentication API's Standard Error Responses: https://earthoOne.com/docs/api/authentication?javascript#standard-error-responses
+ * Thrown when handling the redirect callback fails, will be one of Eartho's
+ * Authentication API's Standard Error Responses: https://eartho.com/docs/api/authentication?javascript#standard-error-responses
  */
 export class AuthenticationError extends GenericError {
-  /* istanbul ignore next */
   constructor(
     error: string,
     error_description: string,
@@ -47,7 +40,6 @@ export class AuthenticationError extends GenericError {
  * when network requests to the Auth server timeout.
  */
 export class TimeoutError extends GenericError {
-  /* istanbul ignore next */
   constructor() {
     super('timeout', 'Timeout');
     //https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
@@ -59,7 +51,6 @@ export class TimeoutError extends GenericError {
  * Error thrown when the login popup times out (if the user does not complete auth)
  */
 export class PopupTimeoutError extends TimeoutError {
-  /* istanbul ignore next */
   constructor(public popup: Window) {
     super();
     //https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
@@ -68,7 +59,6 @@ export class PopupTimeoutError extends TimeoutError {
 }
 
 export class PopupCancelledError extends GenericError {
-  /* istanbul ignore next */
   constructor(public popup: Window) {
     super('cancelled', 'Popup closed');
     //https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
@@ -80,7 +70,6 @@ export class PopupCancelledError extends GenericError {
  * Error thrown when the token exchange results in a `mfa_required` error
  */
 export class MfaRequiredError extends GenericError {
-  /* istanbul ignore next */
   constructor(
     error: string,
     error_description: string,
@@ -90,4 +79,29 @@ export class MfaRequiredError extends GenericError {
     //https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
     Object.setPrototypeOf(this, MfaRequiredError.prototype);
   }
+}
+
+/**
+ * Error thrown when there is no refresh token to use
+ */
+export class MissingRefreshTokenError extends GenericError {
+  constructor(public audience: string, public scope: string) {
+    super(
+      'missing_refresh_token',
+      `Missing Refresh Token (audience: '${valueOrEmptyString(audience, [
+        'default'
+      ])}', scope: '${valueOrEmptyString(scope)}')`
+    );
+    Object.setPrototypeOf(this, MissingRefreshTokenError.prototype);
+  }
+}
+
+/**
+ * Returns an empty string when value is falsy, or when it's value is included in the exclude argument.
+ * @param value The value to check
+ * @param exclude An array of values that should result in an empty string.
+ * @returns The value, or an empty string when falsy or included in the exclude argument.
+ */
+function valueOrEmptyString(value: string, exclude: string[] = []) {
+  return value && !exclude.includes(value) ? value : '';
 }

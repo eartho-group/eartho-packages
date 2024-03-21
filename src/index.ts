@@ -1,15 +1,4 @@
-import 'core-js/es/string/starts-with';
-import 'core-js/es/symbol';
-import 'core-js/es/array/from';
-import 'core-js/es/typed-array/slice';
-import 'core-js/es/array/includes';
-import 'core-js/es/string/includes';
-import 'core-js/es/set';
-import 'promise-polyfill/src/polyfill';
-import 'fast-text-encoding';
-import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
-
-import EarthoOne from './EarthoOne';
+import { EarthoOne } from './EarthoOne';
 import { EarthoOneOptions } from './global';
 
 import './global';
@@ -17,23 +6,18 @@ import './global';
 export * from './global';
 
 /**
- * Asynchronously creates the earthoOne instance and calls `checkSession`.
+ * Asynchronously creates the EarthoOne instance and calls `checkSession`.
  *
  * **Note:** There are caveats to using this in a private browser tab, which may not silently authenticae
- * a user on page refresh. Please see [the checkSession docs]EarthoOne for more info.
+ * a user on page refresh. Please see [the checkSession docs](https://eartho.github.io/one-client-js/classes/EarthoOne.html#checksession) for more info.
  *
  * @param options The client options
  * @returns An instance of EarthoOne
  */
-export default async function createEarthoOne(options: EarthoOneOptions) {
-  const earthoOne = new EarthoOne(options);
-  try {
-    await earthoOne.checkSession();
-  } catch (e) { }
-  try {
-    await earthoOne.handleRedirectCallback();
-  } catch (e) { }
-  return earthoOne;
+export async function createEarthoOne(options: EarthoOneOptions) {
+  const eartho = new EarthoOne(options);
+  await eartho.checkSession();
+  return eartho;
 }
 
 export { EarthoOne };
@@ -44,7 +28,20 @@ export {
   TimeoutError,
   PopupTimeoutError,
   PopupCancelledError,
-  MfaRequiredError
+  MfaRequiredError,
+  MissingRefreshTokenError
 } from './errors';
 
-export { ICache, LocalStorageCache, InMemoryCache, Cacheable } from './core/cache';
+export {
+  ICache,
+  LocalStorageCache,
+  InMemoryCache,
+  Cacheable,
+  DecodedToken,
+  CacheEntry,
+  WrappedCacheEntry,
+  KeyManifestEntry,
+  MaybePromise,
+  CacheKey,
+  CacheKeyData
+} from './cache';

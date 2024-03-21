@@ -3,10 +3,10 @@
 <br />
 <div align="center">
   <a href="https://eartho.io">
-    <img src="https://user-images.githubusercontent.com/99670283/172473537-5b4005cf-979b-45cf-bc8a-0f74fb6842e5.png" alt="Logo" width="128" height="128">
+    <img src="https://assets-global.website-files.com/62a0d30728e5142d9f2704f3/65a0eaf1302b155052b99cce_Group%2059211%20(1)-p-500.png" alt="Logo" width="128" height="128">
   </a>
 
-  <h1 align="center">Eartho. One</h1>
+  <h1 align="center">Eartho.</h1>
 
   <p align="center">
     One line of code to authenticate users via<br /><b>Any social network, crypto wallet and phone authentication</b><br /><br />
@@ -111,7 +111,7 @@ Eartho<br />
 
 
 Discord - [Link](https://discord.gg/5QbuTNTG2q)<br />
-Twitter - [@eartho_world](https://twitter.com/eartho_world)<br />
+Twitter - [@eartho_io](https://twitter.com/eartho_io)<br />
 
 Project Link: [https://github.com/eartho-group/](https://github.com/eartho-group/)
 

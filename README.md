@@ -9,7 +9,7 @@
   <h1 align="center">Eartho.</h1>
 
   <p align="center">
-    One line of code to authenticate users via<br /><b>Any social network, crypto wallet and phone authentication</b><br /><br />
+    One line of code to authenticate and charge users via<br /><b>Any social network, crypto wallet, phone authentication, and payment processor</b><br /><br />
 
 Eartho introduces the first free shared access infrastructure for developers.<br />
 Free user management for all platforms:  authentication, verification & payments.<br />
@@ -118,5 +118,16 @@ Twitter - [@eartho_io](https://twitter.com/eartho_io)<br />
 Project Link: [https://github.com/eartho-group/](https://github.com/eartho-group/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Copyrights
+
+Portions of this code are derived from projects licensed with MIT(Check LICENSE file to see the full license).
+Here are the copyrights and the license type:
+
+- MIT License, Copyright (c) 2018 Auth0, Inc. <support@auth0.com> (http://auth0.com)
+- MIT License, Copyright (c) 2020-present Cryptr
+- MIT License, Copyright (c) 2020 Jose
+- MIT License, Copyright (c) 2016 Filip Skokan
+- MIT License, Copyright (c) 2020 Ville de Montréal
 
 

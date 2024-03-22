@@ -133,7 +133,6 @@ export interface EarthoOneOptions extends BaseConnectOptions {
    * The Client ID found on your Application settings page
    */
   clientId: string;
-  accessId: string;
   /**
    * The value in seconds used to account for clock skew in JWT expirations.
    * Typically, this value is no more than a minute or two at maximum.

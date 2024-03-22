@@ -532,9 +532,9 @@
               useFormData: _self.useFormData,
               useRefreshTokensFallback: _self.useRefreshTokensFallback,
               workerUrl: _self.useWorkerUrl ? '/one-client-js.worker.development.js' : undefined,
-              authorizationParams: {
-                redirect_uri: window.location.origin
-              }
+              //authorizationParams: {
+              //  redirect_uri: window.location.origin
+              //}
             };
 
             if (_self.audience) {
@@ -673,9 +673,9 @@
 
             var options = {
               accessId: defaultAccessId,
-              authorizationParams: {
-                redirect_uri: window.location.origin + '/callback.html'
-              }
+              //authorizationParams: {
+              //  redirect_uri: window.location.origin + '/callback.html'
+              //}
             };
 
             if (_self.organization) {

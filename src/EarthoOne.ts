@@ -475,6 +475,7 @@ export class EarthoOne {
       
     const authorizationParams = urlOptions.authorizationParams || {}
     authorizationParams.access_id = options.accessId
+    authorizationParams.redirect_uri = authorizationParams.redirect_uri || (window.location.origin)
 
     const { url, ...transaction } = await this._prepareAuthorizeUrl(
       authorizationParams

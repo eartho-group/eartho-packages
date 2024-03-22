@@ -3,29 +3,31 @@
 <br />
 <div align="center">
   <a href="https://eartho.io">
-    <img src="https://assets-global.website-files.com/62a0d30728e5142d9f2704f3/65a0eaf1302b155052b99cce_Group%2059211%20(1)-p-500.png" alt="Logo" width="128" height="128">
+    <img src="https://github.com/eartho-group/media/blob/main/icon.png" alt="Logo" width="128" height="128">
   </a>
 
   <h1 align="center">Eartho.</h1>
 
   <p align="center">
     One line of code to authenticate users via<br /><b>Any social network, crypto wallet and phone authentication</b><br /><br />
-You don't need to read the documents of all companies and you don't need to open accounts there.<br />
-We are a third layer that abstracts the complexity for you and protects your users from being tracked.<br /><br />
-You can easily keep your backend solution - self server / firebase / amplify , or get a nocode solution from us.<br /><br />
-    <a href="https://www.eartho.io/product/learn"><strong>Quick Start »</strong></a>
-    <br />
-    <br />
-    <a href="https://eartho.io">Our Website</a>
-    ·
-    <a href="https://github.com/eartho-group/one-client-js/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/eartho-group/one-client-js/issues">Request Feature</a>
-    ·
-    <a href="https://discord.gg/5QbuTNTG2q">Discord</a>
+
+Eartho introduces the first free shared access infrastructure for developers.<br />
+Free user management for all platforms:  authentication, verification & payments.<br />
+Start building in minutes with just one line of code, no complex integrations are needed.<br />
+
+<a href="https://www.eartho.io"><strong>Quick Start »</strong></a>
+<br />
+<br />
+<a href="https://eartho.io">Our Website</a>
+·
+<a href="https://github.com/eartho-group/one-client-js/issues">Report Bug</a>
+·
+<a href="https://github.com/eartho-group/one-client-js/issues">Request Feature</a>
+·
+<a href="https://discord.gg/5QbuTNTG2q">Discord</a>
   </p>
  <br />
-<img src="https://user-images.githubusercontent.com/99670283/177643618-21ef51cd-3ed1-4ed0-a75e-f5cb948a8f13.png">
+<img src="https://github.com/eartho-group/media/blob/main/web_icons.png">
 </div>
 
 
@@ -79,8 +81,8 @@ get started.
 
 <br /> 
 <h3>Full Docs Here<br /> 
-<a href="https://www.eartho.io/product/learn"> 
-https://www.eartho.io/product/learn
+<a href="https://www.eartho.io"> 
+https://www.eartho.io
 </a></h3>
 <br /> <br />
 <h3>

@@ -673,6 +673,7 @@
 
             var options = {
               accessId: defaultAccessId,
+              //enabledAuthProviders: ['facebook'],
               //authorizationParams: {
               //  redirect_uri: window.location.origin + '/callback.html'
               //}
@@ -698,6 +699,7 @@
             var _self = this;
             var options = {
               accessId: defaultAccessId,
+              //enabledAuthProviders: ['facebook'],
               authorizationParams: {
                 scope: _self.audienceScopes[0].scope
               }
@@ -804,6 +806,7 @@
                 if (orgMatches) {
                   this.eartho.connectWithRedirect({
                     accessId: defaultAccessId,
+                    //enabledAuthProviders: ['facebook'],
                     authorizationParams: {
                       organization: orgMatches[1],
                       invitation: inviteMatches[1]

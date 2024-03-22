@@ -294,6 +294,7 @@ export interface AuthorizeOptions extends AuthorizationParams {
 export interface RedirectConnectOptions<TAppState = any>
   extends BaseConnectOptions {
   accessId: string;
+  enabledAuthProviders?: string[];
   /**
    * Used to store state before doing the redirect
    */
@@ -346,6 +347,7 @@ export interface RedirectConnectResult<TAppState = any> {
 
 export interface PopupConnectOptions extends BaseConnectOptions {
     accessId: string;
+    enabledAuthProviders?: string[];
 }
 
 export interface PopupConfigOptions {

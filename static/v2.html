@@ -132,7 +132,7 @@
           return {
             eartho: null,
             loading: true,
-            isAuthenticated: false,
+            isConnected: false,
             scenarioStatus: null,
             error: null,
             foo: '',
@@ -152,7 +152,7 @@
             this.loading = false;
 
             console.log('created');
-            this.isAuthenticated = await this.eartho.isAuthenticated();
+            this.isConnected = await this.eartho.isConnected();
             this.user = await this.eartho.getUser();
           },
           createClientOptions: function (scenario) {
@@ -178,7 +178,7 @@
               },
               cacheMode: 'off'
             });
-            this.isAuthenticated = await this.eartho.isAuthenticated();
+            this.isConnected = await this.eartho.isConnected();
             this.user = await this.eartho.getUser();
           }
         }

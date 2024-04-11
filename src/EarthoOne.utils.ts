@@ -26,7 +26,7 @@ export const OLD_IS_AUTHENTICATED_COOKIE_NAME = 'eartho.is.authenticated';
 /**
  * @ignore
  */
-export const buildIsAuthenticatedCookieName = (clientId: string) =>
+export const buildisConnectedCookieName = (clientId: string) =>
   `eartho.${clientId}.is.authenticated`;
 
 /**

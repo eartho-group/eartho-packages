@@ -249,72 +249,72 @@ describe('EarthoOne', () => {
       expect(window.location.assign).toHaveBeenCalled();
     });
 
-    it('can access isAuthenticated immediately after local logout', async () => {
+    it('can access isConnected immediately after local logout', async () => {
       const eartho = setup();
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ onRedirect: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
-    it('can access isAuthenticated immediately after local logout', async () => {
+    it('can access isConnected immediately after local logout', async () => {
       const eartho = setup();
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ openUrl: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
-    it('can access isAuthenticated immediately after local logout when using a custom async cache', async () => {
+    it('can access isConnected immediately after local logout when using a custom async cache', async () => {
       const eartho = setup({
         cache: new InMemoryAsyncCacheNoKeys()
       });
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ onRedirect: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
-    it('can access isAuthenticated immediately after local logout when using a custom async cache - using openUrl', async () => {
+    it('can access isConnected immediately after local logout when using a custom async cache - using openUrl', async () => {
       const eartho = setup({
         cache: new InMemoryAsyncCacheNoKeys()
       });
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ openUrl: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
-    it('can access isAuthenticated immediately after local logout when using a custom async cache', async () => {
+    it('can access isConnected immediately after local logout when using a custom async cache', async () => {
       const eartho = setup({
         cache: new InMemoryAsyncCacheNoKeys()
       });
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ onRedirect: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
-    it('can access isAuthenticated immediately after local logout when using a custom async cache - using openUrl', async () => {
+    it('can access isConnected immediately after local logout when using a custom async cache - using openUrl', async () => {
       const eartho = setup({
         cache: new InMemoryAsyncCacheNoKeys()
       });
 
       await connectWithRedirect(eartho);
-      expect(await eartho.isAuthenticated()).toBe(true);
+      expect(await eartho.isConnected()).toBe(true);
       await eartho.logout({ openUrl: async () => {} });
 
-      expect(await eartho.isAuthenticated()).toBe(false);
+      expect(await eartho.isConnected()).toBe(false);
     });
 
     it('correctly handles a null clientId value', async () => {

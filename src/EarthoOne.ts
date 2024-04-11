@@ -84,7 +84,7 @@ import TokenWorker from './worker/token.worker.ts';
 import { singlePromise, retryPromise } from './promise-utils';
 import { CacheKeyManifest } from './cache/key-manifest';
 import {
-  buildIsAuthenticatedCookieName,
+  buildisConnectedCookieName,
   buildOrganizationHintCookieName,
   cacheFactory,
   getAuthorizeParams,
@@ -121,7 +121,7 @@ export class EarthoOne {
   private readonly cookieStorage: ClientStorage;
   private readonly sessionCheckExpiryDays: number;
   private readonly orgHintCookieName: string;
-  private readonly isAuthenticatedCookieName: string;
+  private readonly isConnectedCookieName: string;
   private readonly nowProvider: () => number | Promise<number>;
   private readonly httpTimeoutMs: number;
   private readonly options: EarthoOneOptions & {
@@ -195,7 +195,7 @@ export class EarthoOne {
       this.options.clientId
     );
 
-    this.isAuthenticatedCookieName = buildIsAuthenticatedCookieName(
+    this.isConnectedCookieName = buildisConnectedCookieName(
       this.options.clientId
     );
 
@@ -588,12 +588,12 @@ export class EarthoOne {
    * @param options
    */
   public async checkSession(options?: GetTokenSilentlyOptions) {
-    if (!this.cookieStorage.get(this.isAuthenticatedCookieName)) {
+    if (!this.cookieStorage.get(this.isConnectedCookieName)) {
       if (!this.cookieStorage.get(OLD_IS_AUTHENTICATED_COOKIE_NAME)) {
         return;
       } else {
         // Migrate the existing cookie to the new name scoped by client ID
-        this.cookieStorage.save(this.isAuthenticatedCookieName, true, {
+        this.cookieStorage.save(this.isConnectedCookieName, true, {
           daysUntilExpire: this.sessionCheckExpiryDays,
           cookieDomain: this.options.cookieDomain
         });
@@ -799,14 +799,14 @@ export class EarthoOne {
 
   /**
    * ```js
-   * const isAuthenticated = await eartho.isAuthenticated();
+   * const isConnected = await eartho.isConnected();
    * ```
    *
    * Returns `true` if there's valid information stored,
    * otherwise returns `false`.
    *
    */
-  public async isAuthenticated() {
+  public async isConnected() {
     const user = await this.getUser();
     return !!user;
   }
@@ -862,7 +862,7 @@ export class EarthoOne {
     this.cookieStorage.remove(this.orgHintCookieName, {
       cookieDomain: this.options.cookieDomain
     });
-    this.cookieStorage.remove(this.isAuthenticatedCookieName, {
+    this.cookieStorage.remove(this.isConnectedCookieName, {
       cookieDomain: this.options.cookieDomain
     });
     this.userCache.remove(CACHE_KEY_ID_TOKEN_SUFFIX);
@@ -1148,7 +1148,7 @@ export class EarthoOne {
       client_id: this.options.clientId,
     });
 
-    this.cookieStorage.save(this.isAuthenticatedCookieName, true, {
+    this.cookieStorage.save(this.isConnectedCookieName, true, {
       daysUntilExpire: this.sessionCheckExpiryDays,
       cookieDomain: this.options.cookieDomain
     });

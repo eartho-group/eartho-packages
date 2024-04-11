@@ -72,13 +72,13 @@ describe('EarthoOne', () => {
     window.location = oldWindowLocation;
   });
 
-  describe('isAuthenticated', () => {
+  describe('isConnected', () => {
     describe('connectWithRedirect', () => {
       it('returns true if there is a user', async () => {
         const eartho = setup();
         await connectWithRedirect(eartho);
 
-        const result = await eartho.isAuthenticated();
+        const result = await eartho.isConnected();
         expect(result).toBe(true);
       });
 
@@ -93,7 +93,7 @@ describe('EarthoOne', () => {
           });
         } catch {}
 
-        const result = await eartho.isAuthenticated();
+        const result = await eartho.isConnected();
 
         expect(result).toBe(false);
       });
@@ -105,7 +105,7 @@ describe('EarthoOne', () => {
             token: { success: false }
           });
         } catch {}
-        const result = await eartho.isAuthenticated();
+        const result = await eartho.isConnected();
         expect(result).toBe(false);
       });
     });
@@ -115,7 +115,7 @@ describe('EarthoOne', () => {
         const eartho = setup();
         await connectWithPopup(eartho);
 
-        const result = await eartho.isAuthenticated();
+        const result = await eartho.isConnected();
         expect(result).toBe(true);
       });
     });
@@ -133,14 +133,14 @@ describe('EarthoOne', () => {
         });
       } catch {}
 
-      const result = await eartho.isAuthenticated();
+      const result = await eartho.isConnected();
 
       expect(result).toBe(false);
     });
 
     it('returns false if there is no user', async () => {
       const eartho = setup();
-      const result = await eartho.isAuthenticated();
+      const result = await eartho.isConnected();
 
       expect(result).toBe(false);
     });

@@ -13,7 +13,7 @@ describe('In a Node SSR environment', () => {
 
   it('can check authenticated state', async () => {
     const client = new EarthoOne({ clientId: 'foo', domain: 'bar' });
-    expect(await client.isAuthenticated()).toBeFalsy();
+    expect(await client.isConnected()).toBeFalsy();
     expect(await client.getUser()).toBeUndefined();
   });
 });

@@ -147,7 +147,7 @@
         },
         async created() {
           const authFn = async client => {
-            if (await client.eartho.isAuthenticated()) {
+            if (await client.eartho.isConnected()) {
               client.id_token = (await client.eartho.getIdToken()).__raw;
               client.access_token = await client.eartho.getTokenSilently();
             }

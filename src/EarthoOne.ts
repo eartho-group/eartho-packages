@@ -447,10 +447,10 @@ export class EarthoOne {
    *
    * Returns all claims from the id_token if available.
    */
-  public async getIdToken(): Promise<IdToken | undefined> {
+  public async getIdToken(): Promise<string | undefined> {
     const cache = await this._getIdTokenFromCache();
 
-    return cache?.decodedToken?.claims;
+    return cache?.decodedToken?.claims.__raw;
   }
 
   /**

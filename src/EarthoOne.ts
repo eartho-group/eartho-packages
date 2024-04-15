@@ -57,7 +57,8 @@ import {
   INVALID_REFRESH_TOKEN_ERROR_MESSAGE,
   DEFAULT_NOW_PROVIDER,
   DEFAULT_FETCH_TIMEOUT_MS,
-  DEFAULT_POPUP_CONFIG_OPTIONS
+  DEFAULT_POPUP_CONFIG_OPTIONS,
+  CACHE_LOCATION_LOCAL_STORAGE
 } from './constants';
 
 import {
@@ -140,6 +141,18 @@ export class EarthoOne {
   };
 
   constructor(options: EarthoOneOptions) {
+
+    const authDomain = 'api.eartho.io'
+    options.domain = 'one.eartho.io'
+    options.issuer = 'https://one.eartho.world/'
+    options.authorizationParams = options.authorizationParams || {}
+    options.authorizationParams.audience = options.authorizationParams?.audience || options.clientId;
+    options.cacheLocation = CACHE_LOCATION_LOCAL_STORAGE
+    options.useRefreshTokens = true;
+
+    this.domainUrl = getDomain(options.domain);
+    this.authDomainUrl = getDomain(authDomain);
+
     this.options = {
       ...this.defaultOptions,
       ...options,
@@ -148,16 +161,6 @@ export class EarthoOne {
         ...options.authorizationParams
       }
     };
-
-    const authDomain = 'api.eartho.io'
-    this.options.domain = 'one.eartho.io'
-    this.options.issuer = 'https://one.eartho.world/'
-    this.options.cacheLocation = 'localstorage'
-    this.options.authorizationParams.audience = options.authorizationParams?.audience || options.clientId;
-    this.options.useRefreshTokens = true;
-
-    this.domainUrl = getDomain(this.options.domain);
-    this.authDomainUrl = getDomain(authDomain);
 
     typeof window !== 'undefined' && validateCrypto();
 

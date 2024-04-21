@@ -51,13 +51,11 @@ const getPlugins = shouldMinify => {
       'process.env.NODE_ENV': `'${process.env.NODE_ENV}'`,
       preventAssignment: false
     }),
-    shouldMinify
-      ? terser()
-      : terser({
-          compress: false,
-          mangle: false,
-          format: { beautify: true }
-        }),
+    terser({
+      compress: false,
+      mangle: false,
+      // format: { beautify: true }
+    }),
     sourcemaps()
   ];
 };

@@ -14,7 +14,7 @@ export * from './global';
  * @param options The client options
  * @returns An instance of EarthoOne
  */
-export default async function createEarthoOne(options: EarthoOneOptions) {
+export async function createEarthoOne(options: EarthoOneOptions) {
   const eartho = new EarthoOne(options);
   try {
     await eartho.checkSession();

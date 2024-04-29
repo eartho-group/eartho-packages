@@ -832,7 +832,7 @@ export class EarthoOne {
     const { federated, ...logoutOptions } = options.logoutParams || {};
     const federatedQuery = federated ? `&federated` : '';
     const url = this._url(
-      `/v2/logout?${createQueryParams({
+      `/logout?${createQueryParams({
         clientId: options.clientId,
         ...logoutOptions
       })}`
@@ -869,13 +869,13 @@ export class EarthoOne {
       cookieDomain: this.options.cookieDomain
     });
     this.userCache.remove(CACHE_KEY_ID_TOKEN_SUFFIX);
-
+    
     const url = this._buildLogoutUrl(logoutOptions);
 
     if (openUrl) {
-      await openUrl(url);
+      //await openUrl(url);
     } else if (openUrl !== false) {
-      window.location.assign(url);
+      //window.location.assign(url);
     }
   }
 

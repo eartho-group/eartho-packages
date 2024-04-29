@@ -106,7 +106,7 @@ describe('EarthoOne', () => {
       await eartho.logout();
 
       expect(window.location.assign).toHaveBeenCalledWith(
-        `https://${TEST_DOMAIN}/v2/logout?client_id=${TEST_CLIENT_ID}${TEST_EARTHO_CLIENT_QUERY_STRING}`
+        `https://${TEST_DOMAIN}/logout?client_id=${TEST_CLIENT_ID}${TEST_EARTHO_CLIENT_QUERY_STRING}`
       );
     });
 
@@ -116,7 +116,7 @@ describe('EarthoOne', () => {
       await eartho.logout({ logoutParams: { federated: true } });
 
       expect(window.location.assign).toHaveBeenCalledWith(
-        `https://${TEST_DOMAIN}/v2/logout?client_id=${TEST_CLIENT_ID}${TEST_EARTHO_CLIENT_QUERY_STRING}&federated`
+        `https://${TEST_DOMAIN}/logout?client_id=${TEST_CLIENT_ID}${TEST_EARTHO_CLIENT_QUERY_STRING}&federated`
       );
     });
 
@@ -217,7 +217,7 @@ describe('EarthoOne', () => {
       expect(window.location.assign).not.toHaveBeenCalled();
       expect(onRedirect).toHaveBeenCalledWith(
         expect.stringContaining(
-          'https://eartho_domain/v2/logout?client_id=eartho_client_id'
+          'https://eartho_domain/logout?client_id=eartho_client_id'
         )
       );
     });
@@ -230,7 +230,7 @@ describe('EarthoOne', () => {
       expect(window.location.assign).not.toHaveBeenCalled();
       expect(openUrl).toHaveBeenCalledWith(
         expect.stringContaining(
-          'https://eartho_domain/v2/logout?client_id=eartho_client_id'
+          'https://eartho_domain/logout?client_id=eartho_client_id'
         )
       );
     });
@@ -322,7 +322,7 @@ describe('EarthoOne', () => {
       await eartho.logout({ clientId: null });
 
       expect(window.location.assign).toHaveBeenCalledWith(
-        expect.stringContaining('https://eartho_domain/v2/logout')
+        expect.stringContaining('https://eartho_domain/logout')
       );
 
       expect(window.location.assign).toHaveBeenCalledWith(
@@ -336,7 +336,7 @@ describe('EarthoOne', () => {
 
       expect(window.location.assign).toHaveBeenCalledWith(
         expect.stringContaining(
-          'https://eartho_domain/v2/logout?client_id=my-client-id'
+          'https://eartho_domain/logout?client_id=my-client-id'
         )
       );
     });

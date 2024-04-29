@@ -58,7 +58,7 @@ const config = {
   routes: {
     authorization: '/connect', // lgtm [js/hardcoded-credentials]
     token: '/access/oauth/token',
-    end_session: '/v2/logout'
+    end_session: '/logout'
   },
   scopes: ['openid', 'offline_access'],
   clientBasedCORS(ctx, origin, client) {

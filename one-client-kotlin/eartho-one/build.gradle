@@ -1,0 +1,94 @@
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id "org.jetbrains.dokka" version "1.4.20"
+}
+
+logger.lifecycle("Using version ${version} for ${name}")
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 31
+
+        buildConfigField "String", "LIBRARY_NAME", "\"$project.rootProject.name\""
+        buildConfigField "String", "VERSION_NAME", "\"${project.version}\""
+
+        consumerProguardFiles '../proguard/proguard-gson.pro', '../proguard/proguard-okio.pro', '../proguard/proguard-eartho.pro'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    testOptions {
+        unitTests {
+            all {
+                maxHeapSize = "1024m"
+            }
+            includeAndroidResources = true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    lint {
+        abortOnError true
+        htmlReport true
+    }
+}
+
+ext {
+    okhttpVersion = '4.9.3'
+    powermockVersion = '2.0.9'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-module-junit4-rule:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermockVersion"
+    testImplementation 'org.mockito:mockito-core:3.7.7'
+    // Mockito-Kotlin: See https://github.com/nhaarman/mockito-kotlin/wiki/Parameter-specified-as-non-null-is-null
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+    testImplementation "com.squareup.okhttp3:okhttp-tls:$okhttpVersion"
+    testImplementation 'com.jayway.awaitility:awaitility:1.7.0'
+    testImplementation 'org.robolectric:robolectric:4.6.1'
+    testImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+}
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.eartho-group'
+    PUBLISH_VERSION = '1.0.14'
+    PUBLISH_ARTIFACT_ID = 'one'
+    PUBLISH_DESCRIPTION = 'Eartho One Android SDK'
+    PUBLISH_URL = 'https://github.com/eartho-group/eartho-packages'
+    PUBLISH_LICENSE_NAME = 'Mozilla Public License 2.0'
+    PUBLISH_LICENSE_URL =
+            'https://github.com/eartho-group/eartho-packages'
+    PUBLISH_DEVELOPER_ID = 'eartho-group'
+    PUBLISH_DEVELOPER_NAME = 'Eartho'
+    PUBLISH_DEVELOPER_EMAIL = 'contact@eartho.wrold'
+    PUBLISH_SCM_CONNECTION =
+            'scm:git:github.com/eartho-group/one-client-kotlin.git'
+    PUBLISH_SCM_DEVELOPER_CONNECTION =
+            'scm:git@github.com:eartho-group/one-client-kotlin.git'
+    PUBLISH_SCM_URL =
+            'https://github.com/eartho-group/eartho-packages'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

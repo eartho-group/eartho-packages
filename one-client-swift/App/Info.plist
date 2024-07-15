@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>eartho</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER).one.eartho.world</string>
+			</array>
+		</dict>
+	</array>
+	<key>ClientId</key>
+	<string>qoWhmh4vAEZnE5Naig0b</string>
+	<key>ClientSecret</key>
+	<string>-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtHJ23XxMW2Yj2JaPZXRD
+xkXCS+8xuOVc9qSsROCiutpumEk/QDqxUnGubig6dYSsY0ZqAekF+hYiub7PlBVa
+uZRSydPG6jfC7fkvKtB6WccCeQqMP1YfZmsWFNbRluGoWEcHKJbYp7M+XVI8M+i0
+/7pUnPOaOHqLbpKuX3WaBNb+YdiS0cUKgUJaphM7yhQXkfme3SqUYeXrqXHkYsnf
+jC93o09mfeNtY7HrU22Aq6sJto4X7E07RPyc25OyzvBADOmg7zWGna34HL8GNUqL
+c9VpGWo7uyxwomrwA84rIc979hn/TKK9AJMjhFVvU2e1mjAK+j4wB/HPrZrkG5W0
+ywIDAQAB
+-----END PUBLIC KEY-----
+</string>
+</dict>
+</plist>

@@ -1,0 +1,11 @@
+{
+  "clientId": "x5wNs5h7EiyhxzODBe1X",
+  "errorPath": "/error",
+  "httpInterceptor": {
+    "allowedList": [
+      {
+        "uri": "http://localhost:3001/api/external"
+      }
+    ]
+  }
+}

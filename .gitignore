@@ -19,3 +19,8 @@ log/
 *.log
 results/
 .history/
+
+*.idea*
+*.history*
+*.vscode*
+*.node_modules*

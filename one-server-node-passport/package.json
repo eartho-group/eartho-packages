@@ -1,0 +1,28 @@
+{
+  "name": "passport-eartho",
+  "version": "1.0.2",
+  "description": "Eartho platform authentication strategy for Passport.js",
+  "main": "lib/index.js",
+  "keywords": [
+    "eartho",
+    "passport",
+    "passportjs"
+  ],
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "url": "https://github.com/eartho-group/eartho-packages"
+  },
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "jws": "^3.2.2",
+    "mocha": "^6.2.3",
+    "should": "^7.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "passport-oauth": "^1.0.0",
+    "passport-oauth2": "^1.6.0"
+  }
+}

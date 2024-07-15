@@ -1,0 +1,5 @@
+{
+  "domain": "{DOMAIN}",
+  "clientId": "YOUR_EARTHO_CLIENT_ID",
+  "fallbackAccessId" : "YOUR_ACCESS_ID_WHEN_NO_ACCESS" 
+}

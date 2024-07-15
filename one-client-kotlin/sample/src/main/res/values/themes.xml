@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Theme.EarthoAndroid.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.EarthoAndroid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.EarthoAndroid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

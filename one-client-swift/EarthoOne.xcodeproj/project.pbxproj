@@ -1,0 +1,1646 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5B0893E620F8A52100FBF962 /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDE1891EC21B040007300D /* CredentialsManager.swift */; };
+		5B0893E720F8A52400FBF962 /* CredentialsManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */; };
+		5B16D88E1F7141A0009476A5 /* ASProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16D88C1F7141A0009476A5 /* ASProvider.swift */; };
+		5B16D8931F714324009476A5 /* WebAuthUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16D8921F714324009476A5 /* WebAuthUserAgent.swift */; };
+		5B1748741EF2D3A40060E653 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1748731EF2D3A40060E653 /* Helpers.swift */; };
+		5B1748751EF2D3A70060E653 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1748731EF2D3A40060E653 /* Helpers.swift */; };
+		5B1748761EF2D3A70060E653 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1748731EF2D3A40060E653 /* Helpers.swift */; };
+		5B1748771EF2D3A90060E653 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1748731EF2D3A40060E653 /* Helpers.swift */; };
+		5B2860CE1EEAC30500C75D54 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2860CD1EEAC30500C75D54 /* UserInfo.swift */; };
+		5B2860CF1EEAC30900C75D54 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2860CD1EEAC30500C75D54 /* UserInfo.swift */; };
+		5B2860D01EEAC30A00C75D54 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2860CD1EEAC30500C75D54 /* UserInfo.swift */; };
+		5B2860D11EEAC30A00C75D54 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2860CD1EEAC30500C75D54 /* UserInfo.swift */; };
+		5B5E93F91EC45C22002A37F9 /* CredentialsManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */; };
+		5B7EE47320FCA00700367724 /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDE1891EC21B040007300D /* CredentialsManager.swift */; };
+		5B7EE47420FCA00A00367724 /* CredentialsManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */; };
+		5B9262C01ECF0CA800F4F6D3 /* BioAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9262BF1ECF0CA800F4F6D3 /* BioAuthentication.swift */; };
+		5BEDE18A1EC21B040007300D /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDE1891EC21B040007300D /* CredentialsManager.swift */; };
+		5C0AF09A28330CBA00162044 /* SafariProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0AF09928330CBA00162044 /* SafariProvider.swift */; };
+		5C0AF09B28330CBA00162044 /* SafariProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0AF09928330CBA00162044 /* SafariProvider.swift */; };
+		5C0AF09D2833420200162044 /* WebAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0AF09C2833420200162044 /* WebAuthentication.swift */; };
+		5C0AF09E2833420200162044 /* WebAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0AF09C2833420200162044 /* WebAuthentication.swift */; };
+		5C29743223FDBD5400BC18FA /* Optional+DebugDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */; };
+		5C29743323FDBD5400BC18FA /* Optional+DebugDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */; };
+		5C29743423FDBD5500BC18FA /* Optional+DebugDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */; };
+		5C354C04276CE1A500ADBC86 /* PasswordlessType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */; };
+		5C354C05276CE1A500ADBC86 /* PasswordlessType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */; };
+		5C354C06276CE1A500ADBC86 /* PasswordlessType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */; };
+		5C354C07276CE1A500ADBC86 /* PasswordlessType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */; };
+		5C41F6A4244DC94E00252548 /* LoginTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6A3244DC94E00252548 /* LoginTransaction.swift */; };
+		5C41F6AA244DCAFB00252548 /* ClearSessionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6A9244DCAFB00252548 /* ClearSessionTransaction.swift */; };
+		5C41F6B1244DCC3B00252548 /* MobileWebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6B0244DCC3B00252548 /* MobileWebAuth.swift */; };
+		5C41F6C3244F965E00252548 /* Array+Encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551923C8FB8E00C89615 /* Array+Encode.swift */; };
+		5C41F6C6244F968100252548 /* WebAuthUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16D8921F714324009476A5 /* WebAuthUserAgent.swift */; };
+		5C41F6C7244F968B00252548 /* AuthTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F53F5CD1CFD157300476A46 /* AuthTransaction.swift */; };
+		5C41F6C8244F969600252548 /* ASProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B16D88C1F7141A0009476A5 /* ASProvider.swift */; };
+		5C41F6CA244F96AE00252548 /* LoginTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6A3244DC94E00252548 /* LoginTransaction.swift */; };
+		5C41F6CB244F96E300252548 /* BioAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9262BF1ECF0CA800F4F6D3 /* BioAuthentication.swift */; };
+		5C41F6CC244F96F200252548 /* ClaimValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D7023D0BED200074024 /* ClaimValidators.swift */; };
+		5C41F6CD244F96FD00252548 /* IDTokenSignatureValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3D23D0BA2C00074024 /* IDTokenSignatureValidator.swift */; };
+		5C41F6CE244F970500252548 /* IDTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3E23D0BA2C00074024 /* IDTokenValidator.swift */; };
+		5C41F6CF244F970E00252548 /* IDTokenValidatorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3C23D0BA2C00074024 /* IDTokenValidatorContext.swift */; };
+		5C41F6D0244F971700252548 /* JWK+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49EB3423EB5A80008D562F /* JWK+RSA.swift */; };
+		5C41F6D1244F972000252548 /* JWT+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D6B23D0BBA500074024 /* JWT+Header.swift */; };
+		5C41F6D4244F974100252548 /* OAuth2Grant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4A1F951D00AABC00C72242 /* OAuth2Grant.swift */; };
+		5C41F6D5244F974B00252548 /* ClearSessionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6A9244DCAFB00252548 /* ClearSessionTransaction.swift */; };
+		5C41F6D7244F975A00252548 /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1751D0900CF00331C84 /* TransactionStore.swift */; };
+		5C41F6D8244F976200252548 /* WebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3965C11CF67CF000CDE7C0 /* WebAuth.swift */; };
+		5C41F6D9244F977900252548 /* WebAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B91D14F70B00387ECB /* WebAuthError.swift */; };
+		5C41F6DB244F97AB00252548 /* EarthoOneWebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAE9C901D8878D400A871CE /* EarthoOneWebAuth.swift */; };
+		5C41F6DD244F982700252548 /* DesktopWebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C41F6DC244F982700252548 /* DesktopWebAuth.swift */; };
+		5C41F6DF244FA1EE00252548 /* NSURLComponents+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1701D09005A00331C84 /* NSURLComponents+EarthoOne.swift */; };
+		5C49EB3523EB5A80008D562F /* JWK+RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49EB3423EB5A80008D562F /* JWK+RSA.swift */; };
+		5C4F551A23C8FB8E00C89615 /* String+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */; };
+		5C4F551B23C8FB8E00C89615 /* String+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */; };
+		5C4F551C23C8FB8E00C89615 /* String+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */; };
+		5C4F551D23C8FB8E00C89615 /* String+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */; };
+		5C4F551E23C8FB8E00C89615 /* Array+Encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F551923C8FB8E00C89615 /* Array+Encode.swift */; };
+		5C4F552323C8FBA100C89615 /* JWKS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F552223C8FBA100C89615 /* JWKS.swift */; };
+		5C4F552423C8FBA100C89615 /* JWKS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F552223C8FBA100C89615 /* JWKS.swift */; };
+		5C4F552523C8FBA100C89615 /* JWKS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F552223C8FBA100C89615 /* JWKS.swift */; };
+		5C4F552623C8FBA100C89615 /* JWKS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4F552223C8FBA100C89615 /* JWKS.swift */; };
+		5C6513A72791CDDE004EBC22 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6513A62791CDDE004EBC22 /* Version.swift */; };
+		5C6513A82791CDDE004EBC22 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6513A62791CDDE004EBC22 /* Version.swift */; };
+		5C6513A92791CDDE004EBC22 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6513A62791CDDE004EBC22 /* Version.swift */; };
+		5C6513AA2791CDDE004EBC22 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6513A62791CDDE004EBC22 /* Version.swift */; };
+		5C80980B275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */; };
+		5C80980C275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */; };
+		5C80980D275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */; };
+		5C80980E275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */; };
+		5CB41D4023D0BA2C00074024 /* IDTokenValidatorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3C23D0BA2C00074024 /* IDTokenValidatorContext.swift */; };
+		5CB41D4423D0BA2C00074024 /* IDTokenSignatureValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3D23D0BA2C00074024 /* IDTokenSignatureValidator.swift */; };
+		5CB41D4823D0BA2C00074024 /* IDTokenValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3E23D0BA2C00074024 /* IDTokenValidator.swift */; };
+		5CB41D4C23D0BA2C00074024 /* Optional+DebugDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */; };
+		5CB41D6C23D0BBA600074024 /* JWT+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D6B23D0BBA500074024 /* JWT+Header.swift */; };
+		5CB41D7123D0BED200074024 /* ClaimValidators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB41D7023D0BED200074024 /* ClaimValidators.swift */; };
+		5CC9940324ED9EC50027DC74 /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDE1891EC21B040007300D /* CredentialsManager.swift */; };
+		5CC9940424ED9EC90027DC74 /* CredentialsManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */; };
+		5F06DDC91CC66B710011842B /* EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06DDC81CC66B710011842B /* EarthoOne.swift */; };
+		5F06DDCA1CC66B710011842B /* EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06DDC81CC66B710011842B /* EarthoOne.swift */; };
+		5F23E6DC1D4ACD6100C3F2D9 /* NSData+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */; };
+		5F23E6DD1D4ACD6100C3F2D9 /* NSURL+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */; };
+		5F23E6DF1D4ACD7A00C3F2D9 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6FAC621D09E98000D5B4EA /* Logger.swift */; };
+		5F23E6E01D4ACD7F00C3F2D9 /* Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF465BB1CE2AC4500F7ED8C /* Management.swift */; };
+		5F23E6E11D4ACD7F00C3F2D9 /* UserPatchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */; };
+		5F23E6E21D4ACD7F00C3F2D9 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB6051CED27FB00D4BB50 /* Users.swift */; };
+		5F23E6E31D4ACD7F00C3F2D9 /* ManagementError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B31D14DD2600387ECB /* ManagementError.swift */; };
+		5F23E6E41D4ACD8500C3F2D9 /* JSONObjectPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */; };
+		5F23E6E51D4ACD8500C3F2D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B71CD0E910003628F4 /* Request.swift */; };
+		5F23E6E61D4ACD8500C3F2D9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B11CCEAED8003628F4 /* Requestable.swift */; };
+		5F23E6E71D4ACD8500C3F2D9 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8BA1CD0EAAD003628F4 /* Response.swift */; };
+		5F23E6E91D4ACD9200C3F2D9 /* EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06DDC81CC66B710011842B /* EarthoOne.swift */; };
+		5F23E6EA1D4ACD9600C3F2D9 /* EarthoOneError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B61D14F00900387ECB /* EarthoOneError.swift */; };
+		5F23E7061D4B88EA00C3F2D9 /* NSData+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */; };
+		5F23E7071D4B88EA00C3F2D9 /* NSURL+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */; };
+		5F23E7081D4B88F000C3F2D9 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6FAC621D09E98000D5B4EA /* Logger.swift */; };
+		5F23E7091D4B88F600C3F2D9 /* Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF465BB1CE2AC4500F7ED8C /* Management.swift */; };
+		5F23E70A1D4B88F600C3F2D9 /* UserPatchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */; };
+		5F23E70B1D4B88F600C3F2D9 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB6051CED27FB00D4BB50 /* Users.swift */; };
+		5F23E70C1D4B88F600C3F2D9 /* ManagementError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B31D14DD2600387ECB /* ManagementError.swift */; };
+		5F23E70D1D4B88FC00C3F2D9 /* JSONObjectPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */; };
+		5F23E70E1D4B88FC00C3F2D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B71CD0E910003628F4 /* Request.swift */; };
+		5F23E70F1D4B88FC00C3F2D9 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B11CCEAED8003628F4 /* Requestable.swift */; };
+		5F23E7101D4B88FC00C3F2D9 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8BA1CD0EAAD003628F4 /* Response.swift */; };
+		5F23E71A1D4B891E00C3F2D9 /* EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06DDC81CC66B710011842B /* EarthoOne.swift */; };
+		5F23E71B1D4B891E00C3F2D9 /* EarthoOneError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B61D14F00900387ECB /* EarthoOneError.swift */; };
+		5F28B4611D8216180000EB23 /* Loggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B4601D8216180000EB23 /* Loggable.swift */; };
+		5F28B4621D8216180000EB23 /* Loggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B4601D8216180000EB23 /* Loggable.swift */; };
+		5F28B4631D8216180000EB23 /* Loggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B4601D8216180000EB23 /* Loggable.swift */; };
+		5F28B4641D8216180000EB23 /* Loggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28B4601D8216180000EB23 /* Loggable.swift */; };
+		5F3965C21CF67CF000CDE7C0 /* WebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3965C11CF67CF000CDE7C0 /* WebAuth.swift */; };
+		5F4A1F961D00AABC00C72242 /* OAuth2Grant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4A1F951D00AABC00C72242 /* OAuth2Grant.swift */; };
+		5F53F5CE1CFD157300476A46 /* AuthTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F53F5CD1CFD157300476A46 /* AuthTransaction.swift */; };
+		5F6FAC631D09E98000D5B4EA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6FAC621D09E98000D5B4EA /* Logger.swift */; };
+		5F6FAC641D09E98000D5B4EA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6FAC621D09E98000D5B4EA /* Logger.swift */; };
+		5F74CB401CEFD5E600226823 /* JSONObjectPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */; };
+		5F74CB411CEFD5E600226823 /* JSONObjectPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */; };
+		5FADB6061CED27FB00D4BB50 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB6051CED27FB00D4BB50 /* Users.swift */; };
+		5FADB6071CED27FB00D4BB50 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB6051CED27FB00D4BB50 /* Users.swift */; };
+		5FADB60C1CED7E0800D4BB50 /* UserPatchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */; };
+		5FADB60D1CED7E0800D4BB50 /* UserPatchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */; };
+		5FAE9C911D8878D400A871CE /* EarthoOneWebAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAE9C901D8878D400A871CE /* EarthoOneWebAuth.swift */; };
+		5FCAB1711D09005A00331C84 /* NSURLComponents+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1701D09005A00331C84 /* NSURLComponents+EarthoOne.swift */; };
+		5FCAB1731D09009600331C84 /* NSData+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */; };
+		5FCAB1741D09009600331C84 /* NSData+URLSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */; };
+		5FCAB1761D0900CF00331C84 /* TransactionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1751D0900CF00331C84 /* TransactionStore.swift */; };
+		5FCAB1791D09124D00331C84 /* NSURL+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */; };
+		5FCAB17A1D09124D00331C84 /* NSURL+EarthoOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */; };
+		5FD255B41D14DD2600387ECB /* ManagementError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B31D14DD2600387ECB /* ManagementError.swift */; };
+		5FD255B51D14DD2600387ECB /* ManagementError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B31D14DD2600387ECB /* ManagementError.swift */; };
+		5FD255B71D14F00900387ECB /* EarthoOneError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B61D14F00900387ECB /* EarthoOneError.swift */; };
+		5FD255B81D14F00900387ECB /* EarthoOneError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B61D14F00900387ECB /* EarthoOneError.swift */; };
+		5FD255BA1D14F70B00387ECB /* WebAuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD255B91D14F70B00387ECB /* WebAuthError.swift */; };
+		5FDE87471D8A422300EA27DC /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87461D8A422300EA27DC /* Telemetry.swift */; };
+		5FDE87551D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */; };
+		5FDE87561D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */; };
+		5FDE87571D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */; };
+		5FDE87581D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */; };
+		5FDE87591D8A424700EA27DC /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874A1D8A424700EA27DC /* Authentication.swift */; };
+		5FDE875A1D8A424700EA27DC /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874A1D8A424700EA27DC /* Authentication.swift */; };
+		5FDE875B1D8A424700EA27DC /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874A1D8A424700EA27DC /* Authentication.swift */; };
+		5FDE875C1D8A424700EA27DC /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874A1D8A424700EA27DC /* Authentication.swift */; };
+		5FDE875D1D8A424700EA27DC /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */; };
+		5FDE875E1D8A424700EA27DC /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */; };
+		5FDE875F1D8A424700EA27DC /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */; };
+		5FDE87601D8A424700EA27DC /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */; };
+		5FDE87691D8A424700EA27DC /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874E1D8A424700EA27DC /* Credentials.swift */; };
+		5FDE876A1D8A424700EA27DC /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874E1D8A424700EA27DC /* Credentials.swift */; };
+		5FDE876B1D8A424700EA27DC /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874E1D8A424700EA27DC /* Credentials.swift */; };
+		5FDE876C1D8A424700EA27DC /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874E1D8A424700EA27DC /* Credentials.swift */; };
+		5FDE876D1D8A424700EA27DC /* Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874F1D8A424700EA27DC /* Handlers.swift */; };
+		5FDE876E1D8A424700EA27DC /* Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874F1D8A424700EA27DC /* Handlers.swift */; };
+		5FDE876F1D8A424700EA27DC /* Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874F1D8A424700EA27DC /* Handlers.swift */; };
+		5FDE87701D8A424700EA27DC /* Handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE874F1D8A424700EA27DC /* Handlers.swift */; };
+		5FE118291D8A4A2A00A374BF /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87461D8A422300EA27DC /* Telemetry.swift */; };
+		5FE1182A1D8A4A2B00A374BF /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87461D8A422300EA27DC /* Telemetry.swift */; };
+		5FE1182B1D8A4A2B00A374BF /* Telemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE87461D8A422300EA27DC /* Telemetry.swift */; };
+		5FE2F8B21CCEAED8003628F4 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B11CCEAED8003628F4 /* Requestable.swift */; };
+		5FE2F8B31CCEAED8003628F4 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B11CCEAED8003628F4 /* Requestable.swift */; };
+		5FE2F8B81CD0E910003628F4 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B71CD0E910003628F4 /* Request.swift */; };
+		5FE2F8B91CD0E910003628F4 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8B71CD0E910003628F4 /* Request.swift */; };
+		5FE2F8BB1CD0EAAD003628F4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8BA1CD0EAAD003628F4 /* Response.swift */; };
+		5FE2F8BC1CD0EAAD003628F4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2F8BA1CD0EAAD003628F4 /* Response.swift */; };
+		5FF465BC1CE2AC4500F7ED8C /* Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF465BB1CE2AC4500F7ED8C /* Management.swift */; };
+		5FF465BD1CE2AC4500F7ED8C /* Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF465BB1CE2AC4500F7ED8C /* Management.swift */; };
+		962113BC284BF60A0018DBCB /* AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962113BB284BF60A0018DBCB /* AppApp.swift */; };
+		962113BE284BF60A0018DBCB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962113BD284BF60A0018DBCB /* ContentView.swift */; };
+		962113C0284BF60B0018DBCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962113BF284BF60B0018DBCB /* Assets.xcassets */; };
+		962113C3284BF60B0018DBCB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962113C2284BF60B0018DBCB /* Preview Assets.xcassets */; };
+		962113D4284D10840018DBCB /* JWTAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962113D2284D0FA30018DBCB /* JWTAlgorithm.swift */; };
+		962113D6284D159B0018DBCB /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 962113D5284D159B0018DBCB /* JWTDecode */; };
+		969FC0E0287006B300BB146C /* EarthoOne.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; platformFilter = ios; };
+		969FC0E1287006B300BB146C /* EarthoOne.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		96BA473D284BEA1000644C8B /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 96BA473C284BEA1000644C8B /* SimpleKeychain */; };
+		970BC36B25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
+		970BC36C25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
+		970BC36D25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
+		970BC36E25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
+		D5E9E317273ACCA5000CDB0A /* ChallengeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E316273ACCA5000CDB0A /* ChallengeGenerator.swift */; };
+		D5E9E318273ACCA5000CDB0A /* ChallengeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E316273ACCA5000CDB0A /* ChallengeGenerator.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		969FC0E2287006B300BB146C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F049B601CB42C29006F6C05 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F06DD771CC448B10011842B;
+			remoteInfo = EarthoOne.iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		969FC0E4287006B400BB146C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				969FC0E1287006B300BB146C /* EarthoOne.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5B16D88C1F7141A0009476A5 /* ASProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASProvider.swift; sourceTree = "<group>"; };
+		5B16D8921F714324009476A5 /* WebAuthUserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebAuthUserAgent.swift; path = EarthoOne/WebAuthUserAgent.swift; sourceTree = SOURCE_ROOT; };
+		5B1748731EF2D3A40060E653 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		5B2860CD1EEAC30500C75D54 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsManagerError.swift; sourceTree = "<group>"; };
+		5B9262BF1ECF0CA800F4F6D3 /* BioAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BioAuthentication.swift; sourceTree = "<group>"; };
+		5BA58D33209081A700782DD1 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		5BEDE1891EC21B040007300D /* CredentialsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
+		5C0AF09928330CBA00162044 /* SafariProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariProvider.swift; sourceTree = "<group>"; };
+		5C0AF09C2833420200162044 /* WebAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthentication.swift; sourceTree = "<group>"; };
+		5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordlessType.swift; sourceTree = "<group>"; };
+		5C41F6A3244DC94E00252548 /* LoginTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTransaction.swift; sourceTree = "<group>"; };
+		5C41F6A9244DCAFB00252548 /* ClearSessionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearSessionTransaction.swift; sourceTree = "<group>"; };
+		5C41F6B0244DCC3B00252548 /* MobileWebAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileWebAuth.swift; sourceTree = "<group>"; };
+		5C41F6DC244F982700252548 /* DesktopWebAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopWebAuth.swift; sourceTree = "<group>"; };
+		5C49EB3423EB5A80008D562F /* JWK+RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JWK+RSA.swift"; sourceTree = "<group>"; };
+		5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URLSafe.swift"; sourceTree = "<group>"; };
+		5C4F551923C8FB8E00C89615 /* Array+Encode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Encode.swift"; sourceTree = "<group>"; };
+		5C4F552223C8FBA100C89615 /* JWKS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWKS.swift; sourceTree = "<group>"; };
+		5C60412E27482A2600EEF515 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		5C6513A62791CDDE004EBC22 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsStorage.swift; sourceTree = "<group>"; };
+		5CB41D3C23D0BA2C00074024 /* IDTokenValidatorContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDTokenValidatorContext.swift; sourceTree = "<group>"; };
+		5CB41D3D23D0BA2C00074024 /* IDTokenSignatureValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDTokenSignatureValidator.swift; sourceTree = "<group>"; };
+		5CB41D3E23D0BA2C00074024 /* IDTokenValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDTokenValidator.swift; sourceTree = "<group>"; };
+		5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+DebugDescription.swift"; sourceTree = "<group>"; };
+		5CB41D6B23D0BBA500074024 /* JWT+Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JWT+Header.swift"; sourceTree = "<group>"; };
+		5CB41D7023D0BED200074024 /* ClaimValidators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimValidators.swift; sourceTree = "<group>"; };
+		5CD9FC6B26FE30A6009C2B27 /* Nimble.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nimble.xcframework; path = Carthage/Build/Nimble.xcframework; sourceTree = "<group>"; };
+		5CD9FC6C26FE30A6009C2B27 /* Quick.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Quick.xcframework; path = Carthage/Build/Quick.xcframework; sourceTree = "<group>"; };
+		5CD9FC6D26FE30A6009C2B27 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
+		5CD9FC8426FE30EB009C2B27 /* JWTDecode.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = JWTDecode.xcframework; path = Carthage/Build/JWTDecode.xcframework; sourceTree = "<group>"; };
+		5CD9FC8526FE30EB009C2B27 /* SimpleKeychain.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SimpleKeychain.xcframework; path = Carthage/Build/SimpleKeychain.xcframework; sourceTree = "<group>"; };
+		5F049B6E1CB42C29006F6C05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = EarthoOne/Info.plist; sourceTree = "<group>"; };
+		5F06DD781CC448B10011842B /* EarthoOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EarthoOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F06DD851CC448C90011842B /* EarthoOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EarthoOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F06DDC81CC66B710011842B /* EarthoOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthoOne.swift; sourceTree = "<group>"; };
+		5F23E6B91D4ACA7100C3F2D9 /* EarthoOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EarthoOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F23E6F61D4B87F000C3F2D9 /* EarthoOne.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EarthoOne.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F28B4601D8216180000EB23 /* Loggable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Loggable.swift; path = EarthoOne/Loggable.swift; sourceTree = SOURCE_ROOT; };
+		5F3965C11CF67CF000CDE7C0 /* WebAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebAuth.swift; path = EarthoOne/WebAuth.swift; sourceTree = SOURCE_ROOT; };
+		5F4A1F951D00AABC00C72242 /* OAuth2Grant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2Grant.swift; path = EarthoOne/OAuth2Grant.swift; sourceTree = SOURCE_ROOT; };
+		5F53F5CD1CFD157300476A46 /* AuthTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthTransaction.swift; path = EarthoOne/AuthTransaction.swift; sourceTree = SOURCE_ROOT; };
+		5F6FAC621D09E98000D5B4EA /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = EarthoOne/Logger.swift; sourceTree = SOURCE_ROOT; };
+		5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONObjectPayload.swift; path = EarthoOne/JSONObjectPayload.swift; sourceTree = SOURCE_ROOT; };
+		5FADB6051CED27FB00D4BB50 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Users.swift; path = EarthoOne/Users.swift; sourceTree = SOURCE_ROOT; };
+		5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPatchAttributes.swift; path = EarthoOne/UserPatchAttributes.swift; sourceTree = SOURCE_ROOT; };
+		5FAE9C871D88731500A871CE /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		5FAE9C881D88731500A871CE /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		5FAE9C891D88731500A871CE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5FAE9C8A1D88731500A871CE /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile.lock; sourceTree = "<group>"; };
+		5FAE9C8B1D88731500A871CE /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		5FAE9C8C1D88731500A871CE /* EarthoOne.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = EarthoOne.podspec; sourceTree = "<group>"; };
+		5FAE9C8D1D88731500A871CE /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
+		5FAE9C8E1D88731500A871CE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5FAE9C8F1D88731500A871CE /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		5FAE9C901D8878D400A871CE /* EarthoOneWebAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EarthoOneWebAuth.swift; path = EarthoOne/EarthoOneWebAuth.swift; sourceTree = SOURCE_ROOT; };
+		5FCAB1701D09005A00331C84 /* NSURLComponents+EarthoOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURLComponents+EarthoOne.swift"; path = "EarthoOne/NSURLComponents+EarthoOne.swift"; sourceTree = SOURCE_ROOT; };
+		5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+URLSafe.swift"; path = "EarthoOne/NSData+URLSafe.swift"; sourceTree = SOURCE_ROOT; };
+		5FCAB1751D0900CF00331C84 /* TransactionStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransactionStore.swift; path = EarthoOne/TransactionStore.swift; sourceTree = SOURCE_ROOT; };
+		5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURL+EarthoOne.swift"; path = "EarthoOne/NSURL+EarthoOne.swift"; sourceTree = SOURCE_ROOT; };
+		5FD255B31D14DD2600387ECB /* ManagementError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagementError.swift; path = EarthoOne/ManagementError.swift; sourceTree = SOURCE_ROOT; };
+		5FD255B61D14F00900387ECB /* EarthoOneError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthoOneError.swift; sourceTree = "<group>"; };
+		5FD255B91D14F70B00387ECB /* WebAuthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebAuthError.swift; path = EarthoOne/WebAuthError.swift; sourceTree = SOURCE_ROOT; };
+		5FDE87461D8A422300EA27DC /* Telemetry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Telemetry.swift; sourceTree = "<group>"; };
+		5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthoOneAuthentication.swift; sourceTree = "<group>"; };
+		5FDE874A1D8A424700EA27DC /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
+		5FDE874E1D8A424700EA27DC /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		5FDE874F1D8A424700EA27DC /* Handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Handlers.swift; sourceTree = "<group>"; };
+		5FE2F8B11CCEAED8003628F4 /* Requestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Requestable.swift; path = EarthoOne/Requestable.swift; sourceTree = SOURCE_ROOT; };
+		5FE2F8B71CD0E910003628F4 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Request.swift; path = EarthoOne/Request.swift; sourceTree = SOURCE_ROOT; };
+		5FE2F8BA1CD0EAAD003628F4 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = EarthoOne/Response.swift; sourceTree = SOURCE_ROOT; };
+		5FF465BB1CE2AC4500F7ED8C /* Management.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Management.swift; path = EarthoOne/Management.swift; sourceTree = SOURCE_ROOT; };
+		962113B9284BF60A0018DBCB /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		962113BB284BF60A0018DBCB /* AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppApp.swift; sourceTree = "<group>"; };
+		962113BD284BF60A0018DBCB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		962113BF284BF60B0018DBCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		962113C2284BF60B0018DBCB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		962113CD284C7EE70018DBCB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		962113D2284D0FA30018DBCB /* JWTAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTAlgorithm.swift; sourceTree = "<group>"; };
+		970BC36A25C27095007A7745 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		D5E9E316273ACCA5000CDB0A /* ChallengeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeGenerator.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F06DD741CC448B10011842B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96BA473D284BEA1000644C8B /* SimpleKeychain in Frameworks */,
+				962113D6284D159B0018DBCB /* JWTDecode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F06DD811CC448C90011842B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6B51D4ACA7100C3F2D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6F21D4B87F000C3F2D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		962113B6284BF60A0018DBCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				969FC0E0287006B300BB146C /* EarthoOne.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5B16D8901F7141E5009476A5 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				5C41F6A3244DC94E00252548 /* LoginTransaction.swift */,
+				5C41F6A9244DCAFB00252548 /* ClearSessionTransaction.swift */,
+			);
+			name = Transactions;
+			sourceTree = "<group>";
+		};
+		5BEDE1581EC1FFE40007300D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5CB41D3B23D0BA0300074024 /* Validators */,
+				5B1748731EF2D3A40060E653 /* Helpers.swift */,
+				5B9262BF1ECF0CA800F4F6D3 /* BioAuthentication.swift */,
+				5BEDE1891EC21B040007300D /* CredentialsManager.swift */,
+				5C80980A275A7B8600DC0A76 /* CredentialsStorage.swift */,
+				5B5E93F81EC45C22002A37F9 /* CredentialsManagerError.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		5C0AF09828330CA000162044 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				5B16D88C1F7141A0009476A5 /* ASProvider.swift */,
+				5C0AF09928330CBA00162044 /* SafariProvider.swift */,
+			);
+			name = Providers;
+			sourceTree = "<group>";
+		};
+		5C41F6AF244DCC1100252548 /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				5C41F6B0244DCC3B00252548 /* MobileWebAuth.swift */,
+				5C41F6DC244F982700252548 /* DesktopWebAuth.swift */,
+			);
+			name = Platforms;
+			sourceTree = "<group>";
+		};
+		5CB41D3B23D0BA0300074024 /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				5CB41D3E23D0BA2C00074024 /* IDTokenValidator.swift */,
+				5CB41D3C23D0BA2C00074024 /* IDTokenValidatorContext.swift */,
+				5CB41D3D23D0BA2C00074024 /* IDTokenSignatureValidator.swift */,
+				5CB41D7023D0BED200074024 /* ClaimValidators.swift */,
+			);
+			name = Validators;
+			sourceTree = "<group>";
+		};
+		5F049B5F1CB42C29006F6C05 = {
+			isa = PBXGroup;
+			children = (
+				5F049B6B1CB42C29006F6C05 /* EarthoOne */,
+				962113BA284BF60A0018DBCB /* App */,
+				5F06DDC21CC5712F0011842B /* Frameworks */,
+				5F049B6A1CB42C29006F6C05 /* Products */,
+				5FAE9C861D8872E900A871CE /* Supporting Files */,
+			);
+			sourceTree = "<group>";
+		};
+		5F049B6A1CB42C29006F6C05 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F06DD781CC448B10011842B /* EarthoOne.framework */,
+				5F06DD851CC448C90011842B /* EarthoOne.framework */,
+				5F23E6B91D4ACA7100C3F2D9 /* EarthoOne.framework */,
+				5F23E6F61D4B87F000C3F2D9 /* EarthoOne.framework */,
+				962113B9284BF60A0018DBCB /* App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F049B6B1CB42C29006F6C05 /* EarthoOne */ = {
+			isa = PBXGroup;
+			children = (
+				5FDE87751D8A425300EA27DC /* Authentication */,
+				5FDE87451D8A421900EA27DC /* Telemetry */,
+				5BEDE1581EC1FFE40007300D /* Utils */,
+				5FCAB16E1D08FFE900331C84 /* Extensions */,
+				5F6FAC611D09E92800D5B4EA /* Logger */,
+				5FF465BA1CE2AC2800F7ED8C /* Management */,
+				5FE2F8C01CD0F9AF003628F4 /* Networking */,
+				5FCAB16F1D09001100331C84 /* Crypto */,
+				5F3965C01CF679B500CDE7C0 /* WebAuth */,
+				5F06DDC81CC66B710011842B /* EarthoOne.swift */,
+				5FD255B61D14F00900387ECB /* EarthoOneError.swift */,
+				5C6513A62791CDDE004EBC22 /* Version.swift */,
+			);
+			path = EarthoOne;
+			sourceTree = "<group>";
+		};
+		5F06DDC21CC5712F0011842B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5CD9FC8426FE30EB009C2B27 /* JWTDecode.xcframework */,
+				5CD9FC8526FE30EB009C2B27 /* SimpleKeychain.xcframework */,
+				5CD9FC6B26FE30A6009C2B27 /* Nimble.xcframework */,
+				5CD9FC6D26FE30A6009C2B27 /* OHHTTPStubs.xcframework */,
+				5CD9FC6C26FE30A6009C2B27 /* Quick.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F3965C01CF679B500CDE7C0 /* WebAuth */ = {
+			isa = PBXGroup;
+			children = (
+				5C0AF09828330CA000162044 /* Providers */,
+				5B16D8901F7141E5009476A5 /* Transactions */,
+				5C41F6AF244DCC1100252548 /* Platforms */,
+				5F53F5CD1CFD157300476A46 /* AuthTransaction.swift */,
+				5B16D8921F714324009476A5 /* WebAuthUserAgent.swift */,
+				5F4A1F951D00AABC00C72242 /* OAuth2Grant.swift */,
+				5FCAB1751D0900CF00331C84 /* TransactionStore.swift */,
+				5F3965C11CF67CF000CDE7C0 /* WebAuth.swift */,
+				5FAE9C901D8878D400A871CE /* EarthoOneWebAuth.swift */,
+				5FD255B91D14F70B00387ECB /* WebAuthError.swift */,
+				5C0AF09C2833420200162044 /* WebAuthentication.swift */,
+			);
+			name = WebAuth;
+			sourceTree = "<group>";
+		};
+		5F6FAC611D09E92800D5B4EA /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				5F6FAC621D09E98000D5B4EA /* Logger.swift */,
+				5F28B4601D8216180000EB23 /* Loggable.swift */,
+			);
+			name = Logger;
+			sourceTree = "<group>";
+		};
+		5FAE9C861D8872E900A871CE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5C60412E27482A2600EEF515 /* Package.swift */,
+				5BA58D33209081A700782DD1 /* Cartfile */,
+				5F049B6E1CB42C29006F6C05 /* Info.plist */,
+				5FAE9C871D88731500A871CE /* Cartfile.resolved */,
+				5FAE9C8F1D88731500A871CE /* Cartfile.private */,
+				5FAE9C881D88731500A871CE /* CHANGELOG.md */,
+				5FAE9C891D88731500A871CE /* README.md */,
+				5FAE9C8A1D88731500A871CE /* Gemfile.lock */,
+				5FAE9C8B1D88731500A871CE /* Gemfile */,
+				5FAE9C8C1D88731500A871CE /* EarthoOne.podspec */,
+				5FAE9C8D1D88731500A871CE /* codecov.yml */,
+				5FAE9C8E1D88731500A871CE /* LICENSE */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5FCAB16E1D08FFE900331C84 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5C4F551923C8FB8E00C89615 /* Array+Encode.swift */,
+				5C4F551823C8FB8E00C89615 /* String+URLSafe.swift */,
+				5FCAB1721D09009600331C84 /* NSData+URLSafe.swift */,
+				5FCAB1781D09124D00331C84 /* NSURL+EarthoOne.swift */,
+				5FCAB1701D09005A00331C84 /* NSURLComponents+EarthoOne.swift */,
+				5CB41D6B23D0BBA500074024 /* JWT+Header.swift */,
+				5C49EB3423EB5A80008D562F /* JWK+RSA.swift */,
+				5CB41D3F23D0BA2C00074024 /* Optional+DebugDescription.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		5FCAB16F1D09001100331C84 /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				962113D2284D0FA30018DBCB /* JWTAlgorithm.swift */,
+				D5E9E316273ACCA5000CDB0A /* ChallengeGenerator.swift */,
+			);
+			name = Crypto;
+			sourceTree = "<group>";
+		};
+		5FDE87451D8A421900EA27DC /* Telemetry */ = {
+			isa = PBXGroup;
+			children = (
+				5FDE87461D8A422300EA27DC /* Telemetry.swift */,
+			);
+			name = Telemetry;
+			sourceTree = "<group>";
+		};
+		5FDE87751D8A425300EA27DC /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5FDE87491D8A424700EA27DC /* EarthoOneAuthentication.swift */,
+				5FDE874A1D8A424700EA27DC /* Authentication.swift */,
+				5FDE874B1D8A424700EA27DC /* AuthenticationError.swift */,
+				5C354C03276CE1A500ADBC86 /* PasswordlessType.swift */,
+				970BC36A25C27095007A7745 /* Challenge.swift */,
+				5C4F552223C8FBA100C89615 /* JWKS.swift */,
+				5B2860CD1EEAC30500C75D54 /* UserInfo.swift */,
+				5FDE874E1D8A424700EA27DC /* Credentials.swift */,
+				5FDE874F1D8A424700EA27DC /* Handlers.swift */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		5FE2F8C01CD0F9AF003628F4 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				5F74CB3F1CEFD5E600226823 /* JSONObjectPayload.swift */,
+				5FE2F8B71CD0E910003628F4 /* Request.swift */,
+				5FE2F8B11CCEAED8003628F4 /* Requestable.swift */,
+				5FE2F8BA1CD0EAAD003628F4 /* Response.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		5FF465BA1CE2AC2800F7ED8C /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				5FF465BB1CE2AC4500F7ED8C /* Management.swift */,
+				5FADB60B1CED7E0800D4BB50 /* UserPatchAttributes.swift */,
+				5FADB6051CED27FB00D4BB50 /* Users.swift */,
+				5FD255B31D14DD2600387ECB /* ManagementError.swift */,
+			);
+			name = Management;
+			sourceTree = "<group>";
+		};
+		962113BA284BF60A0018DBCB /* App */ = {
+			isa = PBXGroup;
+			children = (
+				962113CD284C7EE70018DBCB /* Info.plist */,
+				962113BB284BF60A0018DBCB /* AppApp.swift */,
+				962113BD284BF60A0018DBCB /* ContentView.swift */,
+				962113BF284BF60B0018DBCB /* Assets.xcassets */,
+				962113C1284BF60B0018DBCB /* Preview Content */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		962113C1284BF60B0018DBCB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				962113C2284BF60B0018DBCB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5F06DD751CC448B10011842B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F06DD821CC448C90011842B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6B61D4ACA7100C3F2D9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6F31D4B87F000C3F2D9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5F06DD771CC448B10011842B /* EarthoOne.iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F06DD7F1CC448B10011842B /* Build configuration list for PBXNativeTarget "EarthoOne.iOS" */;
+			buildPhases = (
+				5F06DD731CC448B10011842B /* Sources */,
+				5F06DD741CC448B10011842B /* Frameworks */,
+				5F06DD751CC448B10011842B /* Headers */,
+				5F06DD761CC448B10011842B /* Resources */,
+				5B717B241E2E2696004A05A7 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthoOne.iOS;
+			packageProductDependencies = (
+				96BA473C284BEA1000644C8B /* SimpleKeychain */,
+				962113D5284D159B0018DBCB /* JWTDecode */,
+			);
+			productName = EarthoOne.iOS;
+			productReference = 5F06DD781CC448B10011842B /* EarthoOne.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5F06DD841CC448C90011842B /* EarthoOne.macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F06DD8A1CC448C90011842B /* Build configuration list for PBXNativeTarget "EarthoOne.macOS" */;
+			buildPhases = (
+				5F06DD801CC448C90011842B /* Sources */,
+				5F06DD811CC448C90011842B /* Frameworks */,
+				5F06DD821CC448C90011842B /* Headers */,
+				5F06DD831CC448C90011842B /* Resources */,
+				5B717B251E2E26B9004A05A7 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthoOne.macOS;
+			productName = EarthoOne.OSX;
+			productReference = 5F06DD851CC448C90011842B /* EarthoOne.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5F23E6B81D4ACA7100C3F2D9 /* EarthoOne.watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F23E6C01D4ACA7100C3F2D9 /* Build configuration list for PBXNativeTarget "EarthoOne.watchOS" */;
+			buildPhases = (
+				5F23E6B41D4ACA7100C3F2D9 /* Sources */,
+				5F23E6B51D4ACA7100C3F2D9 /* Frameworks */,
+				5F23E6B61D4ACA7100C3F2D9 /* Headers */,
+				5F23E6B71D4ACA7100C3F2D9 /* Resources */,
+				5B717B261E2E26C4004A05A7 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthoOne.watchOS;
+			productName = EarthoOne.watchOS;
+			productReference = 5F23E6B91D4ACA7100C3F2D9 /* EarthoOne.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5F23E6F51D4B87F000C3F2D9 /* EarthoOne.tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F23E6FB1D4B87F000C3F2D9 /* Build configuration list for PBXNativeTarget "EarthoOne.tvOS" */;
+			buildPhases = (
+				5F23E6F11D4B87F000C3F2D9 /* Sources */,
+				5F23E6F21D4B87F000C3F2D9 /* Frameworks */,
+				5F23E6F31D4B87F000C3F2D9 /* Headers */,
+				5F23E6F41D4B87F000C3F2D9 /* Resources */,
+				5B717B271E2E26CE004A05A7 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EarthoOne.tvOS;
+			productName = EarthoOne.tvOS;
+			productReference = 5F23E6F61D4B87F000C3F2D9 /* EarthoOne.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		962113B8284BF60A0018DBCB /* App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 962113C4284BF60B0018DBCB /* Build configuration list for PBXNativeTarget "App" */;
+			buildPhases = (
+				962113B5284BF60A0018DBCB /* Sources */,
+				962113B6284BF60A0018DBCB /* Frameworks */,
+				962113B7284BF60A0018DBCB /* Resources */,
+				969FC0E4287006B400BB146C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				969FC0E3287006B300BB146C /* PBXTargetDependency */,
+			);
+			name = App;
+			productName = App;
+			productReference = 962113B9284BF60A0018DBCB /* App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F049B601CB42C29006F6C05 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1310;
+				ORGANIZATIONNAME = EarthoOne;
+				TargetAttributes = {
+					5F06DD771CC448B10011842B = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 1020;
+					};
+					5F06DD841CC448C90011842B = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0900;
+					};
+					5F23E6B81D4ACA7100C3F2D9 = {
+						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0900;
+					};
+					5F23E6F51D4B87F000C3F2D9 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 86WQXF56BC;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
+					};
+					962113B8284BF60A0018DBCB = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 5F049B631CB42C29006F6C05 /* Build configuration list for PBXProject "EarthoOne" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5F049B5F1CB42C29006F6C05;
+			packageReferences = (
+				96BA4738284BE9EC00644C8B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				96BA473B284BEA1000644C8B /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
+				962113CF284D0C840018DBCB /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+			);
+			productRefGroup = 5F049B6A1CB42C29006F6C05 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5F06DD771CC448B10011842B /* EarthoOne.iOS */,
+				5F06DD841CC448C90011842B /* EarthoOne.macOS */,
+				5F23E6F51D4B87F000C3F2D9 /* EarthoOne.tvOS */,
+				5F23E6B81D4ACA7100C3F2D9 /* EarthoOne.watchOS */,
+				962113B8284BF60A0018DBCB /* App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5F06DD761CC448B10011842B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F06DD831CC448C90011842B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6B71D4ACA7100C3F2D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6F41D4B87F000C3F2D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		962113B7284BF60A0018DBCB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				962113C3284BF60B0018DBCB /* Preview Assets.xcassets in Resources */,
+				962113C0284BF60B0018DBCB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B717B241E2E2696004A05A7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"${CONFIGURATION}\" = \"Debug\" ]] && [ -z ${CIRCLECI} ] && which swiftlint >/dev/null; then\nswiftlint\nfi";
+		};
+		5B717B251E2E26B9004A05A7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"${CONFIGURATION}\" = \"Debug\" ]] && [ -z ${CIRCLECI} ] && which swiftlint >/dev/null; then\nswiftlint\nfi";
+		};
+		5B717B261E2E26C4004A05A7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"${CONFIGURATION}\" = \"Debug\" ]] && [ -z ${CIRCLECI} ] && which swiftlint >/dev/null; then\nswiftlint\nfi";
+		};
+		5B717B271E2E26CE004A05A7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"${CONFIGURATION}\" = \"Debug\" ]] && [ -z ${CIRCLECI} ] && which swiftlint >/dev/null; then\nswiftlint\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F06DD731CC448B10011842B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CB41D4423D0BA2C00074024 /* IDTokenSignatureValidator.swift in Sources */,
+				5CB41D4C23D0BA2C00074024 /* Optional+DebugDescription.swift in Sources */,
+				5C4F551A23C8FB8E00C89615 /* String+URLSafe.swift in Sources */,
+				5C0AF09D2833420200162044 /* WebAuthentication.swift in Sources */,
+				5CB41D4823D0BA2C00074024 /* IDTokenValidator.swift in Sources */,
+				5C354C04276CE1A500ADBC86 /* PasswordlessType.swift in Sources */,
+				5FCAB1711D09005A00331C84 /* NSURLComponents+EarthoOne.swift in Sources */,
+				5FDE876D1D8A424700EA27DC /* Handlers.swift in Sources */,
+				5FE2F8BB1CD0EAAD003628F4 /* Response.swift in Sources */,
+				970BC36B25C27095007A7745 /* Challenge.swift in Sources */,
+				5FDE87591D8A424700EA27DC /* Authentication.swift in Sources */,
+				5B16D8931F714324009476A5 /* WebAuthUserAgent.swift in Sources */,
+				5F6FAC631D09E98000D5B4EA /* Logger.swift in Sources */,
+				5C41F6B1244DCC3B00252548 /* MobileWebAuth.swift in Sources */,
+				5F28B4611D8216180000EB23 /* Loggable.swift in Sources */,
+				D5E9E317273ACCA5000CDB0A /* ChallengeGenerator.swift in Sources */,
+				5C49EB3523EB5A80008D562F /* JWK+RSA.swift in Sources */,
+				5FDE87551D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */,
+				5F53F5CE1CFD157300476A46 /* AuthTransaction.swift in Sources */,
+				5CB41D6C23D0BBA600074024 /* JWT+Header.swift in Sources */,
+				5FF465BC1CE2AC4500F7ED8C /* Management.swift in Sources */,
+				5C0AF09A28330CBA00162044 /* SafariProvider.swift in Sources */,
+				5F4A1F961D00AABC00C72242 /* OAuth2Grant.swift in Sources */,
+				5FCAB1731D09009600331C84 /* NSData+URLSafe.swift in Sources */,
+				5B16D88E1F7141A0009476A5 /* ASProvider.swift in Sources */,
+				5C80980B275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */,
+				5FD255BA1D14F70B00387ECB /* WebAuthError.swift in Sources */,
+				5BEDE18A1EC21B040007300D /* CredentialsManager.swift in Sources */,
+				5B2860CE1EEAC30500C75D54 /* UserInfo.swift in Sources */,
+				5C4F552323C8FBA100C89615 /* JWKS.swift in Sources */,
+				5C6513A72791CDDE004EBC22 /* Version.swift in Sources */,
+				5FD255B71D14F00900387ECB /* EarthoOneError.swift in Sources */,
+				5F06DDC91CC66B710011842B /* EarthoOne.swift in Sources */,
+				5B1748741EF2D3A40060E653 /* Helpers.swift in Sources */,
+				5FDE87691D8A424700EA27DC /* Credentials.swift in Sources */,
+				5FE2F8B21CCEAED8003628F4 /* Requestable.swift in Sources */,
+				5C4F551E23C8FB8E00C89615 /* Array+Encode.swift in Sources */,
+				5B9262C01ECF0CA800F4F6D3 /* BioAuthentication.swift in Sources */,
+				5CB41D7123D0BED200074024 /* ClaimValidators.swift in Sources */,
+				5FADB60C1CED7E0800D4BB50 /* UserPatchAttributes.swift in Sources */,
+				5FCAB1791D09124D00331C84 /* NSURL+EarthoOne.swift in Sources */,
+				962113D4284D10840018DBCB /* JWTAlgorithm.swift in Sources */,
+				5F74CB401CEFD5E600226823 /* JSONObjectPayload.swift in Sources */,
+				5FD255B41D14DD2600387ECB /* ManagementError.swift in Sources */,
+				5FE2F8B81CD0E910003628F4 /* Request.swift in Sources */,
+				5C41F6A4244DC94E00252548 /* LoginTransaction.swift in Sources */,
+				5F3965C21CF67CF000CDE7C0 /* WebAuth.swift in Sources */,
+				5FCAB1761D0900CF00331C84 /* TransactionStore.swift in Sources */,
+				5FDE87471D8A422300EA27DC /* Telemetry.swift in Sources */,
+				5FAE9C911D8878D400A871CE /* EarthoOneWebAuth.swift in Sources */,
+				5B5E93F91EC45C22002A37F9 /* CredentialsManagerError.swift in Sources */,
+				5C41F6AA244DCAFB00252548 /* ClearSessionTransaction.swift in Sources */,
+				5FDE875D1D8A424700EA27DC /* AuthenticationError.swift in Sources */,
+				5FADB6061CED27FB00D4BB50 /* Users.swift in Sources */,
+				5CB41D4023D0BA2C00074024 /* IDTokenValidatorContext.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F06DD801CC448C90011842B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C41F6D1244F972000252548 /* JWT+Header.swift in Sources */,
+				5FE2F8BC1CD0EAAD003628F4 /* Response.swift in Sources */,
+				5B7EE47420FCA00A00367724 /* CredentialsManagerError.swift in Sources */,
+				5C0AF09E2833420200162044 /* WebAuthentication.swift in Sources */,
+				5FDE876A1D8A424700EA27DC /* Credentials.swift in Sources */,
+				5C354C05276CE1A500ADBC86 /* PasswordlessType.swift in Sources */,
+				5F28B4621D8216180000EB23 /* Loggable.swift in Sources */,
+				5C41F6D4244F974100252548 /* OAuth2Grant.swift in Sources */,
+				5C41F6D5244F974B00252548 /* ClearSessionTransaction.swift in Sources */,
+				5C29743423FDBD5500BC18FA /* Optional+DebugDescription.swift in Sources */,
+				5C41F6C6244F968100252548 /* WebAuthUserAgent.swift in Sources */,
+				5B1748751EF2D3A70060E653 /* Helpers.swift in Sources */,
+				5F6FAC641D09E98000D5B4EA /* Logger.swift in Sources */,
+				D5E9E318273ACCA5000CDB0A /* ChallengeGenerator.swift in Sources */,
+				5FF465BD1CE2AC4500F7ED8C /* Management.swift in Sources */,
+				5F06DDCA1CC66B710011842B /* EarthoOne.swift in Sources */,
+				5C41F6CD244F96FD00252548 /* IDTokenSignatureValidator.swift in Sources */,
+				5FD255B81D14F00900387ECB /* EarthoOneError.swift in Sources */,
+				5C41F6D0244F971700252548 /* JWK+RSA.swift in Sources */,
+				5C41F6C7244F968B00252548 /* AuthTransaction.swift in Sources */,
+				5FD255B51D14DD2600387ECB /* ManagementError.swift in Sources */,
+				5C0AF09B28330CBA00162044 /* SafariProvider.swift in Sources */,
+				5FE2F8B31CCEAED8003628F4 /* Requestable.swift in Sources */,
+				5B2860CF1EEAC30900C75D54 /* UserInfo.swift in Sources */,
+				5C4F552423C8FBA100C89615 /* JWKS.swift in Sources */,
+				5C80980C275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */,
+				5C41F6D7244F975A00252548 /* TransactionStore.swift in Sources */,
+				5FE1182B1D8A4A2B00A374BF /* Telemetry.swift in Sources */,
+				5C6513A82791CDDE004EBC22 /* Version.swift in Sources */,
+				5FDE875E1D8A424700EA27DC /* AuthenticationError.swift in Sources */,
+				5FDE876E1D8A424700EA27DC /* Handlers.swift in Sources */,
+				5C41F6CE244F970500252548 /* IDTokenValidator.swift in Sources */,
+				5C41F6CA244F96AE00252548 /* LoginTransaction.swift in Sources */,
+				5FADB60D1CED7E0800D4BB50 /* UserPatchAttributes.swift in Sources */,
+				5C41F6CF244F970E00252548 /* IDTokenValidatorContext.swift in Sources */,
+				5C41F6DB244F97AB00252548 /* EarthoOneWebAuth.swift in Sources */,
+				5F74CB411CEFD5E600226823 /* JSONObjectPayload.swift in Sources */,
+				5C41F6CB244F96E300252548 /* BioAuthentication.swift in Sources */,
+				5C41F6C8244F969600252548 /* ASProvider.swift in Sources */,
+				5C41F6DF244FA1EE00252548 /* NSURLComponents+EarthoOne.swift in Sources */,
+				5FE2F8B91CD0E910003628F4 /* Request.swift in Sources */,
+				5B7EE47320FCA00700367724 /* CredentialsManager.swift in Sources */,
+				5C4F551B23C8FB8E00C89615 /* String+URLSafe.swift in Sources */,
+				5FDE875A1D8A424700EA27DC /* Authentication.swift in Sources */,
+				5C41F6D8244F976200252548 /* WebAuth.swift in Sources */,
+				5C41F6CC244F96F200252548 /* ClaimValidators.swift in Sources */,
+				5C41F6D9244F977900252548 /* WebAuthError.swift in Sources */,
+				5FCAB1741D09009600331C84 /* NSData+URLSafe.swift in Sources */,
+				970BC36C25C27095007A7745 /* Challenge.swift in Sources */,
+				5C41F6DD244F982700252548 /* DesktopWebAuth.swift in Sources */,
+				5FCAB17A1D09124D00331C84 /* NSURL+EarthoOne.swift in Sources */,
+				5FDE87561D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */,
+				5FADB6071CED27FB00D4BB50 /* Users.swift in Sources */,
+				5C41F6C3244F965E00252548 /* Array+Encode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6B41D4ACA7100C3F2D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F23E6E91D4ACD9200C3F2D9 /* EarthoOne.swift in Sources */,
+				5CC9940424ED9EC90027DC74 /* CredentialsManagerError.swift in Sources */,
+				5F23E6EA1D4ACD9600C3F2D9 /* EarthoOneError.swift in Sources */,
+				5FDE876F1D8A424700EA27DC /* Handlers.swift in Sources */,
+				970BC36D25C27095007A7745 /* Challenge.swift in Sources */,
+				5FDE87571D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */,
+				5C4F552523C8FBA100C89615 /* JWKS.swift in Sources */,
+				5F23E6E51D4ACD8500C3F2D9 /* Request.swift in Sources */,
+				5F23E6DD1D4ACD6100C3F2D9 /* NSURL+EarthoOne.swift in Sources */,
+				5F23E6E71D4ACD8500C3F2D9 /* Response.swift in Sources */,
+				5B2860D11EEAC30A00C75D54 /* UserInfo.swift in Sources */,
+				5F28B4631D8216180000EB23 /* Loggable.swift in Sources */,
+				5F23E6E01D4ACD7F00C3F2D9 /* Management.swift in Sources */,
+				5C29743323FDBD5400BC18FA /* Optional+DebugDescription.swift in Sources */,
+				5F23E6E11D4ACD7F00C3F2D9 /* UserPatchAttributes.swift in Sources */,
+				5F23E6DF1D4ACD7A00C3F2D9 /* Logger.swift in Sources */,
+				5FDE875B1D8A424700EA27DC /* Authentication.swift in Sources */,
+				5F23E6E21D4ACD7F00C3F2D9 /* Users.swift in Sources */,
+				5FDE876B1D8A424700EA27DC /* Credentials.swift in Sources */,
+				5FE1182A1D8A4A2B00A374BF /* Telemetry.swift in Sources */,
+				5CC9940324ED9EC50027DC74 /* CredentialsManager.swift in Sources */,
+				5F23E6E41D4ACD8500C3F2D9 /* JSONObjectPayload.swift in Sources */,
+				5C4F551C23C8FB8E00C89615 /* String+URLSafe.swift in Sources */,
+				5F23E6DC1D4ACD6100C3F2D9 /* NSData+URLSafe.swift in Sources */,
+				5F23E6E61D4ACD8500C3F2D9 /* Requestable.swift in Sources */,
+				5C354C07276CE1A500ADBC86 /* PasswordlessType.swift in Sources */,
+				5FDE875F1D8A424700EA27DC /* AuthenticationError.swift in Sources */,
+				5C6513AA2791CDDE004EBC22 /* Version.swift in Sources */,
+				5B1748761EF2D3A70060E653 /* Helpers.swift in Sources */,
+				5F23E6E31D4ACD7F00C3F2D9 /* ManagementError.swift in Sources */,
+				5C80980E275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F23E6F11D4B87F000C3F2D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F23E70E1D4B88FC00C3F2D9 /* Request.swift in Sources */,
+				5FDE87701D8A424700EA27DC /* Handlers.swift in Sources */,
+				5C4F551D23C8FB8E00C89615 /* String+URLSafe.swift in Sources */,
+				970BC36E25C27095007A7745 /* Challenge.swift in Sources */,
+				5FDE87581D8A424700EA27DC /* EarthoOneAuthentication.swift in Sources */,
+				5F23E7071D4B88EA00C3F2D9 /* NSURL+EarthoOne.swift in Sources */,
+				5F23E71A1D4B891E00C3F2D9 /* EarthoOne.swift in Sources */,
+				5F23E7101D4B88FC00C3F2D9 /* Response.swift in Sources */,
+				5B2860D01EEAC30A00C75D54 /* UserInfo.swift in Sources */,
+				5F28B4641D8216180000EB23 /* Loggable.swift in Sources */,
+				5B0893E720F8A52400FBF962 /* CredentialsManagerError.swift in Sources */,
+				5F23E7091D4B88F600C3F2D9 /* Management.swift in Sources */,
+				5F23E70A1D4B88F600C3F2D9 /* UserPatchAttributes.swift in Sources */,
+				5F23E71B1D4B891E00C3F2D9 /* EarthoOneError.swift in Sources */,
+				5FDE875C1D8A424700EA27DC /* Authentication.swift in Sources */,
+				5F23E7081D4B88F000C3F2D9 /* Logger.swift in Sources */,
+				5C29743223FDBD5400BC18FA /* Optional+DebugDescription.swift in Sources */,
+				5F23E70B1D4B88F600C3F2D9 /* Users.swift in Sources */,
+				5FDE876C1D8A424700EA27DC /* Credentials.swift in Sources */,
+				5FE118291D8A4A2A00A374BF /* Telemetry.swift in Sources */,
+				5F23E70D1D4B88FC00C3F2D9 /* JSONObjectPayload.swift in Sources */,
+				5C4F552623C8FBA100C89615 /* JWKS.swift in Sources */,
+				5B0893E620F8A52100FBF962 /* CredentialsManager.swift in Sources */,
+				5F23E7061D4B88EA00C3F2D9 /* NSData+URLSafe.swift in Sources */,
+				5F23E70F1D4B88FC00C3F2D9 /* Requestable.swift in Sources */,
+				5C354C06276CE1A500ADBC86 /* PasswordlessType.swift in Sources */,
+				5FDE87601D8A424700EA27DC /* AuthenticationError.swift in Sources */,
+				5C6513A92791CDDE004EBC22 /* Version.swift in Sources */,
+				5B1748771EF2D3A90060E653 /* Helpers.swift in Sources */,
+				5F23E70C1D4B88F600C3F2D9 /* ManagementError.swift in Sources */,
+				5C80980D275A7B8600DC0A76 /* CredentialsStorage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		962113B5284BF60A0018DBCB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				962113BE284BF60A0018DBCB /* ContentView.swift in Sources */,
+				962113BC284BF60A0018DBCB /* AppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		969FC0E3287006B300BB146C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5F06DD771CC448B10011842B /* EarthoOne.iOS */;
+			targetProxy = 969FC0E2287006B300BB146C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5F049B6F1CB42C29006F6C05 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5F049B701CB42C29006F6C05 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5F06DD7D1CC448B10011842B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = EarthoOne;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5F06DD7E1CC448B10011842B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = EarthoOne;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		5F06DD8B1CC448C90011842B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5F06DD8C1CC448C90011842B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5F23E6BE1D4ACA7100C3F2D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Debug;
+		};
+		5F23E6BF1D4ACA7100C3F2D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Release;
+		};
+		5F23E6FC1D4B87F000C3F2D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		5F23E6FD1D4B87F000C3F2D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
+				INFOPLIST_FILE = EarthoOne/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
+				PRODUCT_NAME = EarthoOne;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
+		};
+		962113C5284BF60B0018DBCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_TEAM = 59T89TP48N;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.example.App;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		962113C6284BF60B0018DBCB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_TEAM = 59T89TP48N;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.example.App;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F049B631CB42C29006F6C05 /* Build configuration list for PBXProject "EarthoOne" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F049B6F1CB42C29006F6C05 /* Debug */,
+				5F049B701CB42C29006F6C05 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F06DD7F1CC448B10011842B /* Build configuration list for PBXNativeTarget "EarthoOne.iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F06DD7D1CC448B10011842B /* Debug */,
+				5F06DD7E1CC448B10011842B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F06DD8A1CC448C90011842B /* Build configuration list for PBXNativeTarget "EarthoOne.macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F06DD8B1CC448C90011842B /* Debug */,
+				5F06DD8C1CC448C90011842B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F23E6C01D4ACA7100C3F2D9 /* Build configuration list for PBXNativeTarget "EarthoOne.watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F23E6BE1D4ACA7100C3F2D9 /* Debug */,
+				5F23E6BF1D4ACA7100C3F2D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F23E6FB1D4B87F000C3F2D9 /* Build configuration list for PBXNativeTarget "EarthoOne.tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F23E6FC1D4B87F000C3F2D9 /* Debug */,
+				5F23E6FD1D4B87F000C3F2D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		962113C4284BF60B0018DBCB /* Build configuration list for PBXNativeTarget "App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				962113C5284BF60B0018DBCB /* Debug */,
+				962113C6284BF60B0018DBCB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		962113CF284D0C840018DBCB /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		96BA4738284BE9EC00644C8B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		96BA473B284BEA1000644C8B /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/SimpleKeychain.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		962113D5284D159B0018DBCB /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96BA4738284BE9EC00644C8B /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
+		96BA473C284BEA1000644C8B /* SimpleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96BA473B284BEA1000644C8B /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
+			productName = SimpleKeychain;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5F049B601CB42C29006F6C05 /* Project object */;
+}

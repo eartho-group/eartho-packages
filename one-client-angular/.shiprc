@@ -1,0 +1,4 @@
+{
+    "packagePath": "projects/one-client-angular",
+    "postbump": "npm run build"
+}

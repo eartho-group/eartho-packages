@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["./projects/one-client-angular/src/lib"],
+  "exclude": ["**/*.spec.ts"],
+  "tsconfig": "./projects/one-client-angular/tsconfig.lib.json",
+  "out": "docs",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "hideGenerator": true,
+  "readme": "./README.md"
+}

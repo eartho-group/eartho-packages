@@ -20,9 +20,9 @@ Start building in minutes with just one line of code, no complex integrations ar
 <br />
 <a href="https://eartho.io">Our Website</a>
 ·
-<a href="https://github.com/eartho-group/one-client-js/issues">Report Bug</a>
+<a href="https://github.com/eartho-group/eartho-packages">Report Bug</a>
 ·
-<a href="https://github.com/eartho-group/one-client-js/issues">Request Feature</a>
+<a href="https://github.com/eartho-group/eartho-packages">Request Feature</a>
 ·
 <a href="https://discord.gg/5QbuTNTG2q">Discord</a>
   </p>
@@ -115,7 +115,7 @@ Eartho<br />
 Discord - [Link](https://discord.gg/5QbuTNTG2q)<br />
 Twitter - [@eartho_io](https://twitter.com/eartho_io)<br />
 
-Project Link: [https://github.com/eartho-group/](https://github.com/eartho-group/)
+Project Link: [https://github.com/eartho-group/eartho-packages](https://github.com/eartho-group/eartho-packages)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -129,5 +129,4 @@ Here are the copyrights and the license type:
 - MIT License, Copyright (c) 2020 Jose
 - MIT License, Copyright (c) 2016 Filip Skokan
 - MIT License, Copyright (c) 2020 Ville de Montréal
-
 

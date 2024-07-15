@@ -1,0 +1,57 @@
+#if WEB_AUTH_PLATFORM
+import Foundation
+import JWTDecode
+
+protocol IDTokenSignatureValidatorContext {
+    var issuer: String { get }
+    var audience: String { get }
+    var clientSecret: String { get }
+}
+
+struct IDTokenSignatureValidator: JWTAsyncValidator {
+    enum ValidationError: EarthoOneError {
+        case invalidAlgorithm(actual: String, expected: String)
+        case missingPublicKey(kid: String)
+        case invalidSignature
+
+        var debugDescription: String {
+            switch self {
+            case .invalidAlgorithm(let actual, let expected):
+                return "Signature algorithm of \"\(actual)\" is not supported. Expected the ID token to be signed with \"\(expected)\""
+            case .missingPublicKey(let kid): return "Could not find a public key for Key ID (kid) \"\(kid)\""
+            case .invalidSignature: return "Invalid ID token signature"
+            }
+        }
+    }
+
+    private let context: IDTokenSignatureValidatorContext
+
+    init(context: IDTokenSignatureValidatorContext) {
+        self.context = context
+    }
+
+    func validate(_ jwt: JWT, callback: @escaping (EarthoOneError?) -> Void) {
+        if let error = validateAlg(jwt) { return callback(error) }
+        let algorithm = jwt.algorithm!
+//        if let error = validateKid(jwt) { return callback(error) }
+//        let kid = jwt.kid!
+
+        algorithm.verify(jwt, using: context.clientSecret) ? callback(nil) : callback(ValidationError.invalidSignature)
+    }
+
+    private func validateAlg(_ jwt: JWT) -> EarthoOneError? {
+        let defaultAlgorithm = JWTAlgorithm.rs256.rawValue
+        guard jwt.algorithm != nil else {
+            let actualAlgorithm = jwt.header["alg"] as? String
+            return ValidationError.invalidAlgorithm(actual: actualAlgorithm.debugDescription, expected: defaultAlgorithm)
+        }
+        return nil
+    }
+
+    private func validateKid(_ jwt: JWT) -> EarthoOneError? {
+        let kid = jwt.kid
+        guard kid != nil else { return ValidationError.missingPublicKey(kid: kid.debugDescription) }
+        return nil
+    }
+}
+#endif

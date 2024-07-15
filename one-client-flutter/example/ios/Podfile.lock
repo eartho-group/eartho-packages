@@ -1,0 +1,37 @@
+PODS:
+  - eartho_one (0.0.1):
+    - EarthoOne (~> 1.0.8)
+    - Flutter
+  - EarthoOne (1.0.8):
+    - JWTDecode (~> 2.0)
+    - SimpleKeychain (~> 0.12)
+  - Flutter (1.0.0)
+  - JWTDecode (2.6.3)
+  - SimpleKeychain (0.12.5)
+
+DEPENDENCIES:
+  - eartho_one (from `.symlinks/plugins/eartho_one/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - EarthoOne
+    - JWTDecode
+    - SimpleKeychain
+
+EXTERNAL SOURCES:
+  eartho_one:
+    :path: ".symlinks/plugins/eartho_one/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  eartho_one: 4e7d06ffc2a376f40fccc3d63ce5027b3d3d5d4f
+  EarthoOne: c32f3ac4a37cc6fbb37bf4cfb8f81368476ca383
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  JWTDecode: 33e5e26e5ddbd21b2065820894c08fef0cad9509
+  SimpleKeychain: 8193a9e40967eccac933c1fde82de46c07a5ae26
+
+PODFILE CHECKSUM: b509af10e4eff1565a7ba4e0e5df7dd2b5f29549
+
+COCOAPODS: 1.11.3

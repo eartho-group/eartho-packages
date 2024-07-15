@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Eartho React</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@6/dist/polyfill.min.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="one-client-react.js"></script>
+    <script type="text/babel" data-presets="es2015,es2016,es2017,stage-3,react">
+      const { EarthoOneProvider, useEarthoOne } = reactEartho;
+      const { useState } = React;
+
+      function useLocalStorage(key, initialValue) {
+        const [storedValue, setStoredValue] = useState(() => {
+          const item = window.localStorage.getItem(key);
+          return item ? JSON.parse(item) : initialValue;
+        });
+
+        const setValue = (value) => {
+          setStoredValue(value);
+          window.localStorage.setItem(key, JSON.stringify(value));
+        };
+        return [storedValue, setValue];
+      }
+
+      const Playground = ({ onChangeIDP }) => {
+        const {
+          user,
+          isConnected,
+          isLoading,
+          getIdToken,
+          getAccessTokenSilently,
+          getAccessTokenWithPopup,
+          connectWithRedirect,
+          connectWithPopup,
+          logout,
+        } = useEarthoOne();
+        const [token, setToken] = useState(null);
+        const [claims, setClaims] = useState(null);
+
+        const changeToEartho = () => {
+          onChangeIDP({
+            domain: 'brucke.eartho.io',
+            clientId: 'wLSIP47wM39wKdDmOj6Zb5eSEw3JVhVp',
+          });
+        };
+
+        const changeToNodeOidc = () => {
+          onChangeIDP({
+            domain: 'http://127.0.0.1:3000',
+            clientId: 'testing',
+          });
+        };
+
+        if (isLoading) {
+          return <div>loading...</div>;
+        }
+
+        return isConnected ? (
+          <div>
+            <div id="hello">Hello, {user.name}!</div>
+            <button
+              id="logout"
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              logout
+            </button>
+            <button
+              onClick={async () => setToken(await getAccessTokenSilently())}
+            >
+              Get access token
+            </button>
+            <button
+              onClick={async () => setToken(await getAccessTokenWithPopup())}
+            >
+              Get token with popup
+            </button>
+            <button onClick={async () => setClaims(await getIdToken())}>
+              Get id_token claims
+            </button>
+            {token && <pre>access_token: {token}</pre>}
+            {claims && (
+              <pre>id_token_claims: {JSON.stringify(claims, null, 2)}</pre>
+            )}
+          </div>
+        ) : (
+          <div>
+            <button id="login" onClick={() => connectWithRedirect()}>
+              Login with redirect
+            </button>
+            <button onClick={() => connectWithPopup()}>Login with popup</button>
+
+            <button data-cy="use-eartho" onClick={() => changeToEartho()}>
+              Use Eartho
+            </button>
+            <button
+              data-cy="use-node-oidc-provider"
+              onClick={() => changeToNodeOidc()}
+            >
+              Use Node OIDC Provider
+            </button>
+          </div>
+        );
+      };
+
+      const App = () => {
+        const [identityProvider, setIdentityProvider] = useLocalStorage(
+          'identity_provider',
+          {
+            domain: 'brucke.eartho.io',
+            clientId: 'wLSIP47wM39wKdDmOj6Zb5eSEw3JVhVp',
+          }
+        );
+
+        const changeIDP = (data) => {
+          setIdentityProvider(data);
+        };
+
+        return (
+          <React.StrictMode>
+            <EarthoOneProvider
+              domain={identityProvider.domain}
+              clientId={identityProvider.clientId}
+              key={identityProvider.domain}
+              authorizationParams={{
+                redirect_uri: window.location.origin,
+              }}
+            >
+              <Playground onChangeIDP={changeIDP} />
+            </EarthoOneProvider>
+          </React.StrictMode>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById('app'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!--Ignore rule required due to the 'queries' tag, fix only available for targetSdk=30 -->
+<!--suppress AndroidElementNotAllowed -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.eartho.one">
+    <queries>
+        <!-- For auth with vk client -->
+        <intent>
+            <action android:name="com.eartho.one.action.SDK_AUTH" />
+        </intent>
+
+        <!-- For available browsers request -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name="com.eartho.one.provider.AuthenticationActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.eartho.one.provider.RedirectActivity"
+            android:exported="true">
+
+            <intent-filter android:autoVerify="true"
+                tools:targetApi="m">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="${applicationId}"
+                    android:host="eartho" />
+            </intent-filter>
+        </activity>
+
+    </application>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+</manifest>

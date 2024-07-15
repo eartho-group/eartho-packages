@@ -1,0 +1,117 @@
+{
+  "author": "Eartho",
+  "name": "@eartho/one-client-vue",
+  "description": "Eartho SDK for Vue",
+  "license": "Eartho",
+  "version": "2.0.3",
+  "main": "dist/lib/one-client-vue.cjs.js",
+  "types": "dist/typings/index.d.ts",
+  "module": "dist/one-client-vue.production.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/lib/one-client-vue.cjs.js",
+      "import": "./dist/one-client-vue.production.esm.js",
+      "types": "./dist/typings/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "rimraf dist && rollup -c --watch",
+    "start": "npm run dev",
+    "docs": "typedoc --options ./typedoc.js src",
+    "build": "rimraf dist && rollup -m -c --environment NODE_ENV:production && npm run test:es-check",
+    "build:stats": "npm run build -- --environment WITH_STATS:true && open stats.html",
+    "lint": "eslint ./src --ext ts",
+    "lint:security": "eslint ./src --ext ts --no-eslintrc --config ./.eslintrc.security",
+    "test": "jest --coverage --silent",
+    "test:watch": "jest --coverage --watch",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "test:open:integration": "cypress open",
+    "test:watch:integration": "concurrently --raw npm:dev 'npm:test:open:integration'",
+    "test:es-check": "npm run test:es-check:es2017 && npm run test:es-check:es2017:module",
+    "test:es-check:es2017": "es-check es2017 dist/one-client-vue.production.js",
+    "test:es-check:es2017:module": "es-check es2017 dist/one-client-vue.production.esm.js --module ",
+    "test:integration:server": "npm run dev",
+    "test:integration:tests": "wait-on http://localhost:3000/ && cypress run",
+    "test:integration": "concurrently --raw --kill-others --success first npm:test:integration:server npm:test:integration:tests",
+    "serve:coverage": "serve coverage/lcov-report -n",
+    "serve:stats": "serve bundle-stats -n",
+    "print-bundle-size": "node ./scripts/print-bundle-size",
+    "prepack": "npm run build",
+    "publish:cdn": "ccu --trace"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.3.1",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "browserstack-cypress-cli": "^1.19.0",
+    "cli-table": "^0.3.11",
+    "concurrently": "^7.5.0",
+    "cypress": "^13.1.0",
+    "es-check": "^7.0.1",
+    "eslint": "^8.5.0",
+    "eslint-plugin-security": "^1.5.0",
+    "gzip-size": "^6.0.0",
+    "husky": "^7.0.4",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "jest-junit": "^14.0.1",
+    "oidc-provider": "^7.10.5",
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.3",
+    "qss": "^2.0.3",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.61.1",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "rollup-plugin-dev": "^1.1.3",
+    "rollup-plugin-livereload": "^2.0.5",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-visualizer": "^5.5.2",
+    "rollup-plugin-vue": "^6.0.0",
+    "rollup-plugin-web-worker-loader": "^1.6.1",
+    "serve": "^14.1.1",
+    "ts-jest": "^29.0.3",
+    "tslib": "^2.3.1",
+    "typedoc": "^0.25.1",
+    "typescript": "^5.2.2",
+    "vue-router": "^4.0.12",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "@eartho/one-client-js": "^2.0.12",
+    "vue": "^3.4.25"
+  },
+  "peerDependencies": {
+    "vue-router": "^4.0.12"
+  },
+  "peerDependenciesMeta": {
+    "vue-router": {
+      "optional": true
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eartho-group/one-client-vue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eartho-group/eartho-packages"
+  },
+  "homepage": "https://github.com/eartho-group/eartho-packages",
+  "keywords": [
+    "eartho",
+    "login",
+    "Authorization Code Grant Flow",
+    "PKCE",
+    "Single Page Application authentication",
+    "SPA authentication",
+    "Vue"
+  ]
+}

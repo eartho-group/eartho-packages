@@ -1,0 +1,9 @@
+author: EarthoOne
+author_url: https://auth0.com
+github_url: https://github.com/auth0/EarthoOne.swift
+podspec: EarthoOne.podspec
+output: docs
+clean: true
+theme: fullwidth
+sdk: iphoneos
+undocumented_text: ""

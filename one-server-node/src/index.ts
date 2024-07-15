@@ -1,0 +1,37 @@
+import 'core-js/es/string/starts-with';
+import 'core-js/es/symbol';
+import 'core-js/es/array/from';
+import 'core-js/es/typed-array/slice';
+import 'core-js/es/array/includes';
+import 'core-js/es/string/includes';
+import 'core-js/es/set';
+import 'promise-polyfill/src/polyfill';
+import 'fast-text-encoding';
+import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
+
+import EarthoOne from './EarthoOne';
+import { EarthoOneOptions } from './global';
+
+import './global';
+
+export * from './global';
+
+/**
+ * Asynchronously creates the earthoOne instance .
+*
+ * @param options The client options
+ * @returns An instance of earthoOne
+ */
+export default async function createEarthoOne(options: EarthoOneOptions) {
+  const earthoOne = new EarthoOne(options);
+  return earthoOne;
+}
+
+export { EarthoOne };
+
+export {
+  GenericError,
+  AuthenticationError,
+  TimeoutError,
+} from './errors';
+

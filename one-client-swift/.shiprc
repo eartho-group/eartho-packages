@@ -1,0 +1,10 @@
+{
+    "files": {
+        "EarthoOne/Info.plist": [],
+        "EarthoOne/Version.swift": [],
+        "EarthoOne.podspec": [],
+        "README.md": ["~> {MAJOR}.{MINOR}"]
+    },
+    "postbump": "bundle update && bundle exec jazzy",
+    "prefixVersion": false
+}

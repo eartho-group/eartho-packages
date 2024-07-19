@@ -1,6 +1,6 @@
 {
   "name": "@eartho/one-client-nextjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Next.js SDK for signing in with Eartho",
   "private": false,
   "exports": {

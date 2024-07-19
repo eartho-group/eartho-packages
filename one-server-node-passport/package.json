@@ -17,11 +17,11 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "jws": "^3.2.2",
-    "mocha": "^6.2.3",
+    "mocha": "^10.6.0",
     "should": "^7.1.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "passport-oauth": "^1.0.0",
     "passport-oauth2": "^1.6.0"
   }

@@ -386,7 +386,7 @@ export class EarthoOne {
 
     const authorizationParams = options.authorizationParams || {}
     authorizationParams.access_id = options.accessId
-    if(options.enabledAuthProviders) authorizationParams.enabled_providers = options.enabledAuthProviders
+    if (options.enabledAuthProviders) authorizationParams.enabled_providers = options.enabledAuthProviders
 
     const params = await this._prepareAuthorizeUrl(
       authorizationParams,
@@ -476,12 +476,12 @@ export class EarthoOne {
     const organization =
       urlOptions.authorizationParams?.organization ||
       this.options.authorizationParams.organization;
-      
+
     const authorizationParams = urlOptions.authorizationParams || {}
     authorizationParams.access_id = options.accessId
     authorizationParams.redirect_uri = authorizationParams.redirect_uri || (window.location.origin)
-    if(options.enabledAuthProviders) authorizationParams.enabled_providers = options.enabledAuthProviders
-    
+    if (options.enabledAuthProviders) authorizationParams.enabled_providers = options.enabledAuthProviders
+
     const { url, ...transaction } = await this._prepareAuthorizeUrl(
       authorizationParams
     );
@@ -593,6 +593,7 @@ export class EarthoOne {
   public async checkSession(options?: GetTokenSilentlyOptions) {
     if (!this.cookieStorage.get(this.isConnectedCookieName)) {
       if (!this.cookieStorage.get(OLD_IS_AUTHENTICATED_COOKIE_NAME)) {
+        this.logout()
         return;
       } else {
         // Migrate the existing cookie to the new name scoped by client ID
@@ -600,7 +601,6 @@ export class EarthoOne {
           daysUntilExpire: this.sessionCheckExpiryDays,
           cookieDomain: this.options.cookieDomain
         });
-
         this.cookieStorage.remove(OLD_IS_AUTHENTICATED_COOKIE_NAME);
       }
     }
@@ -869,7 +869,7 @@ export class EarthoOne {
       cookieDomain: this.options.cookieDomain
     });
     this.userCache.remove(CACHE_KEY_ID_TOKEN_SUFFIX);
-    
+
     const url = this._buildLogoutUrl(logoutOptions);
 
     if (openUrl) {
@@ -1014,6 +1014,15 @@ export class EarthoOne {
         audience: options.authorizationParams.audience || 'default'
       };
     } catch (e) {
+      // Check for 401 status code or specific error messages indicating invalid refresh token
+      if (
+        (e.response && e.response.status === 401) ||
+        e.message.indexOf(INVALID_REFRESH_TOKEN_ERROR_MESSAGE) > -1
+      ) {
+        // Log out the user if a 401 response or specific error messages are encountered
+        this.logout();
+        throw new Error('Invalid refresh token, logging out.');
+      }
       if (
         // The web worker didn't have a refresh token in memory so
         // fallback to an iframe.

@@ -1,7 +1,7 @@
 {
   "author": "Eartho",
   "name": "@eartho/one-client-react",
-  "version": "2.0.12",
+  "version": "2.0.14",
   "description": "Eartho SDK for authentication, verifications & payments",
   "keywords": [
     "eartho",
@@ -30,8 +30,8 @@
     "install:examples": "npm i --prefix=examples/cra-react-router --no-package-lock --legacy-peer-deps && npm i --prefix=examples/gatsby-app --no-package-lock --legacy-peer-deps && npm i --prefix=examples/nextjs-app --no-package-lock --legacy-peer-deps && npm ci --prefix=examples/users-api",
     "start:cra": "npm start --prefix=examples/cra-react-router",
     "start:gatsby": "npm start --prefix=examples/gatsby-app",
-    "start:nextjs": "npm run dev --prefix=examples/nextjs-app",
-    "start:api": "npm start --prefix=examples/users-api",
+    "start:nextjs": "NODE_OPTIONS='--inspect' npm run dev --prefix=examples/nextjs-app-14-pages",
+    "start:api": "npm start --prefix=examples/node-express-users-api",
     "test:cra": "start-server-and-test start:api 3001 start:cra http-get://127.0.0.1:3000 cypress:run",
     "test:cra:watch": "start-server-and-test start:api 3001 start:cra 3000 cypress:open",
     "test:gatsby": "start-server-and-test start:api 3001 start:gatsby http-get://localhost:3000 cypress:run",
@@ -96,6 +96,6 @@
     "react-dom": "^16.11.0 || ^17 || ^18"
   },
   "dependencies": {
-    "@eartho/one-client-js": "^2.0.12"
+    "@eartho/one-client-js": "^2.0.14"
   }
 }

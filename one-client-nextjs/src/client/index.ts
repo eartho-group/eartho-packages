@@ -1,7 +1,7 @@
 'use client';
 import {
-  default as EarthoProvider,
-  EarthoProviderProps,
+  default as EarthoClientProvider,
+  EarthoClientProviderProps,
   UserProfile,
   UserContext,
   RequestError,
@@ -12,5 +12,5 @@ import {
   WithPageAuthRequired,
   WithPageAuthRequiredOptions
 } from './with-page-auth-required';
-export { EarthoProvider, EarthoProviderProps, UserProfile, UserContext, RequestError, useUser };
+export { EarthoClientProvider, EarthoClientProviderProps, UserProfile, UserContext, RequestError, useUser };
 export { withPageAuthRequired, WithPageAuthRequired, WithPageAuthRequiredOptions };

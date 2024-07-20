@@ -41,10 +41,10 @@ export type LogoutOptionsProvider = OptionsProvider<LogoutOptions>;
  * @example Pass an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogout } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogout } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   logout: handleLogout({ returnTo: 'https://example.com' })
  * });
  * ```
@@ -52,10 +52,10 @@ export type LogoutOptionsProvider = OptionsProvider<LogoutOptions>;
  * @example Pass a function that receives the request and returns an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogout } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogout } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   logout: handleLogout((req) => {
  *     return { returnTo: 'https://example.com' };
  *   })
@@ -67,9 +67,9 @@ export type LogoutOptionsProvider = OptionsProvider<LogoutOptions>;
  * @example Override the logout handler
  *
  * ```js
- * import { handleAuth, handleLogout } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleLogout } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   logout: async (req, res) => {
  *     try {
  *       await handleLogout(req, res, {
@@ -87,7 +87,7 @@ export type LogoutOptionsProvider = OptionsProvider<LogoutOptions>;
 export type HandleLogout = AuthHandler<LogoutOptions>;
 
 /**
- * The handler for the `/api/auth/logout` API route.
+ * The handler for the `/api/access/logout` API route.
  *
  * @throws {@link HandlerError}
  *

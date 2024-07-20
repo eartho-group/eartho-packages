@@ -11,7 +11,7 @@ describe('login handler (page router)', () => {
   test('should create a state, nonce, and code verifier', async () => {
     const baseUrl = await setup(withoutApi);
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
 
     expect(cookieJar.getCookiesSync(baseUrl)).toEqual(
       expect.arrayContaining([
@@ -28,7 +28,7 @@ describe('login handler (page router)', () => {
   test('should add returnTo to the state', async () => {
     const baseUrl = await setup(withoutApi, { loginOptions: { returnTo: '/custom-url' } });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
 
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
@@ -43,7 +43,7 @@ describe('login handler (page router)', () => {
     const cookieJar = new CookieJar();
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { cookieJar, fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { cookieJar, fullResponse: true });
 
     expect(statusCode).toBe(302);
 
@@ -57,7 +57,7 @@ describe('login handler (page router)', () => {
         client_id: '__test_client_id__',
         scope: 'openid profile email',
         response_type: 'code',
-        redirect_uri: 'http://www.acme.com/api/auth/callback',
+        redirect_uri: 'http://www.acme.com/api/access/callback',
         nonce: expect.any(String),
         state,
         code_challenge: expect.any(String),
@@ -83,7 +83,7 @@ describe('login handler (page router)', () => {
     const cookieJar = new CookieJar();
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { cookieJar, fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { cookieJar, fullResponse: true });
 
     expect(statusCode).toBe(302);
     expect(urlParse(headers.location, true)).toMatchObject({
@@ -99,7 +99,7 @@ describe('login handler (page router)', () => {
     const cookieJar = new CookieJar();
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { cookieJar, fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { cookieJar, fullResponse: true });
 
     expect(statusCode).toBe(302);
     expect(urlParse(headers.location, true)).toMatchObject({
@@ -117,7 +117,7 @@ describe('login handler (page router)', () => {
     const cookieJar = new CookieJar();
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { cookieJar, fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { cookieJar, fullResponse: true });
 
     expect(statusCode).toBe(302);
     expect(urlParse(headers.location, true)).toMatchObject({
@@ -137,7 +137,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
 
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
@@ -160,7 +160,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
 
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
@@ -184,7 +184,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
 
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
@@ -202,7 +202,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login?returnTo=/foo', { cookieJar });
+    await get(baseUrl, '/api/access/login?returnTo=/foo', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -218,7 +218,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login?returnTo=/foo&returnTo=/bar', { cookieJar });
+    await get(baseUrl, '/api/access/login?returnTo=/foo&returnTo=/bar', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -235,7 +235,7 @@ describe('login handler (page router)', () => {
     const baseUrl = await setup(withoutApi, { loginOptions });
 
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login?returnTo=https://www.google.com', { cookieJar });
+    await get(baseUrl, '/api/access/login?returnTo=https://www.google.com', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -250,7 +250,7 @@ describe('login handler (page router)', () => {
     const baseUrl = await setup(withoutApi, { loginOptions });
 
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login?returnTo=/foo?url=https://www.google.com', { cookieJar });
+    await get(baseUrl, '/api/access/login?returnTo=/foo?url=https://www.google.com', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -264,13 +264,13 @@ describe('login handler (page router)', () => {
     const loginOptions = {
       returnTo: '/default-redirect',
       authorizationParams: {
-        redirect_uri: 'https://other-org.acme.com/api/auth/callback'
+        redirect_uri: 'https://other-org.acme.com/api/access/callback'
       }
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
 
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login?returnTo=/foo', { cookieJar });
+    await get(baseUrl, '/api/access/login?returnTo=/foo', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -291,7 +291,7 @@ describe('login handler (page router)', () => {
     };
     const baseUrl = await setup(withoutApi, { loginOptions });
     const cookieJar = new CookieJar();
-    await get(baseUrl, '/api/auth/login', { cookieJar });
+    await get(baseUrl, '/api/access/login', { cookieJar });
     const { value: authVerification } = getCookie('auth_verification', cookieJar, baseUrl)!;
     const state = JSON.parse(decodeURIComponent(authVerification).split('.')[0]).state;
 
@@ -305,7 +305,7 @@ describe('login handler (page router)', () => {
     const baseUrl = await setup(withApi);
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { fullResponse: true });
 
     expect(statusCode).toBe(302);
 
@@ -323,7 +323,7 @@ describe('login handler (page router)', () => {
         }
       }
     });
-    await expect(get(baseUrl, '/api/auth/login', { fullResponse: true })).rejects.toThrowError(
+    await expect(get(baseUrl, '/api/access/login', { fullResponse: true })).rejects.toThrowError(
       /Login handler failed. CAUSE: Custom state value must be an object/
     );
   });
@@ -338,7 +338,7 @@ describe('login handler (page router)', () => {
     const cookieJar = new CookieJar();
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/login', { cookieJar, fullResponse: true });
+    } = await get(baseUrl, '/api/access/login', { cookieJar, fullResponse: true });
 
     expect(statusCode).toBe(302);
     expect(urlParse(headers.location, true)).toMatchObject({

@@ -10,14 +10,14 @@ describe('backchannel-logout handler (app router)', () => {
 
   test('should 404 when backchannel logout is disabled', async () => {
     await expect(
-      getResponse({ url: '/api/auth/backchannel-logout', reqInit: { method: 'post' } })
+      getResponse({ url: '/api/access/backchannel-logout', reqInit: { method: 'post' } })
     ).resolves.toMatchObject({ status: 404 });
   });
 
   test('should error when misconfigured', async () => {
     const res = await getResponse({
       config: { backchannelLogout: true },
-      url: '/api/auth/backchannel-logout',
+      url: '/api/access/backchannel-logout',
       reqInit: { method: 'post' }
     });
     await expect(res.json()).resolves.toEqual({
@@ -31,7 +31,7 @@ describe('backchannel-logout handler (app router)', () => {
   test('should error when no logout token is provided', async () => {
     const res = await getResponse({
       config: { backchannelLogout: { store: new Store() } },
-      url: '/api/auth/backchannel-logout',
+      url: '/api/access/backchannel-logout',
       reqInit: { method: 'post' }
     });
     await expect(res.json()).resolves.toEqual({
@@ -43,7 +43,7 @@ describe('backchannel-logout handler (app router)', () => {
   test('should error when an invalid logout token is provided', async () => {
     const res = await getResponse({
       config: { backchannelLogout: { store: new Store() } },
-      url: '/api/auth/backchannel-logout',
+      url: '/api/access/backchannel-logout',
       reqInit: { method: 'post', body: 'logout_token=foo' }
     });
     await expect(res.json()).resolves.toEqual({
@@ -56,7 +56,7 @@ describe('backchannel-logout handler (app router)', () => {
     const logoutToken = await makeLogoutToken({ iss: 'https://acme.eartho.local/', sid: 'foo' });
     const res = await getResponse({
       config: { backchannelLogout: { store: new Store() } },
-      url: '/api/auth/backchannel-logout',
+      url: '/api/access/backchannel-logout',
       reqInit: { method: 'post', body: `logout_token=${logoutToken}` }
     });
     expect(res.status).toBe(204);
@@ -67,7 +67,7 @@ describe('backchannel-logout handler (app router)', () => {
     const logoutToken = await makeLogoutToken({ iss: 'https://acme.eartho.local/', sid: 'foo', events: null });
     const res = await getResponse({
       config: { backchannelLogout: { store: new Store() } },
-      url: '/api/auth/backchannel-logout',
+      url: '/api/access/backchannel-logout',
       reqInit: { method: 'post', body: `logout_token=${logoutToken}` }
     });
     await expect(res.json()).resolves.toEqual({
@@ -83,7 +83,7 @@ describe('backchannel-logout handler (app router)', () => {
     await expect(
       getResponse({
         config: { backchannelLogout: { store } },
-        url: '/api/auth/backchannel-logout',
+        url: '/api/access/backchannel-logout',
         reqInit: { method: 'post', body: `logout_token=${logoutToken}` }
       })
     ).resolves.toMatchObject({ status: 204 });

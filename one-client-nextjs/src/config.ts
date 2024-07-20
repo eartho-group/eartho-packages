@@ -27,15 +27,15 @@ export interface NextConfig extends BaseConfig {
  *
  * ### 1. Environment Variables
  *
- * The simplest way to use the SDK is to use the named exports ({@link HandleAuth}, {@link HandleLogin},
+ * The simplest way to use the SDK is to use the named exports ({@link HandleAccess}, {@link HandleLogin},
  * {@link HandleLogout}, {@link HandleCallback}, {@link HandleProfile}, {@link GetSession}, {@link GetAccessToken},
  * {@link WithApiAuthRequired}, and {@link WithPageAuthRequired}).
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess } from '@eartho/one-client-nextjs';
  *
- * return handleAuth();
+ * return handleAccess();
  * ```
  *
  * When you use these named exports, an instance of the SDK is created for you which you can configure using
@@ -101,15 +101,15 @@ export interface NextConfig extends BaseConfig {
  * Then import it into your route handler:
  *
  * ```js
- * // pages/api/auth/[eartho].js
+ * // pages/api/access/[eartho].js
  * import eartho from '../../../../utils/eartho';
  *
- * export default eartho.handleAuth();
+ * export default eartho.handleAccess();
  * ```
  *
  * **IMPORTANT** If you use {@link InitEartho}, you should *not* use the other named exports as they will use a different
  * instance of the SDK. Also note - this is for the server side part of the SDK - you will always use named exports for
- * the front end components: {@link EarthoProvider}, {@link UseUser} and the
+ * the front end components: {@link EarthoClientProvider}, {@link UseUser} and the
  * front end version of {@link WithPageAuthRequired}
  *
  * @category Server
@@ -148,7 +148,7 @@ export const getConfig = (params: ConfigParameters = {}): NextConfig => {
   // Don't use destructuring here so that the `DefinePlugin` can replace any env vars specified in `next.config.js`
   const EARTHO_SECRET = process.env.EARTHO_SECRET;
   const EARTHO_ISSUER_BASE_URL = 'https://one.eartho.io';
-  const EARTHO_BASE_URL = 'https://api.eartho.io';
+  const EARTHO_BASE_URL = process.env.EARTHO_BASE_URL;
   const EARTHO_CLIENT_ID = process.env.EARTHO_CLIENT_ID;
   const EARTHO_CLIENT_SECRET = process.env.EARTHO_CLIENT_SECRET;
   const EARTHO_CLOCK_TOLERANCE = process.env.EARTHO_CLOCK_TOLERANCE;
@@ -237,7 +237,7 @@ export const getConfig = (params: ConfigParameters = {}): NextConfig => {
       }
     },
     routes: {
-      callback: baseParams.routes?.callback || EARTHO_CALLBACK || '/api/auth/callback',
+      callback: baseParams.routes?.callback || EARTHO_CALLBACK || '/api/access/callback',
       postLogoutRedirect: baseParams.routes?.postLogoutRedirect || EARTHO_POST_LOGOUT_REDIRECT
     },
     clientAssertionSigningKey: EARTHO_CLIENT_ASSERTION_SIGNING_KEY,

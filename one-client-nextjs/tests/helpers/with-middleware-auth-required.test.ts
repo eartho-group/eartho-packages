@@ -33,7 +33,7 @@ const encrypted = async (claims: Partial<IdTokenClaims> = { sub: '__test_sub__' 
 };
 
 const setup = async ({ url = 'http://example.com', config = withoutApi, user, middleware, instance }: any = {}) => {
-  const mw = (instance || initEartho(config)).withMiddlewareAuthRequired(middleware);
+  const mw = (instance || initEartho(config)).withMiddlewareAccessRequired(middleware);
   const request = new NextRequest(new URL(url));
   if (user) {
     request.cookies.set('appSession', await encrypted({ sub: 'foo' }));
@@ -48,7 +48,7 @@ describe('with-middleware-auth-required', () => {
     const redirect = new URL(res.headers.get('location') as string);
     expect(redirect).toMatchObject({
       hostname: 'example.com',
-      pathname: '/api/auth/login'
+      pathname: '/api/access/login'
     });
     expect(redirect.searchParams.get('returnTo')).toEqual('/');
   });
@@ -68,7 +68,7 @@ describe('with-middleware-auth-required', () => {
     const redirect = new URL(res.headers.get('location') as string);
     expect(redirect).toMatchObject({
       hostname: 'example.com',
-      pathname: '/api/auth/login'
+      pathname: '/api/access/login'
     });
     expect(redirect.searchParams.get('returnTo')).toEqual('/foo/bar?baz=hello');
   });
@@ -78,7 +78,7 @@ describe('with-middleware-auth-required', () => {
     const redirect = new URL(res.headers.get('location') as string);
     expect(redirect).toMatchObject({
       hostname: 'example.com',
-      pathname: '/api/auth/login'
+      pathname: '/api/access/login'
     });
     expect(redirect.searchParams.get('returnTo')).toEqual('/qux');
   });
@@ -91,7 +91,7 @@ describe('with-middleware-auth-required', () => {
     const redirect = new URL(res.headers.get('location') as string);
     expect(redirect).toMatchObject({
       hostname: 'example.com',
-      pathname: '/api/auth/login'
+      pathname: '/api/access/login'
     });
     expect(redirect.searchParams.get('returnTo')).toEqual('/qux?baz=hello');
   });
@@ -102,7 +102,7 @@ describe('with-middleware-auth-required', () => {
   });
 
   test('should ignore default sdk urls', async () => {
-    const res = await setup({ url: 'http://example.com/api/auth/login' });
+    const res = await setup({ url: 'http://example.com/api/access/login' });
     expect(res).toBeUndefined();
   });
 

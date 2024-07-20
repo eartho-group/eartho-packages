@@ -4,7 +4,7 @@ import {
   ConfigParameters,
   GetAccessToken,
   GetSession,
-  HandleAuth,
+  HandleAccess,
   HandleCallback,
   HandleLogin,
   HandleLogout,
@@ -20,7 +20,7 @@ import { clientGetter } from './eartho-session/client/node-client';
 
 const genId = () => crypto.randomBytes(16).toString('hex');
 
-export type EarthoServer = Omit<EarthoServerShared, 'withMiddlewareAuthRequired'>;
+export type EarthoServer = Omit<EarthoServerShared, 'withMiddlewareAccessRequired'>;
 
 let instance: EarthoServerShared;
 
@@ -31,7 +31,7 @@ let instance: EarthoServerShared;
  *
  * @category Server
  */
-export type InitEartho = (params?: ConfigParameters) => Omit<EarthoServer, 'withMiddlewareAuthRequired'>;
+export type InitEartho = (params?: ConfigParameters) => Omit<EarthoServer, 'withMiddlewareAccessRequired'>;
 
 // For using managed instance with named exports.
 function getInstance(): EarthoServerShared {
@@ -46,7 +46,7 @@ function getInstance(): EarthoServerShared {
 // For creating own instance.
 export const initEartho: InitEartho = (params) => {
   setIsUsingOwnInstance();
-  const { withMiddlewareAuthRequired, ...publicApi } = _initAuth({
+  const { withMiddlewareAccessRequired, ...publicApi } = _initAuth({
     genId,
     params,
     clientGetter
@@ -70,6 +70,6 @@ export const handleCallback: HandleCallback = ((...args: Parameters<HandleCallba
   getInstance().handleCallback(...args)) as HandleCallback;
 export const handleProfile: HandleProfile = ((...args: Parameters<HandleProfile>) =>
   getInstance().handleProfile(...args)) as HandleProfile;
-export const handleAuth: HandleAuth = (...args) => getInstance().handleAuth(...args);
+export const handleAccess: HandleAccess = (...args) => getInstance().handleAccess(...args);
 
 export * from './shared';

@@ -12,14 +12,14 @@ describe('profile handler (page router)', () => {
   test('should throw an error when not logged in', async () => {
     const baseUrl = await setup(withoutApi);
 
-    await expect(get(baseUrl, '/api/auth/me')).resolves.toBe('');
+    await expect(get(baseUrl, '/api/access/me')).resolves.toBe('');
   });
 
   test('should return the profile when logged in', async () => {
     const baseUrl = await setup(withoutApi);
     const cookieJar = await login(baseUrl);
 
-    const profile = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile).toStrictEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
   });
 
@@ -27,7 +27,7 @@ describe('profile handler (page router)', () => {
     const baseUrl = await setup(withoutApi);
     const cookieJar = await login(baseUrl);
 
-    const { res } = await get(baseUrl, '/api/auth/me', { cookieJar, fullResponse: true });
+    const { res } = await get(baseUrl, '/api/access/me', { cookieJar, fullResponse: true });
     expect(res.headers['cache-control']).toEqual('no-store');
   });
 
@@ -35,7 +35,7 @@ describe('profile handler (page router)', () => {
     const baseUrl = await setup(withoutApi, { profileOptions: { refetch: true } });
     const cookieJar = await login(baseUrl);
 
-    const { res } = await get(baseUrl, '/api/auth/me', { cookieJar, fullResponse: true });
+    const { res } = await get(baseUrl, '/api/access/me', { cookieJar, fullResponse: true });
     expect(res.headers['cache-control']).toEqual('no-store');
   });
 
@@ -50,7 +50,7 @@ describe('profile handler (page router)', () => {
     });
     const cookieJar = await login(baseUrl);
 
-    await expect(get(baseUrl, '/api/auth/me', { cookieJar })).rejects.toThrow(
+    await expect(get(baseUrl, '/api/access/me', { cookieJar })).rejects.toThrow(
       'The user does not have a valid access token.'
     );
   });
@@ -59,11 +59,11 @@ describe('profile handler (page router)', () => {
     const baseUrl = await setup(withoutApi, { profileOptions: { refetch: true }, userInfoPayload: { foo: 'bar' } });
     const cookieJar = await login(baseUrl);
 
-    const profile = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile).toMatchObject({ foo: 'bar', nickname: '__test_nickname__', sub: '__test_sub__' });
     // check that the session is saved
     userInfo(withoutApi, 'eyJz93a...k4laUWw', {});
-    const profile2 = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile2 = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile2).toMatchObject({ foo: 'bar', nickname: '__test_nickname__', sub: '__test_sub__' });
   });
 
@@ -89,7 +89,7 @@ describe('profile handler (page router)', () => {
         expires_in: 750,
         scope: 'read:foo write:foo'
       });
-    await expect(get(baseUrl, '/api/auth/me', { cookieJar })).rejects.toThrow(
+    await expect(get(baseUrl, '/api/access/me', { cookieJar })).rejects.toThrow(
       'No access token available to refetch the profile'
     );
   });
@@ -109,7 +109,7 @@ describe('profile handler (page router)', () => {
     });
     await refreshTokenRotationExchange(withApi, 'GEbRxBN...edjnXbL', {}, 'new-access-token', 'new-refresh-token');
     const cookieJar = await login(baseUrl);
-    const profile = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile).toMatchObject({ foo: 'bar' });
     const session = await get(baseUrl, '/api/session', { cookieJar });
     expect(session.accessToken).toEqual('new-access-token');
@@ -128,7 +128,7 @@ describe('profile handler (page router)', () => {
     });
     const cookieJar = await login(baseUrl);
 
-    const user = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const user = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(user.foo).toEqual('bar');
   });
 
@@ -143,6 +143,6 @@ describe('profile handler (page router)', () => {
     });
     const cookieJar = await login(baseUrl);
 
-    await expect(get(baseUrl, '/api/auth/me', { cookieJar })).rejects.toThrowError('some validation error');
+    await expect(get(baseUrl, '/api/access/me', { cookieJar })).rejects.toThrowError('some validation error');
   });
 });

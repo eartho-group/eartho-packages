@@ -41,7 +41,7 @@ const getAccessTokenResponse = async ({
   );
   return getResponse({
     earthoInstance,
-    url: '/api/auth/access-token',
+    url: '/api/access/access-token',
     extraHandlers: {
       async 'access-token'() {
         const at = await earthoInstance.getAccessToken(getAccessTokenOpts);

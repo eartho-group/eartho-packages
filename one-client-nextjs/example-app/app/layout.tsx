@@ -1,5 +1,5 @@
 import './globals.css';
-import { EarthoProvider } from '@eartho/one-client-nextjs/client';
+import { EarthoClientProvider } from '@eartho/one-client-nextjs/client';
 import Nav from '@/app/nav';
 
 export const metadata = {
@@ -10,14 +10,14 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <EarthoProvider>
+      <EarthoClientProvider>
         <body>
           <header>
             <Nav />
           </header>
           <div className="container">{children}</div>
         </body>
-      </EarthoProvider>
+      </EarthoClientProvider>
     </html>
   );
 }

@@ -194,7 +194,7 @@ export class EdgeClient extends AbstractClient {
       (this.config.earthoLogout || (issuerUrl.hostname.match('\\.eartho\\.com$') && this.config.earthoLogout !== false))
     ) {
       const { id_token_hint, post_logout_redirect_uri, ...extraParams } = parameters;
-      const earthoLogoutUrl: URL = new URL(urlJoin(as.issuer, '/v2/logout'));
+      const earthoLogoutUrl: URL = new URL(urlJoin(as.issuer, '/logout'));
       post_logout_redirect_uri && earthoLogoutUrl.searchParams.set('returnTo', post_logout_redirect_uri);
       earthoLogoutUrl.searchParams.set('client_id', this.config.clientID);
       Object.entries(extraParams).forEach(([key, value]: [string, string]) => {

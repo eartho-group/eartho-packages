@@ -92,7 +92,7 @@ export const getResponse = async ({
   await setupNock(opts, { idTokenClaims, discoveryOptions, userInfoPayload, userInfoToken, parPayload, parStatus });
   const eartho = url.split('?')[0].split('/').slice(3);
   const instance = earthoInstance || initEartho(opts);
-  const handleAuth = instance.handleAuth({
+  const handleAccess = instance.handleAccess({
     ...(callbackOpts && { callback: instance.handleCallback(callbackOpts) }),
     ...(loginOpts && { login: instance.handleLogin(loginOpts) }),
     ...(logoutOpts && { logout: instance.handleLogout(logoutOpts) }),
@@ -111,7 +111,7 @@ export const getResponse = async ({
         .join('; ')
     );
   }
-  return handleAuth(new NextRequest(new URL(url, opts.baseURL), { headers, ...reqInit } as any), { params: { eartho } });
+  return handleAccess(new NextRequest(new URL(url, opts.baseURL), { headers, ...reqInit } as any), { params: { eartho } });
 };
 
 export const getSession = async (config: any, res: NextResponse) => {
@@ -129,7 +129,7 @@ export const login = async (opts: LoginOpts = {}) => {
   const state = encodeState({ returnTo: '/' });
   return await getResponse({
     ...opts,
-    url: `/api/auth/callback?state=${state}&code=code`,
+    url: `/api/access/callback?state=${state}&code=code`,
     cookies: {
       ...opts.cookies,
       auth_verification: await signCookie(

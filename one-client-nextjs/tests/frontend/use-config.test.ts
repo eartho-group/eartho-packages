@@ -6,10 +6,10 @@ import { useConfig } from '../../src/client/use-config';
 describe('context wrapper', () => {
   test('should provide the default login url', async () => {
     const { result } = renderHook(() => useConfig(), {
-      wrapper: withConfigProvider({ loginUrl: '/api/auth/login' })
+      wrapper: withConfigProvider({ loginUrl: '/api/access/login' })
     });
 
-    expect(result.current.loginUrl).toEqual('/api/auth/login');
+    expect(result.current.loginUrl).toEqual('/api/access/login');
   });
 
   test('should provide a custom login url', async () => {

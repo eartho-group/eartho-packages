@@ -5,7 +5,7 @@ import {
   fetchUserErrorMock,
   fetchUserNetworkErrorMock,
   fetchUserUnauthorizedMock,
-  withEarthoProvider,
+  withEarthoClientProvider,
   user
 } from '../fixtures/frontend';
 import { useUser, UserContext, RequestError } from '../../src/client';
@@ -19,18 +19,18 @@ describe('context wrapper', () => {
     const fetchSpy = jest.fn().mockReturnValue(Promise.resolve());
     (global as any).fetch = fetchSpy;
     const { result, waitForValueToChange } = renderHook(() => useUser(), {
-      wrapper: withEarthoProvider()
+      wrapper: withEarthoClientProvider()
     });
 
     await waitForValueToChange(() => result.current.isLoading);
-    expect(fetchSpy).toHaveBeenCalledWith('/api/auth/me');
+    expect(fetchSpy).toHaveBeenCalledWith('/api/access/me');
   });
 
   test('should accept a custom profile url', async () => {
     const fetchSpy = jest.fn().mockReturnValue(Promise.resolve());
     (global as any).fetch = fetchSpy;
     const { result, waitForValueToChange } = renderHook(() => useUser(), {
-      wrapper: withEarthoProvider({ profileUrl: '/api/custom-url' })
+      wrapper: withEarthoClientProvider({ profileUrl: '/api/custom-url' })
     });
 
     await waitForValueToChange(() => result.current.isLoading);
@@ -42,7 +42,7 @@ describe('context wrapper', () => {
     const fetchSpy = jest.fn().mockReturnValue(Promise.resolve());
     (global as any).fetch = fetchSpy;
     const { result, waitForValueToChange } = renderHook(() => useUser(), {
-      wrapper: withEarthoProvider()
+      wrapper: withEarthoClientProvider()
     });
 
     await waitForValueToChange(() => result.current.isLoading);
@@ -52,7 +52,7 @@ describe('context wrapper', () => {
 
   test('should accept a custom login url', async () => {
     const { result } = renderHook(() => useConfig(), {
-      wrapper: withEarthoProvider({ user, loginUrl: '/api/custom-url' })
+      wrapper: withEarthoClientProvider({ user, loginUrl: '/api/custom-url' })
     });
 
     expect(result.current.loginUrl).toEqual('/api/custom-url');
@@ -66,20 +66,20 @@ describe('context wrapper', () => {
     const customFetcher = jest.fn().mockResolvedValue(returnValue);
 
     const { result, waitForValueToChange } = renderHook(() => useUser(), {
-      wrapper: withEarthoProvider({ fetcher: customFetcher })
+      wrapper: withEarthoClientProvider({ fetcher: customFetcher })
     });
 
     await waitForValueToChange(() => result.current.isLoading);
 
     expect(fetchSpy).not.toHaveBeenCalled();
-    expect(customFetcher).toHaveBeenCalledWith('/api/auth/me');
+    expect(customFetcher).toHaveBeenCalledWith('/api/access/me');
     expect(result.current.user).toBe(returnValue);
   });
 });
 
 describe('user provider', () => {
-  test('should throw an error when the app is not wrapped in EarthoProvider', async () => {
-    const expectedError = 'You forgot to wrap your app in <EarthoProvider>';
+  test('should throw an error when the app is not wrapped in EarthoClientProvider', async () => {
+    const expectedError = 'You forgot to wrap your app in <EarthoClientProvider>';
     const { result } = renderHook(() => useUser());
 
     expect(() => result.current.user).toThrowError(expectedError);
@@ -88,7 +88,7 @@ describe('user provider', () => {
     expect(result.current.checkSession).toThrowError(expectedError);
   });
 
-  test('should be able to stub EarthoProvider with UserContext.Provider', async () => {
+  test('should be able to stub EarthoClientProvider with UserContext.Provider', async () => {
     const { result } = renderHook(() => useUser(), {
       wrapper: (props: any): React.ReactElement => <UserContext.Provider {...props} value={{ user: { foo: 'bar' } }} />
     });
@@ -102,7 +102,7 @@ describe('hook', () => {
 
   test('should provide the fetched user', async () => {
     (global as any).fetch = fetchUserMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     expect(result.current.user).toBeUndefined();
     expect(result.current.error).toBeUndefined();
@@ -116,7 +116,7 @@ describe('hook', () => {
   });
 
   test('should provide the existing user', async () => {
-    const { result } = renderHook(() => useUser(), { wrapper: withEarthoProvider({ user }) });
+    const { result } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider({ user }) });
 
     expect(result.current.user).toEqual(user);
     expect(result.current.error).toBeUndefined();
@@ -125,7 +125,7 @@ describe('hook', () => {
 
   test('should provide no user when the status code is 204', async () => {
     (global as any).fetch = fetchUserUnauthorizedMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     expect(result.current.user).toBeUndefined();
     expect(result.current.error).toBeUndefined();
@@ -140,7 +140,7 @@ describe('hook', () => {
 
   test('should provide an error when the request fails', async () => {
     (global as any).fetch = fetchUserNetworkErrorMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     expect(result.current.user).toBeUndefined();
     expect(result.current.error).toBeUndefined();
@@ -158,7 +158,7 @@ describe('hook', () => {
     const status = 400;
     (global as any).fetch = () => Promise.resolve({ ok: false, status });
 
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     expect(result.current.user).toBeUndefined();
     expect(result.current.error).toBeUndefined();
@@ -176,7 +176,7 @@ describe('hook', () => {
     const error = new Error();
     const fetcher = jest.fn().mockRejectedValue(error);
 
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider({ fetcher }) });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider({ fetcher }) });
 
     expect(result.current.user).toBeUndefined();
     expect(result.current.error).toBeUndefined();
@@ -195,7 +195,7 @@ describe('check session', () => {
 
   test('should set the user after logging in', async () => {
     (global as any).fetch = fetchUserErrorMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     await waitForValueToChange(() => result.current.isLoading);
     expect(result.current.user).toBeUndefined();
@@ -210,7 +210,7 @@ describe('check session', () => {
 
   test('should not unset the user due to a network error while logged in', async () => {
     (global as any).fetch = fetchUserMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     await waitForValueToChange(() => result.current.isLoading);
     expect(result.current.user).toEqual(user);
@@ -225,7 +225,7 @@ describe('check session', () => {
 
   test('should not unset the user due to an error response while logged in', async () => {
     (global as any).fetch = fetchUserMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     await waitForValueToChange(() => result.current.isLoading);
     expect(result.current.user).toEqual(user);
@@ -242,7 +242,7 @@ describe('check session', () => {
     (global as any).fetch = fetchUserMock;
     const fetcher = jest.fn().mockResolvedValueOnce(user).mockRejectedValueOnce(new Error());
 
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider({ fetcher }) });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider({ fetcher }) });
 
     await waitForValueToChange(() => result.current.isLoading);
     expect(result.current.user).toEqual(user);
@@ -257,7 +257,7 @@ describe('check session', () => {
 
   test('should unset the user after logging out', async () => {
     (global as any).fetch = fetchUserMock;
-    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoProvider() });
+    const { result, waitForValueToChange } = renderHook(() => useUser(), { wrapper: withEarthoClientProvider() });
 
     await waitForValueToChange(() => result.current.isLoading);
     expect(result.current.user).toEqual(user);
@@ -277,7 +277,7 @@ describe('re-renders', () => {
   test('should not update context value after rerender with no state change', async () => {
     (global as any).fetch = fetchUserErrorMock;
     const { waitForNextUpdate, result, rerender } = renderHook(() => useUser(), {
-      wrapper: withEarthoProvider()
+      wrapper: withEarthoClientProvider()
     });
 
     await waitForNextUpdate();

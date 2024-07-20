@@ -45,12 +45,12 @@ describe('with-page-auth-required ssr', () => {
 
     test('protect a page', async () => {
       await expect(getPageResponse({})).rejects.toThrowError('NEXT_REDIRECT');
-      expect(redirect).toHaveBeenCalledWith('/api/auth/login');
+      expect(redirect).toHaveBeenCalledWith('/api/access/login');
     });
 
     test('protect a page and redirect to returnTo option', async () => {
       await expect(getPageResponse({ returnTo: '/foo' })).rejects.toThrowError('NEXT_REDIRECT');
-      expect(redirect).toHaveBeenCalledWith('/api/auth/login?returnTo=/foo');
+      expect(redirect).toHaveBeenCalledWith('/api/access/login?returnTo=/foo');
     });
 
     test('protect a page and redirect to returnTo fn option', async () => {
@@ -64,7 +64,7 @@ describe('with-page-auth-required ssr', () => {
           searchParams: { foo: 'bar' }
         })
       ).rejects.toThrowError('NEXT_REDIRECT');
-      expect(redirect).toHaveBeenCalledWith('/api/auth/login?returnTo=/foo/bar?foo=bar');
+      expect(redirect).toHaveBeenCalledWith('/api/access/login?returnTo=/foo/bar?foo=bar');
     });
 
     test('allow access to a page with a valid session', async () => {
@@ -79,9 +79,9 @@ describe('with-page-auth-required ssr', () => {
 
     test('use a custom login url', async () => {
       await expect(
-        getPageResponse({ config: { routes: { ...withApi.routes, login: '/api/auth/custom-login' } } })
+        getPageResponse({ config: { routes: { ...withApi.routes, login: '/api/access/custom-login' } } })
       ).rejects.toThrowError('NEXT_REDIRECT');
-      expect(redirect).toHaveBeenCalledWith('/api/auth/custom-login');
+      expect(redirect).toHaveBeenCalledWith('/api/access/custom-login');
     });
   });
 
@@ -94,7 +94,7 @@ describe('with-page-auth-required ssr', () => {
         res: { statusCode, headers }
       } = await get(baseUrl, '/protected', { fullResponse: true });
       expect(statusCode).toBe(307);
-      expect(decodeURIComponent(headers.location)).toBe('/api/auth/login?returnTo=/protected');
+      expect(decodeURIComponent(headers.location)).toBe('/api/access/login?returnTo=/protected');
     });
 
     test('allow access to a page with a valid session', async () => {
@@ -115,7 +115,7 @@ describe('with-page-auth-required ssr', () => {
         res: { statusCode, headers }
       } = await get(baseUrl, '/protected', { fullResponse: true });
       expect(statusCode).toBe(307);
-      expect(decodeURIComponent(headers.location)).toBe('/api/auth/login?returnTo=/foo');
+      expect(decodeURIComponent(headers.location)).toBe('/api/access/login?returnTo=/foo');
     });
 
     test('accept custom server-side props', async () => {

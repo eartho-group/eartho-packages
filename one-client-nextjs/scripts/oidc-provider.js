@@ -22,7 +22,7 @@ const config = {
       client_id: 'testing',
       client_secret: 'testing',
       redirect_uris: [
-        'http://localhost:3000/api/auth/callback',
+        'http://localhost:3000/api/access/callback',
         'http://localhost:3000/api/page-router-auth/callback',
         'http://localhost:3000/api/edge-auth/callback'
       ],
@@ -34,7 +34,7 @@ const config = {
   routes: {
     authorization: '/authorize', // lgtm [js/hardcoded-credentials]
     token: '/oauth/token',
-    end_session: '/v2/logout'
+    end_session: '/logout'
   },
   scopes: ['openid', 'offline_access'],
   clientBasedCORS(ctx, origin, client) {

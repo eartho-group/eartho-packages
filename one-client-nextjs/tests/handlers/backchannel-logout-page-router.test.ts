@@ -10,7 +10,7 @@ describe('backchannel-logout handler (page router)', () => {
   test('should 404 when backchannel logout is disabled', async () => {
     const baseUrl = await setup(withoutApi);
 
-    await expect(post(baseUrl, '/api/auth/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
+    await expect(post(baseUrl, '/api/access/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
       'Not Found'
     );
   });
@@ -18,7 +18,7 @@ describe('backchannel-logout handler (page router)', () => {
   test('should error when misconfigured', async () => {
     const baseUrl = await setup({ ...withoutApi, backchannelLogout: true });
 
-    await expect(post(baseUrl, '/api/auth/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
+    await expect(post(baseUrl, '/api/access/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
       'Bad Request'
     );
   });
@@ -26,7 +26,7 @@ describe('backchannel-logout handler (page router)', () => {
   test('should error when misconfigured', async () => {
     const baseUrl = await setup({ ...withoutApi, backchannelLogout: true });
 
-    await expect(post(baseUrl, '/api/auth/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
+    await expect(post(baseUrl, '/api/access/backchannel-logout', { fullResponse: true, body: '' })).rejects.toThrow(
       'Bad Request'
     );
   });
@@ -35,7 +35,7 @@ describe('backchannel-logout handler (page router)', () => {
     const baseUrl = await setup({ ...withoutApi, backchannelLogout: { store: new Store() } });
 
     await expect(
-      post(baseUrl, '/api/auth/backchannel-logout', { fullResponse: true, body: 'logout_token=foo' })
+      post(baseUrl, '/api/access/backchannel-logout', { fullResponse: true, body: 'logout_token=foo' })
     ).rejects.toThrow('Bad Request');
   });
 
@@ -44,7 +44,7 @@ describe('backchannel-logout handler (page router)', () => {
     const baseUrl = await setup({ ...withoutApi, backchannelLogout: { store: new Store() } });
 
     await expect(
-      post(baseUrl, '/api/auth/backchannel-logout', { fullResponse: true, body: `logout_token=${logoutToken}` })
+      post(baseUrl, '/api/access/backchannel-logout', { fullResponse: true, body: `logout_token=${logoutToken}` })
     ).resolves.toMatchObject({ res: { statusCode: 204 } });
   });
 
@@ -53,7 +53,7 @@ describe('backchannel-logout handler (page router)', () => {
     const logoutToken = await makeLogoutToken({ iss: 'https://acme.eartho.local/', sid: 'foo', sub: 'bar' });
     const baseUrl = await setup({ ...withoutApi, backchannelLogout: { store } });
 
-    const { res } = await post(baseUrl, '/api/auth/backchannel-logout', {
+    const { res } = await post(baseUrl, '/api/access/backchannel-logout', {
       fullResponse: true,
       body: `logout_token=${logoutToken}`
     });

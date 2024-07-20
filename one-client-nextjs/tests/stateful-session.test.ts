@@ -33,7 +33,7 @@ describe('next stateful session', () => {
 
   it('should not create a session when there are no cookies', async () => {
     const baseURL = await setup(config);
-    await expect(get(baseURL, '/api/auth/me')).resolves.toBe('');
+    await expect(get(baseURL, '/api/access/me')).resolves.toBe('');
     expect(store.store).toEqual({});
   });
 
@@ -41,7 +41,7 @@ describe('next stateful session', () => {
     const baseUrl = await setup(config);
     const cookieJar = await login(baseUrl);
 
-    const profile = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile).toStrictEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
     expect(Object.keys(store)).toHaveLength(1);
   });
@@ -50,7 +50,7 @@ describe('next stateful session', () => {
     await store.set('foo', await getPayload());
     const baseURL = await setup(config);
     const cookieJar = await toSignedCookieJar({ appSession: 'foo' }, baseURL);
-    const profile = await get(baseURL, '/api/auth/me', { cookieJar });
+    const profile = await get(baseURL, '/api/access/me', { cookieJar });
     expect(profile).toMatchObject({
       sub: 'dave'
     });
@@ -60,13 +60,13 @@ describe('next stateful session', () => {
     await store.set('foo', await getPayload());
     const baseURL = await setup(config);
     const cookieJar = await toSignedCookieJar({ appSession: 'foo' }, baseURL);
-    const profile = await get(baseURL, '/api/auth/me', { cookieJar });
+    const profile = await get(baseURL, '/api/access/me', { cookieJar });
     expect(profile).toMatchObject({
       sub: 'dave'
     });
     expect(Object.values(store.store)).toHaveLength(1);
     expect(cookieJar.getCookieStringSync(baseURL)).toMatch(/^appSession=foo\..+/);
-    await get(baseURL, '/api/auth/logout', { cookieJar });
+    await get(baseURL, '/api/access/logout', { cookieJar });
     expect(Object.values(store.store)).toHaveLength(0);
     expect(cookieJar.getCookieStringSync(baseURL)).toEqual('');
   });
@@ -75,7 +75,7 @@ describe('next stateful session', () => {
     const baseUrl = await setup({ ...config, session: { ...config.session, genId: () => 'foo' } });
     const cookieJar = await login(baseUrl);
 
-    const profile = await get(baseUrl, '/api/auth/me', { cookieJar });
+    const profile = await get(baseUrl, '/api/access/me', { cookieJar });
     expect(profile).toStrictEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
     expect(Object.keys(store)).toHaveLength(1);
     expect(cookieJar.getCookieStringSync(baseUrl)).toMatch(/^appSession=foo\..+/);

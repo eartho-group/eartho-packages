@@ -97,7 +97,7 @@ export const setup = async (
 ): Promise<string> => {
   await setupNock(config, { idTokenClaims, discoveryOptions, userInfoPayload, userInfoToken });
   const {
-    handleAuth,
+    handleAccess,
     handleCallback,
     handleLogin,
     handleLogout,
@@ -123,7 +123,7 @@ export const setup = async (
     profile,
     'backchannel-logout:': backchannelLogout
   };
-  global.handleAuth = handleAuth.bind(null, handlers);
+  global.handleAccess = handleAccess.bind(null, handlers);
   global.getSession = getSession;
   global.touchSession = touchSession;
   global.updateSession = updateSession;
@@ -143,7 +143,7 @@ export const teardown = async (): Promise<void> => {
   delete global.getSession;
   delete global.touchSession;
   delete global.updateSession;
-  delete global.handleAuth;
+  delete global.handleAccess;
   delete global.withApiAuthRequired;
   delete global.withPageAuthRequired;
   delete global.withPageAuthRequiredCSR;
@@ -156,7 +156,7 @@ export const login = async (baseUrl: string): Promise<CookieJar> => {
   const nonce = '__test_nonce__';
   const state = encodeState({ returnTo: '/' });
   const cookieJar = await toSignedCookieJar({ auth_verification: JSON.stringify({ state, nonce }) }, baseUrl);
-  await post(baseUrl, '/api/auth/callback', {
+  await post(baseUrl, '/api/access/callback', {
     fullResponse: true,
     body: {
       state,

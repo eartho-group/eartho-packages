@@ -10,7 +10,7 @@ import { Session, AfterCallbackPageRoute, MissingStateCookieError } from '../../
 import nock from 'nock';
 
 const callback = (baseUrl: string, body: any, cookieJar?: CookieJar): Promise<any> =>
-  post(baseUrl, `/api/auth/callback`, {
+  post(baseUrl, `/api/access/callback`, {
     body,
     cookieJar,
     fullResponse: true
@@ -110,7 +110,7 @@ describe('callback handler (page router)', () => {
       baseUrl
     );
     await expect(
-      get(baseUrl, `/api/auth/callback?error=%3Cscript%3Ealert(%27xss%27)%3C%2Fscript%3E&state=foo`, { cookieJar })
+      get(baseUrl, `/api/access/callback?error=%3Cscript%3Ealert(%27xss%27)%3C%2Fscript%3E&state=foo`, { cookieJar })
     ).rejects.toThrow('&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;');
   });
 
@@ -151,7 +151,7 @@ describe('callback handler (page router)', () => {
       }),
       baseUrl
     );
-    const { res } = await post(baseUrl, `/api/auth/callback`, {
+    const { res } = await post(baseUrl, `/api/access/callback`, {
       fullResponse: true,
       cookieJar,
       body: {

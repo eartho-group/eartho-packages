@@ -5,7 +5,7 @@ const instanceCheck = () => {
   if (isUsingNamedExports && isUsingOwnInstance) {
     throw new Error(
       'You cannot mix creating your own instance with `initEartho` and using named ' +
-        "exports like `import { handleAuth } from '@eartho/one-client-nextjs'`"
+        "exports like `import { handleAccess } from '@eartho/one-client-nextjs'`"
     );
   }
 };

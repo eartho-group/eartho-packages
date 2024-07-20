@@ -160,7 +160,7 @@ describe('edge client', function () {
   it('should use eartho logout endpoint if configured', async function () {
     const client = await getClient({ ...defaultConfig, idpLogout: true, earthoLogout: true });
     await expect(client.endSessionUrl({} as any)).resolves.toEqual(
-      'https://op.example.com/v2/logout?client_id=__test_client_id__'
+      'https://op.example.com/logout?client_id=__test_client_id__'
     );
   });
 
@@ -170,7 +170,7 @@ describe('edge client', function () {
       .reply(200, { ...wellKnown, issuer: 'https://foo.eartho.io/' });
     const client = await getClient({ ...defaultConfig, idpLogout: true, issuerBaseURL: 'https://foo.eartho.io' });
     await expect(client.endSessionUrl({ post_logout_redirect_uri: '' })).resolves.toEqual(
-      'https://foo.eartho.io/v2/logout?client_id=__test_client_id__'
+      'https://foo.eartho.io/logout?client_id=__test_client_id__'
     );
   });
 
@@ -185,7 +185,7 @@ describe('edge client', function () {
       earthoLogout: true
     });
     await expect(client.endSessionUrl({ post_logout_redirect_uri: '' })).resolves.toEqual(
-      'https://foo.eartho.io/v2/logout?client_id=__test_client_id__'
+      'https://foo.eartho.io/logout?client_id=__test_client_id__'
     );
   });
 
@@ -231,7 +231,7 @@ describe('edge client', function () {
       idpLogout: true
     });
     await expect(client.endSessionUrl({ post_logout_redirect_uri: 'foo' })).resolves.toEqual(
-      'https://test.eu.eartho.io/v2/logout?returnTo=foo&client_id=__test_client_id__'
+      'https://test.eu.eartho.io/logout?returnTo=foo&client_id=__test_client_id__'
     );
   });
 
@@ -245,7 +245,7 @@ describe('edge client', function () {
   it('should remove null params from eartho logout endpoint', async function () {
     const client = await getClient({ ...defaultConfig, idpLogout: true, earthoLogout: true });
     await expect(client.endSessionUrl({ foo: null } as any)).resolves.toEqual(
-      'https://op.example.com/v2/logout?client_id=__test_client_id__'
+      'https://op.example.com/logout?client_id=__test_client_id__'
     );
   });
 

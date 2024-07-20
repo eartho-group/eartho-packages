@@ -7,7 +7,7 @@ export const withoutApi: ConfigParameters = {
   baseURL: 'http://www.acme.com/',
   secret: '__test_session_secret__',
   routes: {
-    callback: '/api/auth/callback'
+    callback: '/api/access/callback'
   }
 };
 
@@ -25,6 +25,6 @@ export const withApi: ConfigParameters = {
     audience: 'https://api.acme.com'
   },
   routes: {
-    callback: '/api/auth/callback'
+    callback: '/api/access/callback'
   }
 };

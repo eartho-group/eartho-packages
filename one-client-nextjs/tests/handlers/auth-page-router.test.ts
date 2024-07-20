@@ -21,50 +21,50 @@ describe('auth handler (page router)', () => {
 
   test('return 500 for unexpected error', async () => {
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth;
+    global.handleAccess = initEartho(withoutApi).handleAccess;
     delete global.onError;
     jest.spyOn(console, 'error').mockImplementation((error) => {
       delete error.status;
     });
-    await expect(get(baseUrl, '/api/auth/callback?error=foo&error_description=bar&state=foo')).rejects.toThrow(
+    await expect(get(baseUrl, '/api/access/callback?error=foo&error_description=bar&state=foo')).rejects.toThrow(
       'Internal Server Error'
     );
   });
 
   test('return 404 for unknown routes', async () => {
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth;
-    await expect(get(baseUrl, '/api/auth/foo')).rejects.toThrow('Not Found');
+    global.handleAccess = initEartho(withoutApi).handleAccess;
+    await expect(get(baseUrl, '/api/access/foo')).rejects.toThrow('Not Found');
   });
 
   test('return 404 for unknown routes including builtin props', async () => {
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth;
-    await expect(get(baseUrl, '/api/auth/__proto__')).rejects.toThrow('Not Found');
+    global.handleAccess = initEartho(withoutApi).handleAccess;
+    await expect(get(baseUrl, '/api/access/__proto__')).rejects.toThrow('Not Found');
   });
 
   test('return 404 when routes have extra parts', async () => {
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth;
-    await expect(get(baseUrl, '/api/auth/me.css')).rejects.toThrow('Not Found');
-    await expect(get(baseUrl, '/api/auth/me/foo.css')).rejects.toThrow('Not Found');
-    await expect(get(baseUrl, '/api/auth/me/foo/bar.css')).rejects.toThrow('Not Found');
+    global.handleAccess = initEartho(withoutApi).handleAccess;
+    await expect(get(baseUrl, '/api/access/me.css')).rejects.toThrow('Not Found');
+    await expect(get(baseUrl, '/api/access/me/foo.css')).rejects.toThrow('Not Found');
+    await expect(get(baseUrl, '/api/access/me/foo/bar.css')).rejects.toThrow('Not Found');
   });
 
   test('accept custom error handler', async () => {
     const onError = jest.fn((_req, res) => res.end());
     const baseUrl = await setup(withoutApi, { onError });
-    await get(baseUrl, '/api/auth/callback?error=foo&error_description=bar&state=foo');
+    await get(baseUrl, '/api/access/callback?error=foo&error_description=bar&state=foo');
     expect(onError).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse), handlerError());
   });
 
   test('use default error handler', async () => {
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth;
+    global.handleAccess = initEartho(withoutApi).handleAccess;
     delete global.onError;
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     jest.spyOn(console, 'error').mockImplementation(() => {});
-    await expect(get(baseUrl, '/api/auth/callback?error=foo&error_description=bar&state=foo')).rejects.toThrow(
+    await expect(get(baseUrl, '/api/access/callback?error=foo&error_description=bar&state=foo')).rejects.toThrow(
       'Bad Request'
     );
     expect(console.error).toHaveBeenCalledWith(handlerError());
@@ -73,9 +73,9 @@ describe('auth handler (page router)', () => {
   test('finish response if custom error does not', async () => {
     const onError = jest.fn();
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { onError });
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { onError });
     await expect(
-      get(baseUrl, '/api/auth/callback?error=foo&error_description=bar&state=foo', { fullResponse: true })
+      get(baseUrl, '/api/access/callback?error=foo&error_description=bar&state=foo', { fullResponse: true })
     ).rejects.toThrow('Internal Server Error');
     expect(onError).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse), handlerError());
   });
@@ -83,9 +83,9 @@ describe('auth handler (page router)', () => {
   test('finish response with custom error status', async () => {
     const onError = jest.fn((_req, res) => res.status(418));
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { onError });
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { onError });
     await expect(
-      get(baseUrl, '/api/auth/callback?error=foo&error_description=bar&state=foo', { fullResponse: true })
+      get(baseUrl, '/api/access/callback?error=foo&error_description=bar&state=foo', { fullResponse: true })
     ).rejects.toThrow("I'm a Teapot");
     expect(onError).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse), handlerError());
   });
@@ -95,8 +95,8 @@ describe('auth handler (page router)', () => {
       res.end();
     }) as NextApiHandler as Handler;
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { login });
-    await get(baseUrl, '/api/auth/login');
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { login });
+    await get(baseUrl, '/api/access/login');
     expect(login).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse));
   });
 
@@ -105,8 +105,8 @@ describe('auth handler (page router)', () => {
       res.end();
     }) as NextApiHandler as Handler;
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { logout });
-    await get(baseUrl, '/api/auth/logout');
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { logout });
+    await get(baseUrl, '/api/access/logout');
     expect(logout).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse));
   });
 
@@ -115,8 +115,8 @@ describe('auth handler (page router)', () => {
       res.end();
     }) as NextApiHandler as Handler;
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { callback });
-    await get(baseUrl, '/api/auth/callback');
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { callback });
+    await get(baseUrl, '/api/access/callback');
     expect(callback).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse));
   });
 
@@ -125,8 +125,8 @@ describe('auth handler (page router)', () => {
       res.end();
     }) as NextApiHandler as Handler;
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { profile });
-    await get(baseUrl, '/api/auth/me');
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { profile });
+    await get(baseUrl, '/api/access/me');
     expect(profile).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse));
   });
 
@@ -135,8 +135,8 @@ describe('auth handler (page router)', () => {
       res.end();
     }) as NextApiHandler as Handler;
     const baseUrl = await setup(withoutApi);
-    global.handleAuth = initEartho(withoutApi).handleAuth.bind(null, { signup });
-    await get(baseUrl, '/api/auth/signup');
+    global.handleAccess = initEartho(withoutApi).handleAccess.bind(null, { signup });
+    await get(baseUrl, '/api/access/signup');
     expect(signup).toHaveBeenCalledWith(expect.any(IncomingMessage), expect.any(ServerResponse));
   });
 
@@ -147,11 +147,11 @@ describe('auth handler (page router)', () => {
     jest.spyOn(baseLoginHandler, 'default').mockImplementation(() => loginHandler);
     const options: LoginOptions = { authorizationParams: { scope: 'openid' } };
     const baseUrl = await setup(withoutApi);
-    const { handleLogin, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleLogin, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       login: handleLogin(options)
     });
-    await get(baseUrl, '/api/auth/login');
+    await get(baseUrl, '/api/access/login');
     expect(loginHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
       expect.objectContaining({ res: expect.any(ServerResponse) }),
@@ -166,11 +166,11 @@ describe('auth handler (page router)', () => {
     jest.spyOn(baseLogoutHandler, 'default').mockImplementation(() => logoutHandler);
     const options: LogoutOptions = { returnTo: '/foo' };
     const baseUrl = await setup(withoutApi);
-    const { handleLogout, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleLogout, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       logout: handleLogout(options)
     });
-    await get(baseUrl, '/api/auth/logout');
+    await get(baseUrl, '/api/access/logout');
     expect(logoutHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
       expect.objectContaining({ res: expect.any(ServerResponse) }),
@@ -185,11 +185,11 @@ describe('auth handler (page router)', () => {
     jest.spyOn(baseCallbackHandler, 'default').mockImplementation(() => callbackHandler);
     const options: CallbackOptions = { redirectUri: '/foo' };
     const baseUrl = await setup(withoutApi);
-    const { handleCallback, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleCallback, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       callback: handleCallback(options)
     });
-    await get(baseUrl, '/api/auth/callback');
+    await get(baseUrl, '/api/access/callback');
     expect(callbackHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
       expect.objectContaining({ res: expect.any(ServerResponse) }),
@@ -201,12 +201,12 @@ describe('auth handler (page router)', () => {
     const afterRefetch = jest.fn(async (_req, _res, session) => session);
     const options: ProfileOptions = { refetch: true, afterRefetch };
     const baseUrl = await setup(withoutApi);
-    const { handleProfile, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleProfile, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       profile: handleProfile(options)
     });
     const cookieJar = await login(baseUrl);
-    await get(baseUrl, '/api/auth/me', { cookieJar });
+    await get(baseUrl, '/api/access/me', { cookieJar });
     expect(afterRefetch).toHaveBeenCalled();
   });
 
@@ -218,12 +218,12 @@ describe('auth handler (page router)', () => {
     const options = { authorizationParams: { scope: 'openid' } };
     const optionsProvider = jest.fn(() => options);
     const baseUrl = await setup(withoutApi);
-    const { handleLogin, handleAuth } = initEartho(withoutApi);
+    const { handleLogin, handleAccess } = initEartho(withoutApi);
 
-    global.handleAuth = handleAuth.bind(null, {
+    global.handleAccess = handleAccess.bind(null, {
       login: handleLogin(optionsProvider)
     });
-    await get(baseUrl, '/api/auth/login');
+    await get(baseUrl, '/api/access/login');
     expect(optionsProvider).toHaveBeenCalled();
     expect(loginHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
@@ -240,11 +240,11 @@ describe('auth handler (page router)', () => {
     const options: LogoutOptions = { returnTo: '/foo' };
     const optionsProvider = jest.fn(() => options);
     const baseUrl = await setup(withoutApi);
-    const { handleLogout, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleLogout, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       logout: handleLogout(optionsProvider)
     });
-    await get(baseUrl, '/api/auth/logout');
+    await get(baseUrl, '/api/access/logout');
     expect(optionsProvider).toHaveBeenCalled();
     expect(logoutHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
@@ -261,11 +261,11 @@ describe('auth handler (page router)', () => {
     const options: CallbackOptions = { redirectUri: '/foo' };
     const optionsProvider = jest.fn(() => options);
     const baseUrl = await setup(withoutApi);
-    const { handleCallback, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleCallback, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       callback: handleCallback(optionsProvider)
     });
-    await get(baseUrl, '/api/auth/callback');
+    await get(baseUrl, '/api/access/callback');
     expect(optionsProvider).toHaveBeenCalled();
     expect(callbackHandler).toHaveBeenCalledWith(
       expect.objectContaining({ req: expect.any(IncomingMessage) }),
@@ -279,12 +279,12 @@ describe('auth handler (page router)', () => {
     const options: ProfileOptions = { refetch: true, afterRefetch };
     const optionsProvider = jest.fn(() => options);
     const baseUrl = await setup(withoutApi);
-    const { handleProfile, handleAuth } = initEartho(withoutApi);
-    global.handleAuth = handleAuth.bind(null, {
+    const { handleProfile, handleAccess } = initEartho(withoutApi);
+    global.handleAccess = handleAccess.bind(null, {
       profile: handleProfile(optionsProvider)
     });
     const cookieJar = await login(baseUrl);
-    await get(baseUrl, '/api/auth/me', { cookieJar });
+    await get(baseUrl, '/api/access/me', { cookieJar });
     expect(optionsProvider).toHaveBeenCalled();
     expect(afterRefetch).toHaveBeenCalled();
   });

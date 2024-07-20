@@ -1,6 +1,6 @@
-import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
 
-export const GET = handleAuth({
+export const GET = handleAccess({
   login: handleLogin({
     authorizationParams: {
       access_id: 'QJkg3evAtIqJgF80iB1o'

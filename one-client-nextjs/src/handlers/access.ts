@@ -19,11 +19,11 @@ import { isRequest } from '../utils/req-helpers';
  * `login`, `logout`, `callback`, and `profile`. For example:
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  * import { errorReporter, logger } from '../../../utils';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   async login(req, res) {
  *     try {
  *        // Pass in custom params to your handler
@@ -42,10 +42,10 @@ import { isRequest } from '../utils/req-helpers';
  * Alternatively, you can customize the default handlers without overriding them. For example:
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: handleLogin({
  *     authorizationParams: { customParam: 'foo' } // Pass in custom params
  *   })
@@ -55,10 +55,10 @@ import { isRequest } from '../utils/req-helpers';
  * You can also create new handlers by customizing the default ones. For example:
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   signup: handleLogin({
  *     authorizationParams: { screen_hint: 'signup' }
  *   })
@@ -87,38 +87,38 @@ type ErrorHandlers = {
  * *Page Router*
  *
  * Simply set the environment variables per {@link ConfigParameters} then create the file
- * `pages/api/auth/[eartho].js`. For example:
+ * `pages/api/access/[eartho].js`. For example:
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth();
+ * export default handleAccess();
  * ```
 
  * *App Router*
  *
  * Simply set the environment variables per {@link ConfigParameters} then create the file
- * `app/api/auth/[eartho]/route.js`. For example:
+ * `app/api/access/[eartho]/route.js`. For example:
  *
  * ```js
- * // app/api/auth/[eartho]/route.js
- * import { handleAuth } from '@eartho/one-client-nextjs';
+ * // app/api/access/[eartho]/route.js
+ * import { handleAccess } from '@eartho/one-client-nextjs';
  *
- * export const GET = handleAuth();
+ * export const GET = handleAccess();
  * ```
  *
  * This will create 4 handlers for the following urls:
  *
- * - `/api/auth/login`: log the user in to your app by redirecting them to your identity provider.
- * - `/api/auth/callback`: The page that your identity provider will redirect the user back to on login.
- * - `/api/auth/logout`: log the user out of your app.
- * - `/api/auth/me`: View the user profile JSON (used by the {@link UseUser} hook).
+ * - `/api/access/login`: log the user in to your app by redirecting them to your identity provider.
+ * - `/api/access/callback`: The page that your identity provider will redirect the user back to on login.
+ * - `/api/access/logout`: log the user out of your app.
+ * - `/api/access/me`: View the user profile JSON (used by the {@link UseUser} hook).
  *
  * @category Server
  */
 // any is required for app router ts check
-export type HandleAuth = (userHandlers?: Handlers) => NextApiHandler | AppRouteHandlerFn | any;
+export type HandleAccess = (userHandlers?: Handlers) => NextApiHandler | AppRouteHandlerFn | any;
 
 /**
  * Error handler for the default auth routes.
@@ -126,7 +126,7 @@ export type HandleAuth = (userHandlers?: Handlers) => NextApiHandler | AppRouteH
  * Use this to define an error handler for all the default routes in a single place. For example:
  *
  * ```js
- * export default handleAuth({
+ * export default handleAccess({
  *   onError(req, res, error) {
  *     errorLogger(error);
  *     // You can finish the response yourself if you want to customize
@@ -178,7 +178,7 @@ export default function handlerFactory({
   handleCallback: HandleCallback;
   handleProfile: HandleProfile;
   handleBackchannelLogout: HandleBackchannelLogout;
-}): HandleAuth {
+}): HandleAccess {
   return ({ onError, ...handlers }: Handlers = {}): NextApiHandler<void> | AppRouteHandlerFn => {
     const customHandlers: ApiHandlers = {
       login: handleLogin,

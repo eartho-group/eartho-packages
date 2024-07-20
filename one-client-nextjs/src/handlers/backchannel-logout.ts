@@ -6,7 +6,7 @@ import { AppRouteHandlerFnContext, Handler, getHandler } from './router-helpers'
 import { GetConfig } from '../config';
 
 /**
- * The handler for the POST `/api/auth/backchannel-logout` API route.
+ * The handler for the POST `/api/access/backchannel-logout` API route.
  *
  * @category Server
  */

@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import { fetchUserErrorMock, withEarthoProvider, user } from '../fixtures/frontend';
+import { fetchUserErrorMock, withEarthoClientProvider, user } from '../fixtures/frontend';
 import { withPageAuthRequired } from '../../src/client';
 
 describe('with-page-auth-required csr', () => {
@@ -25,7 +25,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(window.location.assign).toHaveBeenCalledTimes(1));
     await waitFor(() => expect(screen.queryByText('Private')).not.toBeInTheDocument());
   });
@@ -33,7 +33,7 @@ describe('with-page-auth-required csr', () => {
   it('should add user to props of CSR page when authenticated', async () => {
     const ProtectedPage = withPageAuthRequired(({ user }): JSX.Element => <>{user.email}</>);
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider({ user }) });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider({ user }) });
     await waitFor(() => expect(window.location.assign).not.toHaveBeenCalled());
     await waitFor(() => expect(screen.getByText('foo@example.com')).toBeInTheDocument());
   });
@@ -43,7 +43,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    const { container } = render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    const { container } = render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(container).toBeEmptyDOMElement());
   });
 
@@ -53,7 +53,7 @@ describe('with-page-auth-required csr', () => {
     const OnRedirecting = (): JSX.Element => <>Redirecting</>;
     const ProtectedPage = withPageAuthRequired(MyPage, { onRedirecting: OnRedirecting });
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(screen.getByText('Redirecting')).toBeInTheDocument());
   });
 
@@ -62,7 +62,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    const { container } = render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    const { container } = render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(container).toBeEmptyDOMElement());
   });
 
@@ -72,7 +72,7 @@ describe('with-page-auth-required csr', () => {
     const OnError = (): JSX.Element => <>Error</>;
     const ProtectedPage = withPageAuthRequired(MyPage, { onError: OnError });
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(screen.getByText('Error')).toBeInTheDocument());
   });
 
@@ -82,7 +82,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => expect(window.location.assign).toHaveBeenCalledWith(expect.stringContaining('/api/foo')));
     delete process.env.NEXT_PUBLIC_EARTHO_LOGIN;
   });
@@ -93,7 +93,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() =>
       expect(window.location.assign).toHaveBeenCalledWith(
         expect.stringContaining(`?returnTo=${encodeURIComponent('/')}`)
@@ -107,7 +107,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage);
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() =>
       expect(window.location.assign).toHaveBeenCalledWith(
         expect.stringContaining(`?returnTo=${encodeURIComponent('/foo')}`)
@@ -120,7 +120,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage, { returnTo: '/foo' });
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() =>
       expect(window.location.assign).toHaveBeenCalledWith(
         expect.stringContaining(`?returnTo=${encodeURIComponent('/foo')}`)
@@ -133,7 +133,7 @@ describe('with-page-auth-required csr', () => {
     const MyPage = (): JSX.Element => <>Private</>;
     const ProtectedPage = withPageAuthRequired(MyPage, { returnTo: '/foo?bar=baz&qux=quux' });
 
-    render(<ProtectedPage />, { wrapper: withEarthoProvider() });
+    render(<ProtectedPage />, { wrapper: withEarthoClientProvider() });
     await waitFor(() => {
       expect(window.location.assign).toHaveBeenCalled();
     });

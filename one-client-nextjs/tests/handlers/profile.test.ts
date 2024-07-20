@@ -20,13 +20,13 @@ describe('profile handler (app router)', () => {
   beforeEach(mockFetch);
 
   test('should be empty when not logged in', async () => {
-    await expect(getResponse({ url: '/api/auth/me' })).resolves.toMatchObject({ status: 204 });
+    await expect(getResponse({ url: '/api/access/me' })).resolves.toMatchObject({ status: 204 });
   });
 
   test('should return the profile when logged in', async () => {
     const loginRes = await appRouterLogin();
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value }
     });
     expect(res.status).toBe(200);
@@ -36,7 +36,7 @@ describe('profile handler (app router)', () => {
   test('should not allow caching the profile response', async () => {
     const loginRes = await appRouterLogin();
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value }
     });
     expect(res.headers.get('cache-control')).toBe('no-store');
@@ -45,7 +45,7 @@ describe('profile handler (app router)', () => {
   test('should not allow caching the profile response when refetch is true', async () => {
     const loginRes = await appRouterLogin();
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       profileOpts: { refetch: true },
       userInfoPayload: { sub: 'foo' }
@@ -63,7 +63,7 @@ describe('profile handler (app router)', () => {
       }
     });
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       profileOpts: { refetch: true }
     });
@@ -74,7 +74,7 @@ describe('profile handler (app router)', () => {
   test('should refetch the user and update the session', async () => {
     const loginRes = await appRouterLogin();
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       profileOpts: { refetch: true },
       userInfoPayload: { foo: 'bar', sub: 'foo' }
@@ -106,7 +106,7 @@ describe('profile handler (app router)', () => {
       });
 
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       profileOpts: { refetch: true },
       userInfoPayload: { foo: 'bar' },
@@ -131,7 +131,7 @@ describe('profile handler (app router)', () => {
     nock.cleanAll();
     await refreshTokenRotationExchange(withApi, 'GEbRxBN...edjnXbL', {}, 'new-access-token', 'new-refresh-token');
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       profileOpts: { refetch: true },
       userInfoPayload: { foo: 'bar', sub: 'foo' },
@@ -150,7 +150,7 @@ describe('profile handler (app router)', () => {
   test('should update the session in the afterRefetch hook', async () => {
     const loginRes = await appRouterLogin();
     const res = await getResponse({
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value },
       userInfoPayload: { sub: 'foo' },
       profileOpts: {
@@ -168,7 +168,7 @@ describe('profile handler (app router)', () => {
     const loginRes = await appRouterLogin();
     await expect(
       getResponse({
-        url: '/api/auth/me',
+        url: '/api/access/me',
         cookies: { appSession: loginRes.cookies.get('appSession').value },
         userInfoPayload: { sub: 'foo' },
         profileOpts: {
@@ -187,7 +187,7 @@ describe('profile handler (app router)', () => {
     const loginRes = await appRouterLogin({ earthoInstance });
     const res = await getResponse({
       earthoInstance,
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value }
     });
     expect(res.status).toBe(200);
@@ -195,7 +195,7 @@ describe('profile handler (app router)', () => {
     await store.set(`sub|${withApi.clientID}|${user.sub}`, {});
     const res2 = await getResponse({
       earthoInstance,
-      url: '/api/auth/me',
+      url: '/api/access/me',
       cookies: { appSession: loginRes.cookies.get('appSession').value }
     });
     expect(res2.status).toBe(204);

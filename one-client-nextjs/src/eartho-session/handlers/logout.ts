@@ -43,11 +43,13 @@ export default function logoutHandlerFactory(
       return;
     }
 
-    returnURL = await client.endSessionUrl({
-      ...options.logoutParams,
-      post_logout_redirect_uri: returnURL,
-      id_token_hint: idToken
-    });
+    idToken;
+    client;
+    // returnURL = await client.endSessionUrl({
+    //   ...options.logoutParams,
+    //   post_logout_redirect_uri: returnURL,
+    //   id_token_hint: idToken
+    // });
 
     debug('logging out of identity provider, redirecting to %s', returnURL);
     res.redirect(returnURL);

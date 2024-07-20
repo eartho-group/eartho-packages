@@ -3,7 +3,7 @@ import {
   ConfigParameters,
   GetAccessToken,
   GetSession,
-  HandleAuth,
+  HandleAccess,
   HandleCallback,
   HandleLogin,
   HandleLogout,
@@ -16,7 +16,7 @@ import {
 import { _initAuth } from './init';
 import { setIsUsingNamedExports, setIsUsingOwnInstance } from './utils/instance-check';
 import { clientGetter } from './eartho-session/client/edge-client';
-import { WithMiddlewareAuthRequired } from './helpers/with-middleware-auth-required';
+import { WithMiddlewareAccessRequired } from './helpers/with-middleware-auth-required';
 
 const genId = () => {
   const bytes = new Uint8Array(16);
@@ -69,8 +69,8 @@ export const handleCallback: HandleCallback = ((...args: Parameters<HandleCallba
   getInstance().handleCallback(...args)) as HandleCallback;
 export const handleProfile: HandleProfile = ((...args: Parameters<HandleProfile>) =>
   getInstance().handleProfile(...args)) as HandleProfile;
-export const handleAuth: HandleAuth = (...args) => getInstance().handleAuth(...args);
-export const withMiddlewareAuthRequired: WithMiddlewareAuthRequired = (...args) =>
-  getInstance().withMiddlewareAuthRequired(...args);
+export const handleAccess: HandleAccess = (...args) => getInstance().handleAccess(...args);
+export const withMiddlewareAccessRequired: WithMiddlewareAccessRequired = (...args) =>
+  getInstance().withMiddlewareAccessRequired(...args);
 
 export * from './shared';

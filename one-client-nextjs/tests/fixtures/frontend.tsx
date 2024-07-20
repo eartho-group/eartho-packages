@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RequestError, EarthoProvider, EarthoProviderProps, UserProfile } from '../../src/client';
+import { RequestError, EarthoClientProvider, EarthoClientProviderProps, UserProfile } from '../../src/client';
 import { default as ConfigProvider, ConfigProviderProps } from '../../src/client/use-config';
 
 type FetchUserMock = {
@@ -19,14 +19,14 @@ export const user: UserProfile = {
   updated_at: null
 };
 
-export const withEarthoProvider = ({
+export const withEarthoClientProvider = ({
   user,
   profileUrl,
   loginUrl,
   fetcher
-}: EarthoProviderProps = {}): React.ComponentType => {
+}: EarthoClientProviderProps = {}): React.ComponentType => {
   return (props: any): React.ReactElement => (
-    <EarthoProvider {...props} user={user} profileUrl={profileUrl} loginUrl={loginUrl} fetcher={fetcher} />
+    <EarthoClientProvider {...props} user={user} profileUrl={profileUrl} loginUrl={loginUrl} fetcher={fetcher} />
   );
 };
 

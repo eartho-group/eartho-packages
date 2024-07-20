@@ -149,7 +149,7 @@ export class NodeClient extends AbstractClient {
         Object.defineProperty(this.client, 'endSessionUrl', {
           value(params: EndSessionParameters) {
             const { id_token_hint, post_logout_redirect_uri, ...extraParams } = params;
-            const parsedUrl = new URL(urlJoin(issuer.metadata.issuer, '/v2/logout'));
+            const parsedUrl = new URL(urlJoin(issuer.metadata.issuer, '/logout'));
             parsedUrl.searchParams.set('client_id', config.clientID);
             post_logout_redirect_uri && parsedUrl.searchParams.set('returnTo', post_logout_redirect_uri);
             Object.entries(extraParams).forEach(([key, value]) => {

@@ -67,7 +67,7 @@ describe('config params', () => {
           sameSite: 'lax'
         }
       },
-      routes: { callback: '/api/auth/callback', postLogoutRedirect: '', login: '/api/auth/login' },
+      routes: { callback: '/api/access/callback', postLogoutRedirect: '', login: '/api/access/login' },
       getLoginState: expect.any(Function),
       identityClaimFilter: [
         'aud',

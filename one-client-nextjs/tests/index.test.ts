@@ -56,7 +56,7 @@ describe('index', () => {
     const res = new ServerResponse(req);
     await expect(instance.getSession(req, res)).resolves.toBeNull();
     expect(() => getSession(req, res)).toThrow(
-      "You cannot mix creating your own instance with `initEartho` and using named exports like `import { handleAuth } from '@eartho/one-client-nextjs'`"
+      "You cannot mix creating your own instance with `initEartho` and using named exports like `import { handleAccess } from '@eartho/one-client-nextjs'`"
     );
   });
 
@@ -66,7 +66,7 @@ describe('index', () => {
     const res = new ServerResponse(req);
     await expect(getSession(req, res)).resolves.toBeNull();
     expect(() => initEartho()).toThrow(
-      "You cannot mix creating your own instance with `initEartho` and using named exports like `import { handleAuth } from '@eartho/one-client-nextjs'`"
+      "You cannot mix creating your own instance with `initEartho` and using named exports like `import { handleAccess } from '@eartho/one-client-nextjs'`"
     );
   });
 

@@ -24,7 +24,7 @@ import {
 import { withPageAuthRequiredFactory, withApiAuthRequiredFactory } from './helpers';
 import { configSingletonGetter, ConfigParameters } from './config';
 import { EarthoServer, telemetry } from './shared';
-import withMiddlewareAuthRequiredFactory from './helpers/with-middleware-auth-required';
+import withMiddlewareAccessRequiredFactory from './helpers/with-middleware-auth-required';
 import { GetClient } from './eartho-session/client/abstract-client';
 
 /**
@@ -69,14 +69,14 @@ export const _initAuth = ({
   const handleCallback = callbackHandler(baseHandleCallback, getConfig);
   const handleBackchannelLogout = backchannelLogoutHandler(baseHandleBackchannelLogout, getConfig);
   const handleProfile = profileHandler(getConfig, getClient, getAccessToken, sessionCache);
-  const handleAuth = handlerFactory({
+  const handleAccess = handlerFactory({
     handleLogin,
     handleLogout,
     handleCallback,
     handleProfile,
     handleBackchannelLogout
   });
-  const withMiddlewareAuthRequired = withMiddlewareAuthRequiredFactory(getConfig, sessionCache);
+  const withMiddlewareAccessRequired = withMiddlewareAccessRequiredFactory(getConfig, sessionCache);
 
   return {
     getSession,
@@ -90,7 +90,7 @@ export const _initAuth = ({
     handleCallback,
     handleBackchannelLogout,
     handleProfile,
-    handleAuth,
-    withMiddlewareAuthRequired
+    handleAccess,
+    withMiddlewareAccessRequired
   };
 };

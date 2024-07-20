@@ -86,7 +86,7 @@ export function codeExchange(params: ConfigParameters, idToken: string, code = '
       return (
         body.grant_type === 'authorization_code' &&
         body.code === code &&
-        body.redirect_uri === `${params.baseURL}api/auth/callback`
+        body.redirect_uri === `${params.baseURL}api/access/callback`
       );
     })
     .reply(200, {

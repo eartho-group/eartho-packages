@@ -70,10 +70,10 @@ export type ProfileOptionsProvider = OptionsProvider<ProfileOptions>;
  * @example Pass an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleProfile } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleProfile } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   profile: handleProfile({ refetch: true })
  * });
  * ```
@@ -81,10 +81,10 @@ export type ProfileOptionsProvider = OptionsProvider<ProfileOptions>;
  * @example Pass a function that receives the request and returns an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleProfile } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleProfile } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   profile: handleProfile((req) => {
  *     return { refetch: true };
  *   })
@@ -96,9 +96,9 @@ export type ProfileOptionsProvider = OptionsProvider<ProfileOptions>;
  * @example Override the profile handler
  *
  * ```js
- * import { handleAuth, handleProfile } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleProfile } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   profile: async (req, res) => {
  *     try {
  *       await handleProfile(req, res, { refetch: true });
@@ -114,7 +114,7 @@ export type ProfileOptionsProvider = OptionsProvider<ProfileOptions>;
 export type HandleProfile = AuthHandler<ProfileOptions>;
 
 /**
- * The handler for the `/api/auth/me` API route.
+ * The handler for the `/api/access/me` API route.
  *
  * @throws {@link HandlerError}
  *

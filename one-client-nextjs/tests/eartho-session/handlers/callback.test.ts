@@ -486,7 +486,7 @@ describe('callback', () => {
   });
 
   it('should accept custom runtime redirect over base url', async () => {
-    const redirectUri = 'http://messi:3000/api/auth/callback/runtime';
+    const redirectUri = 'http://messi:3000/api/access/callback/runtime';
     const baseURL = await setup(defaultConfig, { callbackOptions: { redirectUri } });
     const state = encodeState({ foo: 'bar' });
     const cookieJar = await toSignedCookieJar(authVerificationCookie({ state, nonce: '__test_nonce__' }), baseURL);

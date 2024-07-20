@@ -14,7 +14,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -27,7 +27,7 @@ describe('logout handler (page router)', () => {
         returnTo: 'http://www.acme.com',
         client_id: '__test_client_id__'
       },
-      pathname: '/v2/logout'
+      pathname: '/logout'
     });
   });
 
@@ -37,7 +37,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -51,7 +51,7 @@ describe('logout handler (page router)', () => {
         client_id: '__test_client_id__',
         foo: 'bar'
       },
-      pathname: '/v2/logout'
+      pathname: '/logout'
     });
   });
 
@@ -64,7 +64,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -86,7 +86,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -106,7 +106,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { statusCode, headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -114,7 +114,7 @@ describe('logout handler (page router)', () => {
     expect(statusCode).toBe(302);
     expect(parseUrl(headers['location'])).toMatchObject({
       host: 'acme.eartho.local',
-      pathname: '/v2/logout'
+      pathname: '/logout'
     });
   });
 
@@ -126,7 +126,7 @@ describe('logout handler (page router)', () => {
 
     const {
       res: { headers }
-    } = await get(baseUrl, '/api/auth/logout', {
+    } = await get(baseUrl, '/api/access/logout', {
       cookieJar,
       fullResponse: true
     });
@@ -145,7 +145,7 @@ describe('logout handler (page router)', () => {
     jest.spyOn(ServerResponse.prototype, 'writeHead').mockImplementationOnce(() => {
       throw new Error('write err');
     });
-    await expect(get(baseUrl, '/api/auth/logout', { cookieJar })).rejects.toThrowError(
+    await expect(get(baseUrl, '/api/access/logout', { cookieJar })).rejects.toThrowError(
       /Logout handler failed. CAUSE: write err/
     );
   });

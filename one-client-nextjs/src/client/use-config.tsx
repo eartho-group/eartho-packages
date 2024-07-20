@@ -13,7 +13,7 @@ export const useConfig: UseConfig = () => useContext<ConfigContext>(Config);
 
 export default ({
   children,
-  loginUrl = process.env.NEXT_PUBLIC_EARTHO_LOGIN || '/api/auth/login'
+  loginUrl = process.env.NEXT_PUBLIC_EARTHO_LOGIN || '/api/access/login'
 }: ConfigProviderProps): ReactElement<ConfigContext> => {
   return <Config.Provider value={{ loginUrl }}>{children}</Config.Provider>;
 };

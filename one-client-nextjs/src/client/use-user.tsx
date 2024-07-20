@@ -58,25 +58,25 @@ export class RequestError extends Error {
  * Fetches the user from the profile API route to fill the {@link useUser} hook with the
  * {@link UserProfile} object.
  *
- * If needed, you can pass a custom fetcher to the {@link EarthoProvider} component via the
- * {@link EarthoProviderProps.fetcher} prop.
+ * If needed, you can pass a custom fetcher to the {@link EarthoClientProvider} component via the
+ * {@link EarthoClientProviderProps.fetcher} prop.
  *
  * @throws {@link RequestError}
  */
 type UserFetcher = (url: string) => Promise<UserProfile | undefined>;
 
 /**
- * Configure the {@link EarthoProvider} component.
+ * Configure the {@link EarthoClientProvider} component.
  *
  * If you have any server-side rendered pages (using `getServerSideProps` or Server Components), you should get the
- * user from the server-side session and pass it to the `<EarthoProvider>` component via the `user`
+ * user from the server-side session and pass it to the `<EarthoClientProvider>` component via the `user`
  * prop. This will prefill the {@link useUser} hook with the {@link UserProfile} object.
  * For example:
  *
  * ```js
  * // pages/_app.js
  * import React from 'react';
- * import { EarthoProvider } from '@eartho/one-client-nextjs/client';
+ * import { EarthoClientProvider } from '@eartho/one-client-nextjs/client';
  *
  * export default function App({ Component, pageProps }) {
  *   // If you've used `withPageAuthRequired`, `pageProps.user` can prefill the hook
@@ -85,9 +85,9 @@ type UserFetcher = (url: string) => Promise<UserProfile | undefined>;
  *   const { user } = pageProps;
  *
  *   return (
- *     <EarthoProvider user={user}>
+ *     <EarthoClientProvider user={user}>
  *       <Component {...pageProps} />
- *     </EarthoProvider>
+ *     </EarthoClientProvider>
  *   );
  * }
  * ```
@@ -96,7 +96,7 @@ type UserFetcher = (url: string) => Promise<UserProfile | undefined>;
  *
  * ```js
  * // app/layout.js
- * import { EarthoProvider } from '@eartho/one-client-nextjs/client';
+ * import { EarthoClientProvider } from '@eartho/one-client-nextjs/client';
  *
  * export default async function RootLayout({ children }) {
  *   // this will emit a warning because Server Components cannot write to cookies
@@ -106,9 +106,9 @@ type UserFetcher = (url: string) => Promise<UserProfile | undefined>;
  *   return (
  *     <html lang="en">
  *       <body>
- *         <EarthoProvider user={session?.user}>
+ *         <EarthoClientProvider user={session?.user}>
  *           {children}
- *         </EarthoProvider>
+ *         </EarthoClientProvider>
  *       </body>
  *     </html>
  *   );
@@ -120,34 +120,34 @@ type UserFetcher = (url: string) => Promise<UserProfile | undefined>;
  * `fetcher` option.
  *
  * **IMPORTANT** If you have used a custom url for your {@link HandleProfile} API route handler
- * (the default is `/api/auth/me`) then you need to specify it here in the `profileUrl` option.
+ * (the default is `/api/access/me`) then you need to specify it here in the `profileUrl` option.
  *
  * @category Client
  */
-export type EarthoProviderProps = React.PropsWithChildren<
+export type EarthoClientProviderProps = React.PropsWithChildren<
   { user?: UserProfile; profileUrl?: string; fetcher?: UserFetcher } & ConfigContext
 >;
 
 /**
  * @ignore
  */
-const missingEarthoProvider = 'You forgot to wrap your app in <EarthoProvider>';
+const missingEarthoClientProvider = 'You forgot to wrap your app in <EarthoClientProvider>';
 
 /**
  * @ignore
  */
 export const UserContext = createContext<UserContext>({
   get user(): never {
-    throw new Error(missingEarthoProvider);
+    throw new Error(missingEarthoClientProvider);
   },
   get error(): never {
-    throw new Error(missingEarthoProvider);
+    throw new Error(missingEarthoClientProvider);
   },
   get isLoading(): never {
-    throw new Error(missingEarthoProvider);
+    throw new Error(missingEarthoClientProvider);
   },
   checkSession: (): never => {
-    throw new Error(missingEarthoProvider);
+    throw new Error(missingEarthoClientProvider);
   }
 });
 
@@ -170,8 +170,8 @@ export type UseUser = () => UserContext;
  *
  *   if (isLoading) return <div>Loading...</div>;
  *   if (error) return <div>{error.message}</div>;
- *   if (!user) return <Link href="/api/auth/login"><a>Login</a></Link>;
- *   return <div>Hello {user.name}, <Link href="/api/auth/logout"><a>Logout</a></Link></div>;
+ *   if (!user) return <Link href="/api/access/login"><a>Login</a></Link>;
+ *   return <div>Hello {user.name}, <Link href="/api/access/logout"><a>Logout</a></Link></div>;
  * }
  * ```
  *
@@ -180,16 +180,16 @@ export type UseUser = () => UserContext;
 export const useUser: UseUser = () => useContext<UserContext>(UserContext);
 
 /**
- * To use the {@link useUser} hook, you must wrap your application in a `<EarthoProvider>` component.
+ * To use the {@link useUser} hook, you must wrap your application in a `<EarthoClientProvider>` component.
  *
  * @category Client
  */
-export type EarthoProvider = (props: EarthoProviderProps) => ReactElement<UserContext>;
+export type EarthoClientProvider = (props: EarthoClientProviderProps) => ReactElement<UserContext>;
 
 /**
  * @ignore
  */
-type EarthoProviderState = {
+type EarthoClientProviderState = {
   user?: UserProfile;
   error?: Error;
   isLoading: boolean;
@@ -213,11 +213,11 @@ const userFetcher: UserFetcher = async (url) => {
 export default ({
   children,
   user: initialUser,
-  profileUrl = process.env.NEXT_PUBLIC_EARTHO_PROFILE || '/api/auth/me',
+  profileUrl = process.env.NEXT_PUBLIC_EARTHO_PROFILE || '/api/access/me',
   loginUrl,
   fetcher = userFetcher
-}: EarthoProviderProps): ReactElement<UserContext> => {
-  const [state, setState] = useState<EarthoProviderState>({ user: initialUser, isLoading: !initialUser });
+}: EarthoClientProviderProps): ReactElement<UserContext> => {
+  const [state, setState] = useState<EarthoClientProviderState>({ user: initialUser, isLoading: !initialUser });
 
   const checkSession = useCallback(async (): Promise<void> => {
     try {

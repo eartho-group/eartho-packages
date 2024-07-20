@@ -25,8 +25,8 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  * @example Validate additional claims
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
  * const afterCallback = (req, res, session, state) => {
  *   if (session.user.isAdmin) {
@@ -36,7 +36,7 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  *   }
  * };
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   async callback(req, res) {
  *     try {
  *       await handleCallback(req, res, { afterCallback });
@@ -50,8 +50,8 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  * @example Modify the session after login
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
  * const afterCallback = (req, res, session, state) => {
  *   session.user.customProperty = 'foo';
@@ -59,7 +59,7 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  *   return session;
  * };
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   async callback(req, res) {
  *     try {
  *       await handleCallback(req, res, { afterCallback });
@@ -73,8 +73,8 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  * @example Redirect successful login based on claim
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
  * const afterCallback = (req, res, session, state) => {
  *   if (!session.user.isAdmin) {
@@ -83,7 +83,7 @@ export type AfterCallback = AfterCallbackPageRoute | AfterCallbackAppRoute;
  *   return session;
  * };
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   async callback(req, res) {
  *     try {
  *       await handleCallback(req, res, { afterCallback });
@@ -112,8 +112,8 @@ export type AfterCallbackPageRoute = (
  * @example Validate additional claims
  *
  * ```js
- * // app/api/auth/[eartho]/route.js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // app/api/access/[eartho]/route.js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  * import { NextResponse } from 'next/server';
  *
  * const afterCallback = (req, session) => {
@@ -122,7 +122,7 @@ export type AfterCallbackPageRoute = (
  *   }
  * };
 
- * export const GET = handleAuth({
+ * export const GET = handleAccess({
  *   async callback(req, ctx) {
  *     const res = await handleCallback(req, ctx, { afterCallback });
  *     const session = await getSession(req, res);
@@ -137,8 +137,8 @@ export type AfterCallbackPageRoute = (
  * @example Modify the session after login
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  * import { NextResponse } from 'next/server';
  *
  * const afterCallback = (req, session, state) => {
@@ -147,7 +147,7 @@ export type AfterCallbackPageRoute = (
  *   return session;
  * };
  *
- * export const GET = handleAuth({
+ * export const GET = handleAccess({
  *   callback: handleCallback({ afterCallback })
  * });
  * ```
@@ -155,11 +155,11 @@ export type AfterCallbackPageRoute = (
  * @example Redirect successful login based on claim (afterCallback is not required).
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  * import { NextResponse } from 'next/server';
  *
- * export const GET = handleAuth({
+ * export const GET = handleAccess({
  *   async callback(req, ctx) {
  *     const res = await handleCallback(req, ctx);
  *     const session = await getSession(req, res);
@@ -227,10 +227,10 @@ export type CallbackOptionsProvider = OptionsProvider<CallbackOptions>;
  * @example Pass an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   callback: handleCallback({ redirectUri: 'https://example.com' })
  * });
  * ```
@@ -238,10 +238,10 @@ export type CallbackOptionsProvider = OptionsProvider<CallbackOptions>;
  * @example Pass a function that receives the request and returns an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   callback: handleCallback((req) => {
  *     return { redirectUri: 'https://example.com' };
  *   })
@@ -253,9 +253,9 @@ export type CallbackOptionsProvider = OptionsProvider<CallbackOptions>;
  * @example Override the callback handler
  *
  * ```js
- * import { handleAuth, handleCallback } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleCallback } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   callback: async (req, res) => {
  *     try {
  *       await handleCallback(req, res, {
@@ -273,7 +273,7 @@ export type CallbackOptionsProvider = OptionsProvider<CallbackOptions>;
 export type HandleCallback = AuthHandler<CallbackOptions>;
 
 /**
- * The handler for the `/api/auth/callback` API route.
+ * The handler for the `/api/access/callback` API route.
  *
  * @throws {@link HandlerError}
  *

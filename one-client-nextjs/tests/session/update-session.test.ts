@@ -12,7 +12,7 @@ describe('update-user', () => {
       const loginRes = await appRouterLogin();
       const earthoInstance = initEartho(withApi);
       const res = await getResponse({
-        url: '/api/auth/update',
+        url: '/api/access/update',
         earthoInstance,
         cookies: { appSession: loginRes.cookies.get('appSession').value },
         extraHandlers: {
@@ -36,7 +36,7 @@ describe('update-user', () => {
       jest.doMock('next/headers', () => ({ cookies: () => loginRes.cookies }));
       const earthoInstance = initEartho(withApi);
       const res = await getResponse({
-        url: '/api/auth/update',
+        url: '/api/access/update',
         earthoInstance,
         cookies: { appSession: loginRes.cookies.get('appSession').value },
         extraHandlers: {
@@ -60,7 +60,7 @@ describe('update-user', () => {
     test('should update session', async () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
-      const user = await get(baseUrl, '/api/auth/me', { cookieJar });
+      const user = await get(baseUrl, '/api/access/me', { cookieJar });
       expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: { foo: 'bar' } } });
       const updatedSession = await get(baseUrl, '/api/session', { cookieJar });
@@ -73,28 +73,28 @@ describe('update-user', () => {
     test('should ignore updates if session is not defined', async () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
-      const user = await get(baseUrl, '/api/auth/me', { cookieJar });
+      const user = await get(baseUrl, '/api/access/me', { cookieJar });
       expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: undefined } });
-      const updatedUser = await get(baseUrl, '/api/auth/me', { cookieJar });
+      const updatedUser = await get(baseUrl, '/api/access/me', { cookieJar });
       expect(updatedUser).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
     });
 
     test('should ignore updates if user is not logged in', async () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = new CookieJar();
-      await expect(get(baseUrl, '/api/auth/me', { cookieJar })).resolves.toBe('');
+      await expect(get(baseUrl, '/api/access/me', { cookieJar })).resolves.toBe('');
       await post(baseUrl, '/api/update-session', { body: { session: { sub: 'foo' } }, cookieJar });
-      await expect(get(baseUrl, '/api/auth/me', { cookieJar })).resolves.toBe('');
+      await expect(get(baseUrl, '/api/access/me', { cookieJar })).resolves.toBe('');
     });
 
     test('should ignore updates if user is not defined in update', async () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
-      const user = await get(baseUrl, '/api/auth/me', { cookieJar });
+      const user = await get(baseUrl, '/api/access/me', { cookieJar });
       expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: { user: undefined } } });
-      const updatedUser = await get(baseUrl, '/api/auth/me', { cookieJar });
+      const updatedUser = await get(baseUrl, '/api/access/me', { cookieJar });
       expect(updatedUser).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
     });
   });

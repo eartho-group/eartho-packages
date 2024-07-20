@@ -21,14 +21,14 @@ export type GetLoginState = GetLoginStatePageRoute | GetLoginStateAppRoute;
  * Use this to store additional state for the user before they visit the identity provider to log in.
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
  * const getLoginState = (req, loginOptions) => {
  *   return { basket_id: getBasketId(req) };
  * };
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: handleLogin({ getLoginState })
  * });
  * ```
@@ -41,14 +41,14 @@ export type GetLoginStatePageRoute = (req: NextApiRequest, options: LoginOptions
  * Use this to store additional state for the user before they visit the identity provider to log in.
  *
  * ```js
- * // app/api/auth/[eartho]/route.js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // app/api/access/[eartho]/route.js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
  * const getLoginState = (req, loginOptions) => {
  *   return { basket_id: getBasketId(req) };
  * };
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: handleLogin({ getLoginState })
  * });
  * ```
@@ -69,9 +69,9 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    * By default no connection is specified, so the Universal Login page will be displayed.
    *
    * ```js
-   * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+   * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
    *
-   * export default handleAuth({
+   * export default handleAccess({
    *   login: async (req, res) => {
    *     try {
    *       await handleLogin(req, res, {
@@ -91,9 +91,9 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    * Provider scopes for OAuth2/social connections, such as GitHub or Google.
    *
    * ```js
-   * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+   * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
    *
-   * export default handleAuth({
+   * export default handleAccess({
    *   login: async (req, res) => {
    *     try {
    *       await handleLogin(req, res, {
@@ -198,10 +198,10 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  * @example Pass an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: handleLogin({
  *     authorizationParams: { connection: 'github' }
  *   })
@@ -211,10 +211,10 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  * @example Pass a function that receives the request and returns an options object
  *
  * ```js
- * // pages/api/auth/[eartho].js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * // pages/api/access/[eartho].js
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: handleLogin((req) => {
  *     return {
  *       authorizationParams: { connection: 'github' }
@@ -228,9 +228,9 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  * @example Override the login handler
  *
  * ```js
- * import { handleAuth, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
  *
- * export default handleAuth({
+ * export default handleAccess({
  *   login: async (req, res) => {
  *     try {
  *       await handleLogin(req, res, {
@@ -248,7 +248,7 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
 export type HandleLogin = AuthHandler<LoginOptions>;
 
 /**
- * The handler for the `/api/auth/login` API route.
+ * The handler for the `/api/access/login` API route.
  *
  * @throws {@link HandlerError}
  *

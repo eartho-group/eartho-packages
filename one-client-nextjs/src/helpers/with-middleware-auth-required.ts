@@ -4,11 +4,11 @@ import { GetConfig } from '../config';
 import { EarthoNextRequest } from '../http';
 
 /**
- * Pass custom options to {@link WithMiddlewareAuthRequired}.
+ * Pass custom options to {@link WithMiddlewareAccessRequired}.
  *
  * @category Server
  */
-export type WithMiddlewareAuthRequiredOptions = {
+export type WithMiddlewareAccessRequiredOptions = {
   middleware?: NextMiddleware;
   returnTo?: string | ((req: NextRequest) => Promise<string> | string);
 };
@@ -20,18 +20,18 @@ export type WithMiddlewareAuthRequiredOptions = {
  *
  * ```js
  * // middleware.js
- * import { withMiddlewareAuthRequired } from '@eartho/one-client-nextjs/edge';
+ * import { withMiddlewareAccessRequired } from '@eartho/one-client-nextjs/edge';
  *
- * export default withMiddlewareAuthRequired();
+ * export default withMiddlewareAccessRequired();
  * ```
  *
  * To protect specific routes:
  *
  * ```js
  * // middleware.js
- * import { withMiddlewareAuthRequired } from '@eartho/one-client-nextjs/edge';
+ * import { withMiddlewareAccessRequired } from '@eartho/one-client-nextjs/edge';
  *
- * export default withMiddlewareAuthRequired();
+ * export default withMiddlewareAccessRequired();
  *
  * export const config = {
  *   matcher: '/about/:path*',
@@ -43,9 +43,9 @@ export type WithMiddlewareAuthRequiredOptions = {
  *
  * ```js
  * // middleware.js
- * import { withMiddlewareAuthRequired, getSession } from '@eartho/one-client-nextjs/edge';
+ * import { withMiddlewareAccessRequired, getSession } from '@eartho/one-client-nextjs/edge';
  *
- * export default withMiddlewareAuthRequired(async function middleware(req) {
+ * export default withMiddlewareAccessRequired(async function middleware(req) {
  *   const res = NextResponse.next();
  *   const user = await getSession(req, res);
  *   res.cookies.set('hl', user.language);
@@ -57,9 +57,9 @@ export type WithMiddlewareAuthRequiredOptions = {
  *
  * ```js
  * // middleware.js
- * import { withMiddlewareAuthRequired, getSession } from '@eartho/one-client-nextjs/edge';
+ * import { withMiddlewareAccessRequired, getSession } from '@eartho/one-client-nextjs/edge';
  *
- * export default withMiddlewareAuthRequired({
+ * export default withMiddlewareAccessRequired({
  *   returnTo: '/foo',
  *   // Custom middleware is provided with the `middleware` config option
  *   async middleware(req) { return NextResponse.next(); }
@@ -70,27 +70,27 @@ export type WithMiddlewareAuthRequiredOptions = {
  *
  * ```js
  * // middleware.js
- * import { withMiddlewareAuthRequired, getSession } from '@eartho/one-client-nextjs/edge';
+ * import { withMiddlewareAccessRequired, getSession } from '@eartho/one-client-nextjs/edge';
  *
- * export default withMiddlewareAuthRequired({
+ * export default withMiddlewareAccessRequired({
  *   returnTo(req) { return `${req.nextURL.basePath}${req.nextURL.pathname}`};
  * });
  * ```
  *
  * @category Server
  */
-export type WithMiddlewareAuthRequired = (
-  middlewareOrOpts?: NextMiddleware | WithMiddlewareAuthRequiredOptions
+export type WithMiddlewareAccessRequired = (
+  middlewareOrOpts?: NextMiddleware | WithMiddlewareAccessRequiredOptions
 ) => NextMiddleware;
 
 /**
  * @ignore
  */
-export default function withMiddlewareAuthRequiredFactory(
+export default function withMiddlewareAccessRequiredFactory(
   getConfig: GetConfig,
   sessionCache: SessionCache
-): WithMiddlewareAuthRequired {
-  return function withMiddlewareAuthRequired(opts?): NextMiddleware {
+): WithMiddlewareAccessRequired {
+  return function withMiddlewareAccessRequired(opts?): NextMiddleware {
     return async function wrappedMiddleware(...args) {
       const [req] = args;
       const {

@@ -64,7 +64,7 @@ export default function Nav() {
             {user ? (
               <>
                 <li>
-                  <a href="/api/auth/logout" data-testid="logout">
+                  <a href="/api/access/logout" data-testid="logout">
                     Logout
                   </a>
                 </li>
@@ -77,7 +77,7 @@ export default function Nav() {
             ) : (
               <>
                 <li>
-                  <a href="/api/auth/login" data-testid="login">
+                  <a href="/api/access/login" data-testid="login">
                     Login
                   </a>
                 </li>

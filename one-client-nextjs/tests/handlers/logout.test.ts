@@ -13,7 +13,7 @@ describe('logout handler (app router)', () => {
   test('should redirect to eartho', async () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
-    const res = await getResponse({ url: '/api/auth/logout', cookies });
+    const res = await getResponse({ url: '/api/access/logout', cookies });
     expect(res.status).toBe(302);
     expect(parseUrl(res.headers.get('location'), true)).toMatchObject({
       protocol: 'https:',
@@ -22,7 +22,7 @@ describe('logout handler (app router)', () => {
         returnTo: 'http://www.acme.com',
         client_id: '__test_client_id__'
       },
-      pathname: '/v2/logout'
+      pathname: '/logout'
     });
   });
 
@@ -30,7 +30,7 @@ describe('logout handler (app router)', () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
     const res = await getResponse({
-      url: '/api/auth/logout',
+      url: '/api/access/logout',
       cookies,
       logoutOpts: { logoutParams: { foo: 'bar' } }
     });
@@ -46,7 +46,7 @@ describe('logout handler (app router)', () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
     const res = await getResponse({
-      url: '/api/auth/logout',
+      url: '/api/access/logout',
       cookies,
       logoutOpts: { returnTo: 'https://www.google.com' }
     });
@@ -60,7 +60,7 @@ describe('logout handler (app router)', () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
     const res = await getResponse({
-      url: '/api/auth/logout',
+      url: '/api/access/logout',
       cookies,
       config: { earthoLogout: false },
       discoveryOptions: { end_session_endpoint: 'https://my-end-session-endpoint/logout' }
@@ -76,21 +76,21 @@ describe('logout handler (app router)', () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
     const res = await getResponse({
-      url: '/api/auth/logout',
+      url: '/api/access/logout',
       cookies,
       discoveryOptions: { end_session_endpoint: 'https://my-end-session-endpoint/logout' }
     });
     expect(res.status).toBe(302);
     expect(parseUrl(res.headers.get('location'))).toMatchObject({
       host: 'acme.eartho.local',
-      pathname: '/v2/logout'
+      pathname: '/logout'
     });
   });
 
   test('should delete the session', async () => {
     const loginRes = await appRouterLogin();
     const cookies = { appSession: loginRes.cookies.get('appSession').value };
-    const res = await getResponse({ url: '/api/auth/logout', cookies });
+    const res = await getResponse({ url: '/api/access/logout', cookies });
     expect(res.status).toBe(302);
     expect(new Date(res.cookies.get('appSession').expires).getTime()).toBe(0);
   });
@@ -101,7 +101,7 @@ describe('logout handler (app router)', () => {
     nock.cleanAll();
     discovery(withApi, { error: true });
 
-    const res = await getResponse({ url: '/api/auth/logout', cookies, clearNock: false });
+    const res = await getResponse({ url: '/api/access/logout', cookies, clearNock: false });
     expect(res.status).toBe(500);
     expect(res.statusText).toMatch(/Logout handler failed. CAUSE: Discovery requests failing/);
   });

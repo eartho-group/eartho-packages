@@ -17,7 +17,7 @@ describe('callback handler (app router)', () => {
 
   test('should require a state parameter', async () => {
     const res = await getResponse({
-      url: '/api/auth/callback',
+      url: '/api/access/callback',
       cookies: await authVerificationCookie({
         state: 'foo'
       })
@@ -28,7 +28,7 @@ describe('callback handler (app router)', () => {
 
   test('should require a state cookie', async () => {
     const res = await getResponse({
-      url: '/api/auth/callback?state=__test_state__'
+      url: '/api/access/callback?state=__test_state__'
     });
     expect(res.status).toBe(400);
     expect(res.statusText).toMatch(/Missing state cookie from login request/);
@@ -36,7 +36,7 @@ describe('callback handler (app router)', () => {
 
   test('should validate the state', async () => {
     const res = await getResponse({
-      url: '/api/auth/callback?state=__test_state__',
+      url: '/api/access/callback?state=__test_state__',
       cookies: await authVerificationCookie({
         state: 'other_state'
       })
@@ -50,7 +50,7 @@ describe('callback handler (app router)', () => {
   test('should validate the audience', async () => {
     const state = encodeState({ returnTo: 'https://example.com' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state: state,
         nonce: '__test_nonce__',
@@ -67,7 +67,7 @@ describe('callback handler (app router)', () => {
   test('should validate the issuer', async () => {
     const state = encodeState({ returnTo: 'https://example.com' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state: state,
         nonce: '__test_nonce__',
@@ -83,7 +83,7 @@ describe('callback handler (app router)', () => {
 
   test('should escape html in error qp', async () => {
     const res = await getResponse({
-      url: '/api/auth/callback?error=%3Cscript%3Ealert(%27xss%27)%3C%2Fscript%3E&state=foo',
+      url: '/api/access/callback?error=%3Cscript%3Ealert(%27xss%27)%3C%2Fscript%3E&state=foo',
       cookies: await authVerificationCookie({
         state: 'foo'
       })
@@ -95,7 +95,7 @@ describe('callback handler (app router)', () => {
   test('should create session and strip OIDC claims', async () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state,
         nonce: '__test_nonce__',
@@ -115,7 +115,7 @@ describe('callback handler (app router)', () => {
   test('remove properties from session with afterCallback hook', async () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state,
         nonce: '__test_nonce__',
@@ -140,7 +140,7 @@ describe('callback handler (app router)', () => {
   test('add properties to session with afterCallback hook', async () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state: state,
         nonce: '__test_nonce__',
@@ -165,7 +165,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -183,7 +183,7 @@ describe('callback handler (app router)', () => {
   test('redirect from afterCallback hook', async () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     const res = await getResponse({
-      url: `/api/auth/callback?state=${state}&code=code`,
+      url: `/api/access/callback?state=${state}&code=code`,
       cookies: await authVerificationCookie({
         state,
         nonce: '__test_nonce__',
@@ -203,7 +203,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -223,7 +223,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -243,7 +243,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -266,7 +266,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -289,7 +289,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',
@@ -309,7 +309,7 @@ describe('callback handler (app router)', () => {
     const state = encodeState({ returnTo: 'https://example.com/foo' });
     await expect(
       getResponse({
-        url: `/api/auth/callback?state=${state}&code=code`,
+        url: `/api/access/callback?state=${state}&code=code`,
         cookies: await authVerificationCookie({
           state,
           nonce: '__test_nonce__',

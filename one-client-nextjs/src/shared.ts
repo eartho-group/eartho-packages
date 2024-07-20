@@ -1,6 +1,6 @@
 import { SessionStore as GenericSessionStore, SessionPayload } from './eartho-session';
 import {
-  HandleAuth,
+  HandleAccess,
   HandleLogin,
   HandleProfile,
   HandleLogout,
@@ -10,7 +10,7 @@ import {
 import { SessionCache, GetSession, GetAccessToken, Session, TouchSession, UpdateSession } from './session';
 import { WithApiAuthRequired, WithPageAuthRequired } from './helpers';
 import { ConfigParameters } from './config';
-import { WithMiddlewareAuthRequired } from './helpers/with-middleware-auth-required';
+import { WithMiddlewareAccessRequired } from './helpers/with-middleware-auth-required';
 import version from './version';
 
 export const telemetry = { name: 'nextjs-eartho', version };
@@ -83,12 +83,12 @@ export interface EarthoServer {
   /**
    * Create the main handlers for your api routes.
    */
-  handleAuth: HandleAuth;
+  handleAccess: HandleAccess;
 
   /**
    * Add auth to your middleware functions.
    */
-  withMiddlewareAuthRequired: WithMiddlewareAuthRequired;
+  withMiddlewareAccessRequired: WithMiddlewareAccessRequired;
 }
 
 export {
@@ -159,7 +159,7 @@ export {
 
 export {
   ConfigParameters,
-  HandleAuth,
+  HandleAccess,
   HandleLogin,
   HandleProfile,
   HandleLogout,

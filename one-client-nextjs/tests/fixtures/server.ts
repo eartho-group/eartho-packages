@@ -43,9 +43,9 @@ const toNextApiResponse = async (res: ServerResponse): Promise<NextApiResponse> 
 
 const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   const [path] = req.url!.split('?');
-  if (path.startsWith('/api/auth')) {
+  if (path.startsWith('/api/access')) {
     req.query.eartho = path.split('/').slice(3);
-    await (global.handleAuth?.())(req, res);
+    await (global.handleAccess?.())(req, res);
     return;
   }
   switch (path) {

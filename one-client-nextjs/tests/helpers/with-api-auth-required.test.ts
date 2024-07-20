@@ -11,7 +11,7 @@ describe('with-api-auth-required', () => {
     const getApiResponse = (opts?: any) => {
       const earthoInstance = initEartho(withApi);
       return getResponse({
-        url: '/api/auth/protected',
+        url: '/api/access/protected',
         earthoInstance,
         extraHandlers: {
           protected(req: NextRequest, ctx: { params: Record<string, any> }) {
@@ -66,7 +66,7 @@ describe('with-api-auth-required', () => {
     test('allow access to an api route that returns a basic response with a valid session', async () => {
       const loginRes = await appRouterLogin();
       const res = await getApiResponse({
-        url: '/api/auth/protected-returns-response',
+        url: '/api/access/protected-returns-response',
         cookies: { appSession: loginRes.cookies.get('appSession').value }
       });
       expect(res.status).toBe(200);
@@ -79,7 +79,7 @@ describe('with-api-auth-required', () => {
     test('allow access to an api route that updates the cookies', async () => {
       const loginRes = await appRouterLogin();
       const res = await getApiResponse({
-        url: '/api/auth/protected-updates-headers',
+        url: '/api/access/protected-updates-headers',
         cookies: { appSession: loginRes.cookies.get('appSession').value }
       });
       expect(res.status).toBe(200);
@@ -94,7 +94,7 @@ describe('with-api-auth-required', () => {
     test('allow access to an api route that updates the session cookie', async () => {
       const loginRes = await appRouterLogin();
       const res = await getApiResponse({
-        url: '/api/auth/protected-updates-session',
+        url: '/api/access/protected-updates-session',
         cookies: { appSession: loginRes.cookies.get('appSession').value },
         update: 'foo'
       });
@@ -109,7 +109,7 @@ describe('with-api-auth-required', () => {
       const loginRes = await appRouterLogin();
       const update = randomBytes(2000).toString('base64');
       const res = await getApiResponse({
-        url: '/api/auth/protected-updates-session',
+        url: '/api/access/protected-updates-session',
         cookies: { appSession: loginRes.cookies.get('appSession').value },
         update
       });

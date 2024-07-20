@@ -12,7 +12,7 @@ describe('touch-session', () => {
       const earthoInstance = initEartho(config);
       const loginRes = await appRouterLogin({ config });
       const res = await getResponse({
-        url: '/api/auth/session',
+        url: '/api/access/session',
         config,
         earthoInstance,
         cookies: { appSession: loginRes.cookies.get('appSession').value },
@@ -32,7 +32,7 @@ describe('touch-session', () => {
       const earthoInstance = initEartho(config);
       const loginRes = await appRouterLogin({ config });
       const res = await getResponse({
-        url: '/api/auth/session',
+        url: '/api/access/session',
         config,
         earthoInstance,
         cookies: { appSession: loginRes.cookies.get('appSession').value },
@@ -60,7 +60,7 @@ describe('touch-session', () => {
       });
       const cookieJar = await login(baseUrl);
       const [authCookie] = await cookieJar.getCookies(baseUrl);
-      await get(baseUrl, '/api/auth/me', { cookieJar });
+      await get(baseUrl, '/api/access/me', { cookieJar });
       const [updatedAuthCookie] = await cookieJar.getCookies(baseUrl);
       expect(updatedAuthCookie).toEqual(authCookie);
     });

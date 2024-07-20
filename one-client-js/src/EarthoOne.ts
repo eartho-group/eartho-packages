@@ -593,7 +593,7 @@ export class EarthoOne {
   public async checkSession(options?: GetTokenSilentlyOptions) {
     if (!this.cookieStorage.get(this.isConnectedCookieName)) {
       if (!this.cookieStorage.get(OLD_IS_AUTHENTICATED_COOKIE_NAME)) {
-        this.logout()
+        await this.logout()
         return;
       } else {
         // Migrate the existing cookie to the new name scoped by client ID
@@ -1015,13 +1015,11 @@ export class EarthoOne {
       };
     } catch (e) {
       // Check for 401 status code or specific error messages indicating invalid refresh token
-      if (
-        (e.response && e.response.status === 401) ||
-        e.message.indexOf(INVALID_REFRESH_TOKEN_ERROR_MESSAGE) > -1
-      ) {
-        // Log out the user if a 401 response or specific error messages are encountered
-        this.logout();
-        throw new Error('Invalid refresh token, logging out.');
+      if (e.error === 'login_required') {
+        await this.logout({
+          openUrl: false
+        });
+        throw e
       }
       if (
         // The web worker didn't have a refresh token in memory so

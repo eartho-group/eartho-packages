@@ -1,5 +1,5 @@
 import React from 'react';
-import { withAuthenticationRequired } from '@eartho/one-client-react';
+import { withAccessRequired } from '@eartho/one-client-react';
 import { callToApiExample } from '../hooks/callToApiExample';
 import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
@@ -11,7 +11,7 @@ const Users = () => {
     loading,
     error,
     data: users = [],
-  } = callToApiExample(`http://localhost:${PORT}/users`,{
+  } = callToApiExample(`http://localhost:${PORT}/users`, {
     access_id: process.env.NEXT_PUBLIC_ACCESS_ID,
   });
 
@@ -43,4 +43,16 @@ const Users = () => {
   );
 };
 
-export default withAuthenticationRequired(Users, {access_id: ""});
+export default withAccessRequired(Users, {
+  requiredAccess: ['admin', 'editor'],
+  redirectPaths: {
+    admin: '/admin-dashboard',
+    editor: '/editor-dashboard'
+  },
+  defaultRedirectPath: '/no-access',
+  returnTo: '/users',
+  onRedirecting: () => <Loading />,
+  onBeforeRedirect: async () => {
+    console.log('Access check in progress');
+  },
+});

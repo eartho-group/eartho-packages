@@ -1,5 +1,5 @@
 import React from 'react';
-import { withAuthenticationRequired } from '@eartho/one-client-react';
+import { withAccessRequired } from '@eartho/one-client-react';
 import { Users } from '../components/Users';
 import { Nav } from '../components/Nav';
 
@@ -14,4 +14,4 @@ const UsersPage = () => {
   );
 };
 
-export default withAuthenticationRequired(UsersPage);
+export default withAccessRequired(UsersPage);

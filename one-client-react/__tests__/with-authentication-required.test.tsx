@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import withAuthenticationRequired from '../src/with-authentication-required';
+import withAccessRequired from '../src/with-authentication-required';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { EarthoOne, User } from '@eartho/one-client-js';
 import EarthoOneProvider from '../src/eartho-provider';
@@ -9,11 +9,11 @@ import { defer } from './helpers';
 
 const mockClient = jest.mocked(new EarthoOne({ clientId: '', domain: '' }));
 
-describe('withAuthenticationRequired', () => {
+describe('withAccessRequired', () => {
   it('should block access to a private component when not authenticated', async () => {
     mockClient.getUser.mockResolvedValue(undefined);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, { loginOptions: { accessId: '' } });
+    const WrappedComponent = withAccessRequired(MyComponent, { loginOptions: { accessId: '' } });
     render(
       <EarthoOneProvider clientId="__test_client_id__" domain="__test_domain__">
         <WrappedComponent />
@@ -28,7 +28,7 @@ describe('withAuthenticationRequired', () => {
   it('should allow access to a private component when authenticated', async () => {
     mockClient.getUser.mockResolvedValue({ name: '__test_user__' });
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, { loginOptions: { accessId: '' } });
+    const WrappedComponent = withAccessRequired(MyComponent, { loginOptions: { accessId: '' } });
     await act(() => {
       render(
         <EarthoOneProvider clientId="__test_client_id__" domain="__test_domain__">
@@ -51,7 +51,7 @@ describe('withAuthenticationRequired', () => {
 
     const MyComponent = (): JSX.Element => <>Private</>;
     const OnRedirecting = (): JSX.Element => <>Redirecting</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       onRedirecting: OnRedirecting,
       loginOptions: { accessId: '' }
     });
@@ -91,7 +91,7 @@ describe('withAuthenticationRequired', () => {
       .mockImplementationOnce(async () => {
         callOrder.push('onBeforeAuthentication');
       });
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       onBeforeAuthentication: OnBeforeAuthentication,
       loginOptions: { accessId: '' }
     });
@@ -115,7 +115,7 @@ describe('withAuthenticationRequired', () => {
   it('should pass additional options on to connectWithRedirect', async () => {
     mockClient.getUser.mockResolvedValue(undefined);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       loginOptions: {
         accessId: '',
         fragment: 'foo',
@@ -138,7 +138,7 @@ describe('withAuthenticationRequired', () => {
   it('should merge additional appState with the returnTo', async () => {
     mockClient.getUser.mockResolvedValue(undefined);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       loginOptions: {
         accessId: '',
         appState: {
@@ -167,7 +167,7 @@ describe('withAuthenticationRequired', () => {
   it('should accept a returnTo function', async () => {
     mockClient.getUser.mockResolvedValue(undefined);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       loginOptions: { accessId: '' },
       returnTo: () => '/foo',
     });
@@ -190,7 +190,7 @@ describe('withAuthenticationRequired', () => {
   it('should call connectWithRedirect only once even if parent state changes', async () => {
     mockClient.getUser.mockResolvedValue(undefined);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, { loginOptions: { accessId: '' } });
+    const WrappedComponent = withAccessRequired(MyComponent, { loginOptions: { accessId: '' } });
     const App = ({ foo }: { foo: number }): JSX.Element => (
       <div>
         {foo}
@@ -216,7 +216,7 @@ describe('withAuthenticationRequired', () => {
     mockClient.getUser.mockResolvedValueOnce(undefined);
     const context = React.createContext<EarthoOneContextInterface>(initialContext);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       context,
       loginOptions: { accessId: '' }
     });
@@ -248,7 +248,7 @@ describe('withAuthenticationRequired', () => {
     mockClient.getUser.mockResolvedValueOnce({ name: '__test_user__' });
     const context = React.createContext<EarthoOneContextInterface>(initialContext);
     const MyComponent = (): JSX.Element => <>Private</>;
-    const WrappedComponent = withAuthenticationRequired(MyComponent, {
+    const WrappedComponent = withAccessRequired(MyComponent, {
       context,
       loginOptions: { accessId: '' }
     });

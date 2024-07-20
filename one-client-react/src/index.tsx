@@ -6,9 +6,9 @@ export {
 export { default as useEarthoOne } from './use-eartho';
 export { default as withEarthoOne, WithEarthoOneProps } from './with-eartho';
 export {
-  default as withAuthenticationRequired,
-  WithAuthenticationRequiredOptions,
-} from './with-authentication-required';
+  default as withAccessRequired,
+  withAccessRequiredOptions,
+} from './with-access-required';
 export {
   default as EarthoOneContext,
   EarthoOneContextInterface,

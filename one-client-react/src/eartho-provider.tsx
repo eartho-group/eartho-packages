@@ -1,30 +1,14 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState, ReactNode } from 'react';
 import {
   EarthoOne,
   EarthoOneOptions,
-  PopupConnectOptions,
   PopupConfigOptions,
+  PopupConnectOptions,
   RedirectConnectResult,
-  User,
+  User
 } from '@eartho/one-client-js';
-import EarthoOneContext, {
-  EarthoOneContextInterface,
-  LogoutOptions,
-  RedirectConnectOptions,
-} from './eartho-context';
-import {
-  hasAuthParams,
-  loginError,
-  tokenError,
-  deprecateRedirectUri,
-} from './utils';
+import EarthoOneContext, { EarthoOneContextInterface, LogoutOptions, RedirectConnectOptions } from './eartho-context';
+import { hasAuthParams, loginError, tokenError, deprecateRedirectUri } from './utils';
 import { reducer } from './reducer';
 import { initialAuthState } from './auth-state';
 
@@ -37,50 +21,25 @@ export type AppState = {
 };
 
 /**
+ * Structure for each protected path
+ */
+export interface ProtectedPath {
+  path: string;
+  accessIds: string[];
+  redirectPath: string;
+}
+
+/**
  * The main configuration to instantiate the `EarthoOneProvider`.
  */
 export interface EarthoOneProviderOptions extends EarthoOneOptions {
-  /**
-   * The child nodes your Provider has wrapped
-   */
   children?: React.ReactNode;
-  /**
-   * By default this removes the code and state parameters from the url when you are redirected from the authorize page.
-   * It uses `window.history` but you might want to overwrite this if you are using a custom router, like `react-router-dom`
-   * See the EXAMPLES.md for more info.
-   */
   onRedirectCallback?: (appState?: AppState, user?: User) => void;
-  /**
-   * By default, if the page url has code/state params, the SDK will treat them as Eartho's and attempt to exchange the
-   * code for a token. In some cases the code might be for something else (another OAuth SDK perhaps). In these
-   * instances you can instruct the client to ignore them eg
-   *
-   * ```jsx
-   * <EarthoOneProvider
-   *   clientId={clientId}
-   *   domain={domain}
-   *   skipRedirectCallback={window.location.pathname === '/stripe-oauth-callback'}
-   * >
-   * ```
-   */
   skipRedirectCallback?: boolean;
-  /**
-   * Context to be used when creating the EarthoOneProvider, defaults to the internally created context.
-   *
-   * This allows multiple EarthoOneProviders to be nested within the same application, the context value can then be
-   * passed to useEarthoOne, withEarthoOne, or withAuthenticationRequired to use that specific EarthoOneProvider to access
-   * auth state and methods specifically tied to the provider that the context belongs to.
-   *
-   * When using multiple EarthoOneProviders in a single application you should do the following to ensure sessions are not
-   * overwritten:
-   *
-   * * Configure a different redirect_uri for each EarthoOneProvider, and set skipRedirectCallback for each provider to ignore
-   * the others redirect_uri
-   * * If using localstorage for both EarthoOneProviders, ensure that the audience and scope are different for so that the key
-   * used to store data is different
-   *
-   */
   context?: React.Context<EarthoOneContextInterface>;
+  protectedPaths?: ProtectedPath[];
+  defaultLoginPath?: string;
+  loadingComponent?: ReactNode | null;
 }
 
 /**
@@ -92,17 +51,15 @@ declare const __VERSION__: string;
 /**
  * @ignore
  */
-const toEarthoOneOptions = (
-  opts: EarthoOneProviderOptions
-): EarthoOneOptions => {
+const toEarthoOneOptions = (opts: EarthoOneProviderOptions): EarthoOneOptions => {
   deprecateRedirectUri(opts);
 
   return {
     ...opts,
     earthoOneClient: {
       name: 'one-client-react',
-      version: __VERSION__,
-    },
+      version: __VERSION__
+    }
   };
 };
 
@@ -118,15 +75,6 @@ const defaultOnRedirectCallback = (appState?: AppState): void => {
 };
 
 /**
- * ```jsx
- * <EarthoOneProvider
- *   domain={domain}
- *   clientId={clientId}
- *   authorizationParams={{ redirect_uri: window.location.origin }}>
- *   <MyApp />
- * </EarthoOneProvider>
- * ```
- *
  * Provides the EarthoOneContext to its child components.
  */
 const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
@@ -135,13 +83,15 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
     skipRedirectCallback,
     onRedirectCallback = defaultOnRedirectCallback,
     context = EarthoOneContext,
+    protectedPaths = [],
+    defaultLoginPath = '/login',
+    loadingComponent = null, // Default loading component is null
     ...clientOpts
   } = opts;
-  const [client] = useState(
-    () => new EarthoOne(toEarthoOneOptions(clientOpts))
-  );
+  const [client] = useState(() => new EarthoOne(toEarthoOneOptions(clientOpts)));
   const [state, dispatch] = useReducer(reducer, initialAuthState);
   const didInitialise = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (didInitialise.current) {
@@ -162,9 +112,32 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
         dispatch({ type: 'INITIALISED', user });
       } catch (error) {
         dispatch({ type: 'ERROR', error: loginError(error) });
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, [client, onRedirectCallback, skipRedirectCallback]);
+
+  // Check if user is connected, if not redirect to default login path
+  useEffect(() => {
+    if (!isLoading && !state.isConnected) {
+      const blockedPath = protectedPaths.find(({ path }) => new RegExp(path).test(window.location.pathname));
+      if (blockedPath) {
+        window.location.replace(defaultLoginPath);
+      }
+    }
+  }, [isLoading, state.isConnected, protectedPaths, defaultLoginPath]);
+
+  // Check if user has required access, if not redirect to specific redirect path
+  useEffect(() => {
+    if (!isLoading && state.isConnected) {
+      const currentPath = window.location.pathname;
+      const protectedPath = protectedPaths.find(({ path }) => new RegExp(path).test(currentPath));
+      if (protectedPath && !protectedPath.accessIds.some(accessId => state.user?.access.includes(accessId))) {
+        window.location.replace(protectedPath.redirectPath);
+      }
+    }
+  }, [isLoading, state.isConnected, state.user?.access, protectedPaths]);
 
   const connectWithRedirect = useCallback(
     (opts: RedirectConnectOptions): Promise<void> => {
@@ -197,20 +170,13 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
     async (opts: LogoutOptions = {}): Promise<void> => {
       await client.logout(opts);
       dispatch({ type: 'LOGOUT' });
-  
     },
     [client]
   );
 
-  const getUser = useCallback(
-    () => client.getUser(),
-    [client]
-  );
-  
-  const getIdToken = useCallback(
-    () => client.getIdToken(),
-    [client]
-  );
+  const getUser = useCallback(() => client.getUser(), [client]);
+
+  const getIdToken = useCallback(() => client.getIdToken(), [client]);
 
   const handleRedirectCallback = useCallback(
     async (url?: string): Promise<RedirectConnectResult> => {
@@ -221,13 +187,13 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
       } finally {
         dispatch({
           type: 'HANDLE_REDIRECT_COMPLETE',
-          user: await client.getUser(),
+          user: await client.getUser()
         });
       }
     },
     [client]
   );
-  
+
   const contextValue = useMemo<EarthoOneContextInterface<User>>(() => {
     return {
       ...state,
@@ -236,7 +202,7 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
       connectWithRedirect,
       connectWithPopup,
       logout,
-      handleRedirectCallback,
+      handleRedirectCallback
     };
   }, [
     state,
@@ -245,8 +211,12 @@ const EarthoOneProvider = (opts: EarthoOneProviderOptions): JSX.Element => {
     connectWithRedirect,
     connectWithPopup,
     logout,
-    handleRedirectCallback,
+    handleRedirectCallback
   ]);
+
+  if (isLoading) {
+    return <>{loadingComponent}</>; // Use the custom loading component or null
+  }
 
   return <context.Provider value={contextValue}>{children}</context.Provider>;
 };

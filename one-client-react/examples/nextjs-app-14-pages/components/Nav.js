@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Loading } from './Loading';
 
 export function Nav() {
-  const { isConnected, isLoading, user, connectWithRedirect, logout } = useEarthoOne();
+  const { isConnected, isLoading, user, connectWithRedirect, connectWithPopup, logout } = useEarthoOne();
   const { pathname } = useRouter();
 
   if (isLoading) {
@@ -25,9 +25,8 @@ export function Nav() {
           </Link>
           <Link
             href="/users"
-            className={`nav-item nav-link${
-              pathname === '/users' ? ' active' : ''
-            }`}
+            className={`nav-item nav-link${pathname === '/users' ? ' active' : ''
+              }`}
           >
             Users
           </Link>
@@ -47,15 +46,26 @@ export function Nav() {
             logout
           </button>
         </div>
-      ) : (
+      ) : (<>
         <button
           className="btn btn-outline-success"
           id="login"
           onClick={() => connectWithRedirect({
             accessId: process.env.NEXT_PUBLIC_ACCESS_ID
           })}        >
-          login
+          login with redirect
         </button>
+        <div />
+        <button
+          className="btn btn-outline-success"
+          id="login"
+          onClick={() => connectWithPopup({
+            accessId: process.env.NEXT_PUBLIC_ACCESS_ID
+          })}        
+          >
+          login with popup
+        </button>
+      </>
       )}
     </nav>
   );

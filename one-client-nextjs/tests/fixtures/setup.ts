@@ -13,7 +13,7 @@ import {
   AccessTokenRequest,
   Claims,
   PageRouterOnError,
-  HandleLogin,
+  HandleConnect,
   HandleLogout,
   HandleCallback,
   HandleProfile,
@@ -29,7 +29,7 @@ export type SetupOptions = {
   idTokenClaims?: Claims;
   callbackHandler?: HandleCallback;
   callbackOptions?: CallbackOptions;
-  loginHandler?: HandleLogin;
+  loginHandler?: HandleConnect;
   loginOptions?: LoginOptions;
   logoutHandler?: HandleLogout;
   logoutOptions?: LogoutOptions;
@@ -99,7 +99,7 @@ export const setup = async (
   const {
     handleAccess,
     handleCallback,
-    handleLogin,
+    handleConnect,
     handleLogout,
     handleBackchannelLogout,
     handleProfile,
@@ -111,7 +111,7 @@ export const setup = async (
     withPageAuthRequired
   } = initEartho(config);
   const callback: NextApiHandler = (...args) => (callbackHandler || handleCallback)(...args, callbackOptions);
-  const login: NextApiHandler = (...args) => (loginHandler || handleLogin)(...args, loginOptions);
+  const login: NextApiHandler = (...args) => (loginHandler || handleConnect)(...args, loginOptions);
   const logout: NextApiHandler = (...args) => (logoutHandler || handleLogout)(...args, logoutOptions);
   const profile: NextApiHandler = (...args) => (profileHandler || handleProfile)(...args, profileOptions);
   const backchannelLogout: NextApiHandler = (...args) => (backchannelLogoutHandler || handleBackchannelLogout)(...args);

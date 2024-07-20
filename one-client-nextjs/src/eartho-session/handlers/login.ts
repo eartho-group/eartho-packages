@@ -12,7 +12,7 @@ function getRedirectUri(config: Config): string {
   return urlJoin(config.baseURL, config.routes.callback);
 }
 
-export type HandleLogin = (req: EarthoRequest, res: EarthoResponse, options?: LoginOptions) => Promise<void>;
+export type HandleConnect = (req: EarthoRequest, res: EarthoResponse, options?: LoginOptions) => Promise<void>;
 
 export type AuthVerification = {
   nonce: string;
@@ -26,7 +26,7 @@ export default function loginHandlerFactory(
   getConfig: GetConfig,
   getClient: GetClient,
   transientHandler: TransientStore
-): HandleLogin {
+): HandleConnect {
   const getConfigFn = typeof getConfig === 'function' ? getConfig : () => getConfig;
   return async (req, res, options = {}) => {
     const config = await getConfigFn(req);

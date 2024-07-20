@@ -4,7 +4,7 @@ import {
   AuthorizationParameters,
   HandleCallback as BaseHandleCallback,
   AfterCallback as BaseAfterCallback,
-  HandleLogin as BaseHandleLogin
+  HandleConnect as BaseHandleConnect
 } from '../eartho-session';
 import { Session } from '../session';
 import { assertReqRes } from '../utils/assert';
@@ -343,7 +343,7 @@ const applyOptions = (
  * @ignore
  */
 const appRouteHandlerFactory: (
-  handler: BaseHandleLogin,
+  handler: BaseHandleConnect,
   getConfig: GetConfig
 ) => (req: NextRequest, ctx: AppRouteHandlerFnContext, options?: CallbackOptions) => Promise<Response> | Response =
   (handler, getConfig) =>

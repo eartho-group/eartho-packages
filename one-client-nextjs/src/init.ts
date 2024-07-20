@@ -52,7 +52,7 @@ export const _initAuth = ({
   const transientStore = new TransientStore(getConfig);
 
   const sessionCache = new SessionCache(getConfig);
-  const baseHandleLogin = baseLoginHandler(getConfig, getClient, transientStore);
+  const baseHandleConnect = baseLoginHandler(getConfig, getClient, transientStore);
   const baseHandleLogout = baseLogoutHandler(getConfig, getClient, sessionCache);
   const baseHandleCallback = baseCallbackHandler(getConfig, getClient, sessionCache, transientStore);
   const baseHandleBackchannelLogout = baseBackchannelLogoutHandler(getConfig, getClient);
@@ -64,13 +64,13 @@ export const _initAuth = ({
   const getAccessToken = accessTokenFactory(getConfig, getClient, sessionCache);
   const withApiAuthRequired = withApiAuthRequiredFactory(sessionCache);
   const withPageAuthRequired = withPageAuthRequiredFactory(getConfig, sessionCache);
-  const handleLogin = loginHandler(baseHandleLogin, getConfig);
+  const handleConnect = loginHandler(baseHandleConnect, getConfig);
   const handleLogout = logoutHandler(baseHandleLogout);
   const handleCallback = callbackHandler(baseHandleCallback, getConfig);
   const handleBackchannelLogout = backchannelLogoutHandler(baseHandleBackchannelLogout, getConfig);
   const handleProfile = profileHandler(getConfig, getClient, getAccessToken, sessionCache);
   const handleAccess = handlerFactory({
-    handleLogin,
+    handleConnect,
     handleLogout,
     handleCallback,
     handleProfile,
@@ -85,7 +85,7 @@ export const _initAuth = ({
     getAccessToken,
     withApiAuthRequired,
     withPageAuthRequired,
-    handleLogin,
+    handleConnect,
     handleLogout,
     handleCallback,
     handleBackchannelLogout,

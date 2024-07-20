@@ -2,7 +2,7 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   AuthorizationParameters,
-  HandleLogin as BaseHandleLogin,
+  HandleConnect as BaseHandleConnect,
   LoginOptions as BaseLoginOptions
 } from '../eartho-session';
 import toSafeRedirect from '../utils/url-helpers';
@@ -22,14 +22,14 @@ export type GetLoginState = GetLoginStatePageRoute | GetLoginStateAppRoute;
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * const getLoginState = (req, loginOptions) => {
  *   return { basket_id: getBasketId(req) };
  * };
  *
  * export default handleAccess({
- *   login: handleLogin({ getLoginState })
+ *   login: handleConnect({ getLoginState })
  * });
  * ```
  *
@@ -42,14 +42,14 @@ export type GetLoginStatePageRoute = (req: NextApiRequest, options: LoginOptions
  *
  * ```js
  * // app/api/access/[eartho]/route.js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * const getLoginState = (req, loginOptions) => {
  *   return { basket_id: getBasketId(req) };
  * };
  *
  * export default handleAccess({
- *   login: handleLogin({ getLoginState })
+ *   login: handleConnect({ getLoginState })
  * });
  * ```
  *
@@ -69,12 +69,12 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    * By default no connection is specified, so the Universal Login page will be displayed.
    *
    * ```js
-   * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+   * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
    *
    * export default handleAccess({
    *   login: async (req, res) => {
    *     try {
-   *       await handleLogin(req, res, {
+   *       await handleConnect(req, res, {
    *         // Get the connection name from the Eartho Dashboard
    *         authorizationParams: { connection: 'github' }
    *       });
@@ -91,12 +91,12 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    * Provider scopes for OAuth2/social connections, such as GitHub or Google.
    *
    * ```js
-   * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+   * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
    *
    * export default handleAccess({
    *   login: async (req, res) => {
    *     try {
-   *       await handleLogin(req, res, {
+   *       await handleConnect(req, res, {
    *         authorizationParams: {
    *           connection: 'github',
    *           connection_scope: 'public_repo read:user'
@@ -119,7 +119,7 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    *
    * ```js
    * // pages/api/invite.js
-   * import { handleLogin } from '@eartho/one-client-nextjs';
+   * import { handleConnect } from '@eartho/one-client-nextjs';
    *
    * export default async function invite(req, res) {
    *   try {
@@ -127,7 +127,7 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
    *     if (!invitation) {
    *       res.status(400).end('Missing "invitation" parameter');
    *     }
-   *     await handleLogin(req, res, {
+   *     await handleConnect(req, res, {
    *       authorizationParams: {
    *         invitation,
    *         organization
@@ -162,7 +162,7 @@ export interface AuthorizationParams extends Partial<AuthorizationParameters> {
 /**
  * Options to customize the login handler.
  *
- * @see {@link HandleLogin}
+ * @see {@link HandleConnect}
  *
  * @category Server
  */
@@ -199,10 +199,10 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * export default handleAccess({
- *   login: handleLogin({
+ *   login: handleConnect({
  *     authorizationParams: { connection: 'github' }
  *   })
  * });
@@ -212,10 +212,10 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * export default handleAccess({
- *   login: handleLogin((req) => {
+ *   login: handleConnect((req) => {
  *     return {
  *       authorizationParams: { connection: 'github' }
  *     };
@@ -228,12 +228,12 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  * @example Override the login handler
  *
  * ```js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * export default handleAccess({
  *   login: async (req, res) => {
  *     try {
- *       await handleLogin(req, res, {
+ *       await handleConnect(req, res, {
  *         authorizationParams: { connection: 'github' }
  *       });
  *     } catch (error) {
@@ -245,7 +245,7 @@ export type LoginOptionsProvider = OptionsProvider<LoginOptions>;
  *
  * @category Server
  */
-export type HandleLogin = AuthHandler<LoginOptions>;
+export type HandleConnect = AuthHandler<LoginOptions>;
 
 /**
  * The handler for the `/api/access/login` API route.
@@ -259,11 +259,11 @@ export type LoginHandler = Handler<LoginOptions>;
 /**
  * @ignore
  */
-export default function handleLoginFactory(handler: BaseHandleLogin, getConfig: GetConfig): HandleLogin {
+export default function handleConnectFactory(handler: BaseHandleConnect, getConfig: GetConfig): HandleConnect {
   const appRouteHandler = appRouteHandlerFactory(handler, getConfig);
   const pageRouteHandler = pageRouteHandlerFactory(handler, getConfig);
 
-  return getHandler<LoginOptions>(appRouteHandler, pageRouteHandler) as HandleLogin;
+  return getHandler<LoginOptions>(appRouteHandler, pageRouteHandler) as HandleConnect;
 }
 
 /**
@@ -300,7 +300,7 @@ const applyOptions = (
  * @ignore
  */
 const appRouteHandlerFactory: (
-  handler: BaseHandleLogin,
+  handler: BaseHandleConnect,
   getConfig: GetConfig
 ) => (req: NextRequest, ctx: AppRouteHandlerFnContext, options?: LoginOptions) => Promise<Response> | Response =
   (handler, getConfig) =>
@@ -323,7 +323,7 @@ const appRouteHandlerFactory: (
  * @ignore
  */
 const pageRouteHandlerFactory: (
-  handler: BaseHandleLogin,
+  handler: BaseHandleConnect,
   getConfig: GetConfig
 ) => (req: NextApiRequest, res: NextApiResponse, options?: LoginOptions) => Promise<void> | void =
   (handler, getConfig) =>

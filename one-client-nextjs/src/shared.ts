@@ -1,7 +1,7 @@
 import { SessionStore as GenericSessionStore, SessionPayload } from './eartho-session';
 import {
   HandleAccess,
-  HandleLogin,
+  HandleConnect,
   HandleProfile,
   HandleLogout,
   HandleCallback,
@@ -48,7 +48,7 @@ export interface EarthoServer {
   /**
    * Login handler which will redirect the user to Eartho.
    */
-  handleLogin: HandleLogin;
+  handleConnect: HandleConnect;
 
   /**
    * Callback handler which will complete the transaction and create a local session.
@@ -160,7 +160,7 @@ export {
 export {
   ConfigParameters,
   HandleAccess,
-  HandleLogin,
+  HandleConnect,
   HandleProfile,
   HandleLogout,
   HandleCallback,

@@ -94,7 +94,7 @@ export const getResponse = async ({
   const instance = earthoInstance || initEartho(opts);
   const handleAccess = instance.handleAccess({
     ...(callbackOpts && { callback: instance.handleCallback(callbackOpts) }),
-    ...(loginOpts && { login: instance.handleLogin(loginOpts) }),
+    ...(loginOpts && { login: instance.handleConnect(loginOpts) }),
     ...(logoutOpts && { logout: instance.handleLogout(logoutOpts) }),
     ...(profileOpts && { profile: instance.handleProfile(profileOpts) }),
     onError(_req: any, error: any) {

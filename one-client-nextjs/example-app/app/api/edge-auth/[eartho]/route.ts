@@ -1,9 +1,9 @@
-import { handleAccess, handleLogin, handleCallback } from '@eartho/one-client-nextjs/edge';
+import { handleAccess, handleConnect, handleCallback } from '@eartho/one-client-nextjs/edge';
 
 const redirectUri = `${process.env.EARTHO_BASE_URL}/api/edge-auth/callback`;
 
 export const GET = handleAccess({
-  login: handleLogin({
+  login: handleConnect({
     authorizationParams: { redirect_uri: redirectUri }
   }),
   callback: handleCallback({ redirectUri }),

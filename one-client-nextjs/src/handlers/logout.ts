@@ -1,6 +1,6 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
-import { HandleLogin as BaseHandleLogin, HandleLogout as BaseHandleLogout } from '../eartho-session';
+import { HandleConnect as BaseHandleConnect, HandleLogout as BaseHandleLogout } from '../eartho-session';
 import { assertReqRes } from '../utils/assert';
 import { HandlerErrorCause, LogoutHandlerError } from '../utils/errors';
 import { EarthoNextApiRequest, EarthoNextApiResponse, EarthoNextRequest, EarthoNextResponse } from '../http';
@@ -106,7 +106,7 @@ export default function handleLogoutFactory(handler: BaseHandleLogout): HandleLo
 }
 
 const appRouteHandlerFactory: (
-  handler: BaseHandleLogin
+  handler: BaseHandleConnect
 ) => (req: NextRequest, ctx: AppRouteHandlerFnContext, options?: LogoutOptions) => Promise<Response> | Response =
   (handler) =>
   async (req, _ctx, options = {}) => {
@@ -120,7 +120,7 @@ const appRouteHandlerFactory: (
   };
 
 const pageRouteHandlerFactory: (
-  handler: BaseHandleLogin
+  handler: BaseHandleConnect
 ) => (req: NextApiRequest, res: NextApiResponse, options?: LogoutOptions) => Promise<void> | void =
   (handler) =>
   async (req, res, options = {}) => {

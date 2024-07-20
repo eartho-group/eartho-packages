@@ -27,7 +27,7 @@ export interface NextConfig extends BaseConfig {
  *
  * ### 1. Environment Variables
  *
- * The simplest way to use the SDK is to use the named exports ({@link HandleAccess}, {@link HandleLogin},
+ * The simplest way to use the SDK is to use the named exports ({@link HandleAccess}, {@link HandleConnect},
  * {@link HandleLogout}, {@link HandleCallback}, {@link HandleProfile}, {@link GetSession}, {@link GetAccessToken},
  * {@link WithApiAuthRequired}, and {@link WithPageAuthRequired}).
  *

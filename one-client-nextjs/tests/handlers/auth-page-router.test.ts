@@ -147,9 +147,9 @@ describe('auth handler (page router)', () => {
     jest.spyOn(baseLoginHandler, 'default').mockImplementation(() => loginHandler);
     const options: LoginOptions = { authorizationParams: { scope: 'openid' } };
     const baseUrl = await setup(withoutApi);
-    const { handleLogin, handleAccess } = initEartho(withoutApi);
+    const { handleConnect, handleAccess } = initEartho(withoutApi);
     global.handleAccess = handleAccess.bind(null, {
-      login: handleLogin(options)
+      login: handleConnect(options)
     });
     await get(baseUrl, '/api/access/login');
     expect(loginHandler).toHaveBeenCalledWith(
@@ -218,10 +218,10 @@ describe('auth handler (page router)', () => {
     const options = { authorizationParams: { scope: 'openid' } };
     const optionsProvider = jest.fn(() => options);
     const baseUrl = await setup(withoutApi);
-    const { handleLogin, handleAccess } = initEartho(withoutApi);
+    const { handleConnect, handleAccess } = initEartho(withoutApi);
 
     global.handleAccess = handleAccess.bind(null, {
-      login: handleLogin(optionsProvider)
+      login: handleConnect(optionsProvider)
     });
     await get(baseUrl, '/api/access/login');
     expect(optionsProvider).toHaveBeenCalled();

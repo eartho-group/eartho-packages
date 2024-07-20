@@ -66,7 +66,7 @@ class TestSessionCache implements SessionCache<IncomingMessage, ServerResponse> 
 }
 
 type Handlers = {
-  handleLogin: (req: NodeRequest, res: NodeResponse, opts?: LoginOptions) => Promise<void>;
+  handleConnect: (req: NodeRequest, res: NodeResponse, opts?: LoginOptions) => Promise<void>;
   handleLogout: (req: NodeRequest, res: NodeResponse, opts?: LogoutOptions) => Promise<void>;
   handleCallback: (req: NodeRequest, res: NodeResponse, opts?: CallbackOptions) => Promise<void>;
   handleBackchannelLogout: (req: NodeRequest, res: NodeResponse) => Promise<void>;
@@ -81,7 +81,7 @@ const createHandlers = (params: ConfigParameters): Handlers => {
   const sessionCache = new TestSessionCache(cookieStore);
 
   return {
-    handleLogin: loginHandler(config, getClient, transientStore),
+    handleConnect: loginHandler(config, getClient, transientStore),
     handleLogout: logoutHandler(config, getClient, sessionCache),
     handleCallback: callbackHandler(config, getClient, sessionCache, transientStore),
     handleBackchannelLogout: backchannelLogoutHandlerFactory(config, getClient),
@@ -139,7 +139,7 @@ const requestListener =
     try {
       switch (pathname) {
         case '/login':
-          return await handlers.handleLogin(nodeReq, nodeRes, loginOptions);
+          return await handlers.handleConnect(nodeReq, nodeRes, loginOptions);
         case '/logout':
           return await handlers.handleLogout(nodeReq, nodeRes, logoutOptions);
         case '/callback':

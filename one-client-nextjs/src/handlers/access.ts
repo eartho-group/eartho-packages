@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest } from 'next/server';
-import { HandleLogin } from './login';
+import { HandleConnect } from './login';
 import { HandleLogout } from './logout';
 import { HandleCallback } from './callback';
 import { HandleBackchannelLogout } from './backchannel-logout';
@@ -20,14 +20,14 @@ import { isRequest } from '../utils/req-helpers';
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  * import { errorReporter, logger } from '../../../utils';
  *
  * export default handleAccess({
  *   async login(req, res) {
  *     try {
  *        // Pass in custom params to your handler
- *       await handleLogin(req, res, { authorizationParams: { customParam: 'foo' } });
+ *       await handleConnect(req, res, { authorizationParams: { customParam: 'foo' } });
  *       // Add your own custom logging.
  *       logger('Redirecting to login');
  *     } catch (error) {
@@ -43,10 +43,10 @@ import { isRequest } from '../utils/req-helpers';
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * export default handleAccess({
- *   login: handleLogin({
+ *   login: handleConnect({
  *     authorizationParams: { customParam: 'foo' } // Pass in custom params
  *   })
  * });
@@ -56,10 +56,10 @@ import { isRequest } from '../utils/req-helpers';
  *
  * ```js
  * // pages/api/access/[eartho].js
- * import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+ * import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
  *
  * export default handleAccess({
- *   signup: handleLogin({
+ *   signup: handleConnect({
  *     authorizationParams: { screen_hint: 'signup' }
  *   })
  * });
@@ -167,13 +167,13 @@ const defaultAppRouterOnError: AppRouterOnError = (_req, error) => {
  * @ignore
  */
 export default function handlerFactory({
-  handleLogin,
+  handleConnect,
   handleLogout,
   handleCallback,
   handleProfile,
   handleBackchannelLogout
 }: {
-  handleLogin: HandleLogin;
+  handleConnect: HandleConnect;
   handleLogout: HandleLogout;
   handleCallback: HandleCallback;
   handleProfile: HandleProfile;
@@ -181,7 +181,7 @@ export default function handlerFactory({
 }): HandleAccess {
   return ({ onError, ...handlers }: Handlers = {}): NextApiHandler<void> | AppRouteHandlerFn => {
     const customHandlers: ApiHandlers = {
-      login: handleLogin,
+      login: handleConnect,
       logout: handleLogout,
       callback: handleCallback,
       'backchannel-logout': handleBackchannelLogout,

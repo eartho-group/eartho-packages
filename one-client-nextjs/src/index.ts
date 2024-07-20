@@ -6,7 +6,7 @@ import {
   GetSession,
   HandleAccess,
   HandleCallback,
-  HandleLogin,
+  HandleConnect,
   HandleLogout,
   HandleProfile,
   TouchSession,
@@ -62,8 +62,8 @@ export const withApiAuthRequired: WithApiAuthRequired = (...args) =>
   (getInstance().withApiAuthRequired as any)(...args);
 export const withPageAuthRequired: WithPageAuthRequired = ((...args: Parameters<WithPageAuthRequired>) =>
   getInstance().withPageAuthRequired(...args)) as WithPageAuthRequired;
-export const handleLogin: HandleLogin = ((...args: Parameters<HandleLogin>) =>
-  getInstance().handleLogin(...args)) as HandleLogin;
+export const handleConnect: HandleConnect = ((...args: Parameters<HandleConnect>) =>
+  getInstance().handleConnect(...args)) as HandleConnect;
 export const handleLogout: HandleLogout = ((...args: Parameters<HandleLogout>) =>
   getInstance().handleLogout(...args)) as HandleLogout;
 export const handleCallback: HandleCallback = ((...args: Parameters<HandleCallback>) =>

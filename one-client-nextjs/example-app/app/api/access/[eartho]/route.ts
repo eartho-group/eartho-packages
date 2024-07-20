@@ -1,19 +1,19 @@
-import { handleAccess, handleLogin } from '@eartho/one-client-nextjs';
+import { handleAccess, handleConnect } from '@eartho/one-client-nextjs';
 
 export const GET = handleAccess({
-  login: handleLogin({
+  login: handleConnect({
     authorizationParams: {
       access_id: 'QJkg3evAtIqJgF80iB1o'
     }
   }),
-  payment1: handleLogin({
+  payment1: handleConnect({
     authorizationParams: {
-      access_id: 'bbb'
+      access_id: 'access-id-payment1'
     }
   }),
-  payment2: handleLogin({
+  payment2: handleConnect({
     authorizationParams: {
-      access_id: 'bbb'
+      access_id: 'access-id-payment2'
     }
   }),
   onError(req: Request, error: Error) {

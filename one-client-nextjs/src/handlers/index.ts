@@ -8,7 +8,7 @@ export {
 } from './callback';
 export {
   default as loginHandler,
-  HandleLogin,
+  HandleConnect,
   LoginOptions,
   GetLoginState,
   GetLoginStatePageRoute,

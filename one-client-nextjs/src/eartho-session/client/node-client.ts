@@ -44,7 +44,7 @@ export class NodeClient extends AbstractClient {
       config,
       telemetry: { name, version }
     } = this;
-    
+
     const defaultHttpOptions: CustomHttpOptionsProvider = (_url, options) => ({
       ...options,
       headers: {
@@ -53,16 +53,16 @@ export class NodeClient extends AbstractClient {
         clientid: `${config.clientID}`,
         ...(config.enableTelemetry
           ? {
-            'Eartho-Client': Buffer.from(
-              JSON.stringify({
-                name,
-                version,
-                env: {
-                  node: process.version
-                }
-              })
-            ).toString('base64')
-          }
+              'Eartho-Client': Buffer.from(
+                JSON.stringify({
+                  name,
+                  version,
+                  env: {
+                    node: process.version
+                  }
+                })
+              ).toString('base64')
+            }
           : undefined)
       },
       timeout: config.httpTimeout,
@@ -144,7 +144,8 @@ export class NodeClient extends AbstractClient {
     if (config.idpLogout) {
       if (
         this.config.idpLogout &&
-        (this.config.earthoLogout || (issuerUrl.hostname.match('\\.eartho\\.com$') && this.config.earthoLogout !== false))
+        (this.config.earthoLogout ||
+          (issuerUrl.hostname.match('\\.eartho\\.com$') && this.config.earthoLogout !== false))
       ) {
         Object.defineProperty(this.client, 'endSessionUrl', {
           value(params: EndSessionParameters) {

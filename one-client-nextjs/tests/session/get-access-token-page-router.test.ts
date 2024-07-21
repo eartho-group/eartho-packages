@@ -261,7 +261,7 @@ describe('get access token (page router)', () => {
       accessToken: 'new-token',
       refreshToken: 'GEbRxBN...edjnXbL',
       user: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         email: 'john@test.com',
         name: 'john doe',
         sub: '123',

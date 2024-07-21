@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@eartho/one-client-nextjs/client';
+import { connectWithPopup } from '../../dist';
 
 export default function Nav() {
   const { user } = useUser();
@@ -77,9 +78,14 @@ export default function Nav() {
             ) : (
               <>
                 <li>
-                  <a href="/api/access/login" data-testid="login">
+                  <button
+                    onClick={async () => {
+                      connectWithPopup('login');
+                    }}
+                    data-testid="login"
+                  >
                     Login
-                  </a>
+                  </button>
                 </li>
                 <li>
                   <a href="/api/edge-auth/login" data-testid="login-edge">

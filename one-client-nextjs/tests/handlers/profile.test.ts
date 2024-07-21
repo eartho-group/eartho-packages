@@ -30,7 +30,7 @@ describe('profile handler (app router)', () => {
       cookies: { appSession: loginRes.cookies.get('appSession').value }
     });
     expect(res.status).toBe(200);
-    await expect(res.json()).resolves.toMatchObject({ nickname: '__test_nickname__', sub: '__test_sub__' });
+    await expect(res.json()).resolves.toMatchObject({ displayName: '__test_displayName__', sub: '__test_sub__' });
   });
 
   test('should not allow caching the profile response', async () => {

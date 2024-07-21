@@ -1,6 +1,7 @@
 import EarthoResponseCookies from './eartho-response-cookies';
 
 export default abstract class EarthoResponse<Res = any> extends EarthoResponseCookies {
+
   protected constructor(public res: Res) {
     super();
   }

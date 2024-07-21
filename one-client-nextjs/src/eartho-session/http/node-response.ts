@@ -21,6 +21,10 @@ export default class NodeResponse<T extends ServerResponse = ServerResponse> ext
     ]);
   }
 
+  public clearCookie(name: string, options?: CookieSerializeOptions) {
+    this.setCookie(name, '', { ...options, expires: new Date(0) });
+  }
+
   public redirect(location: string, status = 302): void {
     if (this.res.writableEnded) {
       return;

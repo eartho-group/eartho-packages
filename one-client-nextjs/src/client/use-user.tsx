@@ -9,14 +9,13 @@ import ConfigProvider, { ConfigContext } from './use-config';
  * @category Client
  */
 export interface UserProfile {
+  uid?: string | null;
   email?: string | null;
-  email_verified?: boolean | null;
-  name?: string | null;
-  nickname?: string | null;
-  picture?: string | null;
-  sub?: string | null;
-  updated_at?: string | null;
-  org_id?: string | null;
+  emailVerified?: boolean | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  displayName?: string | null;
+  photoURL?: string | null;
   [key: string]: unknown; // Any custom claim which could be in the profile
 }
 

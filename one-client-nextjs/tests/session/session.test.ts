@@ -33,7 +33,7 @@ describe('session', () => {
         foo: 'bar',
         iat: expect.any(Number),
         iss: 'https://op.example.com/',
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         nonce: '__test_nonce__',
         sub: '__test_sub__'
       });

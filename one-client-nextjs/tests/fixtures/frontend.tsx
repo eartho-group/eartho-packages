@@ -11,9 +11,9 @@ type FetchUserMock = {
 
 export const user: UserProfile = {
   email: 'foo@example.com',
-  email_verified: true,
+  emailVerified: true,
   name: 'foo',
-  nickname: 'foo',
+  displayName: 'foo',
   picture: 'foo.jpg',
   sub: '1',
   updated_at: null

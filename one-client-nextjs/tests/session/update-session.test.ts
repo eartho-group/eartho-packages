@@ -61,12 +61,12 @@ describe('update-user', () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
       const user = await get(baseUrl, '/api/access/me', { cookieJar });
-      expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+      expect(user).toEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: { foo: 'bar' } } });
       const updatedSession = await get(baseUrl, '/api/session', { cookieJar });
       expect(updatedSession).toMatchObject({
         foo: 'bar',
-        user: expect.objectContaining({ nickname: '__test_nickname__', sub: '__test_sub__' })
+        user: expect.objectContaining({ displayName: '__test_displayName__', sub: '__test_sub__' })
       });
     });
 
@@ -74,10 +74,10 @@ describe('update-user', () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
       const user = await get(baseUrl, '/api/access/me', { cookieJar });
-      expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+      expect(user).toEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: undefined } });
       const updatedUser = await get(baseUrl, '/api/access/me', { cookieJar });
-      expect(updatedUser).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+      expect(updatedUser).toEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
     });
 
     test('should ignore updates if user is not logged in', async () => {
@@ -92,10 +92,10 @@ describe('update-user', () => {
       const baseUrl = await setup(withoutApi);
       const cookieJar = await login(baseUrl);
       const user = await get(baseUrl, '/api/access/me', { cookieJar });
-      expect(user).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+      expect(user).toEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
       await post(baseUrl, '/api/update-session', { cookieJar, body: { session: { user: undefined } } });
       const updatedUser = await get(baseUrl, '/api/access/me', { cookieJar });
-      expect(updatedUser).toEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+      expect(updatedUser).toEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
     });
   });
 });

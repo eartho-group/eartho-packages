@@ -14,18 +14,13 @@ import {
   profileHandler,
   backchannelLogoutHandler
 } from './handlers';
-import {
-  sessionFactory,
-  accessTokenFactory,
-  SessionCache,
-  touchSessionFactory,
-  updateSessionFactory
-} from './session';
+import { sessionFactory, accessTokenFactory, SessionCache, touchSessionFactory, updateSessionFactory } from './session';
 import { withPageAuthRequiredFactory, withApiAuthRequiredFactory } from './helpers';
 import { configSingletonGetter, ConfigParameters } from './config';
 import { EarthoServer, telemetry } from './shared';
 import withMiddlewareAccessRequiredFactory from './helpers/with-middleware-auth-required';
 import { GetClient } from './eartho-session/client/abstract-client';
+import handlePopupCallbackFactory from './handlers/callback-popup';
 
 /**
  * Initialise your own instance of the SDK.
@@ -67,12 +62,14 @@ export const _initAuth = ({
   const handleConnect = loginHandler(baseHandleConnect, getConfig);
   const handleLogout = logoutHandler(baseHandleLogout);
   const handleCallback = callbackHandler(baseHandleCallback, getConfig);
+  const handlePopupCallback = handlePopupCallbackFactory();
   const handleBackchannelLogout = backchannelLogoutHandler(baseHandleBackchannelLogout, getConfig);
   const handleProfile = profileHandler(getConfig, getClient, getAccessToken, sessionCache);
   const handleAccess = handlerFactory({
     handleConnect,
     handleLogout,
     handleCallback,
+    handlePopupCallback,
     handleProfile,
     handleBackchannelLogout
   });

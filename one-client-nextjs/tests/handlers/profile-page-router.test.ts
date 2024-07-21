@@ -20,7 +20,7 @@ describe('profile handler (page router)', () => {
     const cookieJar = await login(baseUrl);
 
     const profile = await get(baseUrl, '/api/access/me', { cookieJar });
-    expect(profile).toStrictEqual({ nickname: '__test_nickname__', sub: '__test_sub__' });
+    expect(profile).toStrictEqual({ displayName: '__test_displayName__', sub: '__test_sub__' });
   });
 
   test('should not allow caching the profile response', async () => {
@@ -60,11 +60,11 @@ describe('profile handler (page router)', () => {
     const cookieJar = await login(baseUrl);
 
     const profile = await get(baseUrl, '/api/access/me', { cookieJar });
-    expect(profile).toMatchObject({ foo: 'bar', nickname: '__test_nickname__', sub: '__test_sub__' });
+    expect(profile).toMatchObject({ foo: 'bar', displayName: '__test_displayName__', sub: '__test_sub__' });
     // check that the session is saved
     userInfo(withoutApi, 'eyJz93a...k4laUWw', {});
     const profile2 = await get(baseUrl, '/api/access/me', { cookieJar });
-    expect(profile2).toMatchObject({ foo: 'bar', nickname: '__test_nickname__', sub: '__test_sub__' });
+    expect(profile2).toMatchObject({ foo: 'bar', displayName: '__test_displayName__', sub: '__test_sub__' });
   });
 
   test("should refetch the user and fail if it can't get an access token", async () => {

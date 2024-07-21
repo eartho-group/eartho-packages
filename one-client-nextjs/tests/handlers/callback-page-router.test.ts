@@ -135,7 +135,7 @@ describe('callback handler (page router)', () => {
     expect(res.statusCode).toBe(302);
     const body = await get(baseUrl, `/api/session`, { cookieJar });
     expect(body.user).toStrictEqual({
-      nickname: '__test_nickname__',
+      displayName: '__test_displayName__',
       sub: '__test_sub__'
     });
   });
@@ -197,7 +197,7 @@ describe('callback handler (page router)', () => {
       refreshToken: 'GEbRxBN...edjnXbL',
       idToken: await makeIdToken({ iss: 'https://acme.eartho.local/' }),
       user: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: '__test_sub__'
       }
     });
@@ -241,7 +241,7 @@ describe('callback handler (page router)', () => {
       idToken: await makeIdToken({ iss: 'https://acme.eartho.local/' }),
       token_type: 'Bearer',
       user: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: '__test_sub__'
       }
     });
@@ -277,7 +277,7 @@ describe('callback handler (page router)', () => {
     expect(session).toMatchObject({
       foo: 'bar',
       user: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: '__test_sub__'
       }
     });

@@ -13,6 +13,7 @@ import {
   NextPageRouterHandler
 } from './router-helpers';
 import { isRequest } from '../utils/req-helpers';
+import { HandlePopupCallback } from './callback-popup';
 
 /**
  * If you want to add some custom behavior to the default auth handlers, you can pass in custom handlers for
@@ -170,12 +171,14 @@ export default function handlerFactory({
   handleConnect,
   handleLogout,
   handleCallback,
+  handlePopupCallback,
   handleProfile,
   handleBackchannelLogout
 }: {
   handleConnect: HandleConnect;
   handleLogout: HandleLogout;
   handleCallback: HandleCallback;
+  handlePopupCallback: HandlePopupCallback;
   handleProfile: HandleProfile;
   handleBackchannelLogout: HandleBackchannelLogout;
 }): HandleAccess {
@@ -184,6 +187,7 @@ export default function handlerFactory({
       login: handleConnect,
       logout: handleLogout,
       callback: handleCallback,
+      'callback-popup': handlePopupCallback,
       'backchannel-logout': handleBackchannelLogout,
       me: (handlers as ApiHandlers).profile || handleProfile,
       ...handlers
@@ -235,32 +239,32 @@ const appRouteHandlerFactory: (customHandlers: ApiHandlers, onError?: AppRouterO
  */
 const pageRouteHandlerFactory: (customHandlers: ApiHandlers, onError?: PageRouterOnError) => NextApiHandler =
   (customHandlers, onError) =>
-  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    let {
-      query: { eartho: route }
-    } = req;
+    async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+      let {
+        query: { eartho: route }
+      } = req;
 
-    if (Array.isArray(route)) {
-      let otherRoutes;
-      [route, ...otherRoutes] = route;
-      if (otherRoutes.length) {
-        res.status(404).end();
-        return;
+      if (Array.isArray(route)) {
+        let otherRoutes;
+        [route, ...otherRoutes] = route;
+        if (otherRoutes.length) {
+          res.status(404).end();
+          return;
+        }
       }
-    }
 
-    try {
-      const handler = route && customHandlers.hasOwnProperty(route) && customHandlers[route];
-      if (handler) {
-        await (handler as NextApiHandler)(req, res);
-      } else {
-        res.status(404).end();
+      try {
+        const handler = route && customHandlers.hasOwnProperty(route) && customHandlers[route];
+        if (handler) {
+          await (handler as NextApiHandler)(req, res);
+        } else {
+          res.status(404).end();
+        }
+      } catch (error) {
+        await (onError || defaultPageRouterOnError)(req, res, error as HandlerError);
+        if (!res.writableEnded) {
+          // 200 is the default, so we assume it has not been set in the custom error handler if it equals 200
+          res.status(res.statusCode === 200 ? 500 : res.statusCode).end();
+        }
       }
-    } catch (error) {
-      await (onError || defaultPageRouterOnError)(req, res, error as HandlerError);
-      if (!res.writableEnded) {
-        // 200 is the default, so we assume it has not been set in the custom error handler if it equals 200
-        res.status(res.statusCode === 200 ? 500 : res.statusCode).end();
-      }
-    }
-  };
+    };

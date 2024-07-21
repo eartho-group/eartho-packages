@@ -58,10 +58,12 @@ export const getSession: GetSession = (...args) => getInstance().getSession(...a
 export const updateSession: UpdateSession = (...args) => getInstance().updateSession(...args);
 export const getAccessToken: GetAccessToken = (...args) => getInstance().getAccessToken(...args);
 export const touchSession: TouchSession = (...args) => getInstance().touchSession(...args);
+
 export const withApiAuthRequired: WithApiAuthRequired = (...args) =>
   (getInstance().withApiAuthRequired as any)(...args);
 export const withPageAuthRequired: WithPageAuthRequired = ((...args: Parameters<WithPageAuthRequired>) =>
   getInstance().withPageAuthRequired(...args)) as WithPageAuthRequired;
+
 export const handleConnect: HandleConnect = ((...args: Parameters<HandleConnect>) =>
   getInstance().handleConnect(...args)) as HandleConnect;
 export const handleLogout: HandleLogout = ((...args: Parameters<HandleLogout>) =>
@@ -73,3 +75,4 @@ export const handleProfile: HandleProfile = ((...args: Parameters<HandleProfile>
 export const handleAccess: HandleAccess = (...args) => getInstance().handleAccess(...args);
 
 export * from './shared';
+export * from './extensions';

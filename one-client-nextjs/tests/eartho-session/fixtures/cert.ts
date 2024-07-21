@@ -43,7 +43,7 @@ export const jwks = { keys: [publicKey] };
 export const makeIdToken = async (payload?: Partial<IdTokenClaims>): Promise<string> => {
   payload = Object.assign(
     {
-      nickname: '__test_nickname__',
+      displayName: '__test_displayName__',
       sub: '__test_sub__',
       iss: 'https://op.example.com/',
       aud: '__test_client_id__',

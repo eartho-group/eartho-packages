@@ -212,7 +212,7 @@ describe('callback', () => {
     const baseURL = await setup({ ...defaultConfig, legacySameSiteCookie: false });
 
     const expected = {
-      nickname: '__test_nickname__',
+      displayName: '__test_displayName__',
       sub: '__test_sub__',
       iss: 'https://op.example.com/',
       aud: '__test_client_id__',
@@ -244,7 +244,7 @@ describe('callback', () => {
     const baseURL = await setup({ ...defaultConfig, legacySameSiteCookie: false });
 
     const expected = {
-      nickname: '__test_nickname__',
+      displayName: '__test_displayName__',
       sub: '__test_sub__',
       iss: 'https://op.example.com/',
       aud: '__test_client_id__',

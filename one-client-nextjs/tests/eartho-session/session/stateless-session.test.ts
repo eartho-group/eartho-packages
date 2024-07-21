@@ -82,7 +82,7 @@ describe('StatelessSession', () => {
       refresh_token: '__test_access_token__',
       expires_at: expect.any(Number),
       claims: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: '__test_sub__',
         iss: 'https://op.example.com/',
         aud: '__test_client_id__',
@@ -389,7 +389,7 @@ describe('StatelessSession', () => {
       refresh_token: '__test_access_token__',
       expires_at: expect.any(Number),
       claims: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: '__test_sub__',
         iss: 'https://op.example.com/',
         aud: '__test_client_id__',

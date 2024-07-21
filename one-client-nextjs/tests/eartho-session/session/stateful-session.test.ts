@@ -76,7 +76,7 @@ describe('StatefulSession', () => {
     expect(session).toMatchObject({
       id_token: expect.any(String),
       claims: {
-        nickname: '__test_nickname__',
+        displayName: '__test_displayName__',
         sub: 'dave',
         iss: 'https://op.example.com/',
         aud: '__test_client_id__',

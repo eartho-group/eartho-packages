@@ -105,5 +105,6 @@ export default function callbackHandlerFactory(
     }
 
     res.redirect(openidState.returnTo || config.baseURL);
+
   };
 }

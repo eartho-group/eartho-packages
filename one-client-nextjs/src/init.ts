@@ -15,10 +15,10 @@ import {
   backchannelLogoutHandler
 } from './handlers';
 import { sessionFactory, accessTokenFactory, SessionCache, touchSessionFactory, updateSessionFactory } from './session';
-import { withPageAuthRequiredFactory, withApiAuthRequiredFactory } from './helpers';
+import { withClientAccessRequiredFactory, withServerAccessRequiredFactory } from './helpers';
 import { configSingletonGetter, ConfigParameters } from './config';
 import { EarthoServer, telemetry } from './shared';
-import withMiddlewareAccessRequiredFactory from './helpers/with-middleware-auth-required';
+import withMiddlewareAccessRequiredFactory from './helpers/with-middleware-access-required';
 import { GetClient } from './eartho-session/client/abstract-client';
 import handlePopupCallbackFactory from './handlers/callback-popup';
 
@@ -57,8 +57,7 @@ export const _initAuth = ({
   const touchSession = touchSessionFactory(sessionCache);
   const updateSession = updateSessionFactory(sessionCache);
   const getAccessToken = accessTokenFactory(getConfig, getClient, sessionCache);
-  const withApiAuthRequired = withApiAuthRequiredFactory(sessionCache);
-  const withPageAuthRequired = withPageAuthRequiredFactory(getConfig, sessionCache);
+
   const handleConnect = loginHandler(baseHandleConnect, getConfig);
   const handleLogout = logoutHandler(baseHandleLogout);
   const handleCallback = callbackHandler(baseHandleCallback, getConfig);
@@ -73,6 +72,9 @@ export const _initAuth = ({
     handleProfile,
     handleBackchannelLogout
   });
+
+  const withServerAccessRequired = withServerAccessRequiredFactory(sessionCache);
+  const withClientAccessRequired = withClientAccessRequiredFactory(getConfig, sessionCache);
   const withMiddlewareAccessRequired = withMiddlewareAccessRequiredFactory(getConfig, sessionCache);
 
   return {
@@ -80,14 +82,16 @@ export const _initAuth = ({
     touchSession,
     updateSession,
     getAccessToken,
-    withApiAuthRequired,
-    withPageAuthRequired,
+
+    withServerAccessRequired,
+    withClientAccessRequired,
+    withMiddlewareAccessRequired,
+
     handleConnect,
     handleLogout,
     handleCallback,
     handleBackchannelLogout,
     handleProfile,
-    handleAccess,
-    withMiddlewareAccessRequired
+    handleAccess
   };
 };

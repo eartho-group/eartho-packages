@@ -24,10 +24,10 @@ import { get, set, Session, SessionCache } from '.';
  * }
  *
  * // Or, it's slightly more efficient to use the `req`, `res` args if you're
- * // using another part of the SDK like `withApiAuthRequired` or `getSession`.
- * import { getSession, updateSession, withApiAuthRequired } from '@eartho/one-client-nextjs';
+ * // using another part of the SDK like `withServerAccessRequired` or `getSession`.
+ * import { getSession, updateSession, withServerAccessRequired } from '@eartho/one-client-nextjs';
  *
- * const GET = withApiAuthRequired(async function GET(req) {
+ * const GET = withServerAccessRequired(async function GET(req) {
  *   const res = new NextResponse();
  *   const { user } = await getSession(req, res);
  *   await updateSession(req, res, { ...session, user: { ...session.user, foo: 'bar' }});

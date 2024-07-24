@@ -29,7 +29,7 @@ export interface NextConfig extends BaseConfig {
  *
  * The simplest way to use the SDK is to use the named exports ({@link HandleAccess}, {@link HandleConnect},
  * {@link HandleLogout}, {@link HandleCallback}, {@link HandleProfile}, {@link GetSession}, {@link GetAccessToken},
- * {@link WithApiAuthRequired}, and {@link WithPageAuthRequired}).
+ * {@link WithServerAccessRequired}, and {@link WithClientAccessRequired}).
  *
  * ```js
  * // pages/api/access/[eartho].js
@@ -110,7 +110,7 @@ export interface NextConfig extends BaseConfig {
  * **IMPORTANT** If you use {@link InitEartho}, you should *not* use the other named exports as they will use a different
  * instance of the SDK. Also note - this is for the server side part of the SDK - you will always use named exports for
  * the front end components: {@link EarthoClientProvider}, {@link UseUser} and the
- * front end version of {@link WithPageAuthRequired}
+ * front end version of {@link WithClientAccessRequired}
  *
  * @category Server
  */

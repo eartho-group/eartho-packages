@@ -63,7 +63,7 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     case '/api/protected':
       {
         (
-          await global.withApiAuthRequired?.(function protectedApiRoute() {
+          await global.withServerAccessRequired?.(function protectedApiRoute() {
             res.status(200).json({ foo: 'bar' });
           })
         )(req, res);
@@ -91,7 +91,7 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
       }
       break;
     case '/protected':
-      const ret = await global.withPageAuthRequired?.()({ req, res, resolvedUrl: path });
+      const ret = await global.withClientAccessRequired?.()({ req, res, resolvedUrl: path });
       if (ret.redirect) {
         res.redirect(ret.redirect.destination);
       } else {

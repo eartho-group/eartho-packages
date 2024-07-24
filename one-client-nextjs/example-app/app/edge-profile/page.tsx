@@ -1,7 +1,7 @@
 import React from 'react';
-import { getSession, withPageAuthRequired } from '@eartho/one-client-nextjs/edge';
+import { getSession, withClientAccessRequired } from '@eartho/one-client-nextjs/edge';
 
-export default withPageAuthRequired(
+export default withClientAccessRequired(
   async function Page() {
     const session = await getSession();
 

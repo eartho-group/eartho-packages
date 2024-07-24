@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { withPageAuthRequired } from '@eartho/one-client-nextjs/client';
+import { withClientAccessRequired } from '@eartho/one-client-nextjs/client';
 
-export default withPageAuthRequired(function ProfileApi() {
+export default withClientAccessRequired(function ProfileApi() {
   const [user, setUser] = useState();
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import {
   LoginOptions,
   LogoutOptions,
   ProfileOptions,
-  WithPageAuthRequiredPageRouterOptions,
+  WithClientAccessRequiredPageRouterOptions,
   initEartho,
   AccessTokenRequest,
   Claims,
@@ -36,7 +36,7 @@ export type SetupOptions = {
   profileHandler?: HandleProfile;
   backchannelLogoutHandler?: HandleBackchannelLogout;
   profileOptions?: ProfileOptions;
-  withPageAuthRequiredOptions?: WithPageAuthRequiredPageRouterOptions;
+  withClientAccessRequiredOptions?: WithClientAccessRequiredPageRouterOptions;
   getAccessTokenOptions?: AccessTokenRequest;
   onError?: PageRouterOnError;
   discoveryOptions?: Record<string, any>;
@@ -86,7 +86,7 @@ export const setup = async (
     profileHandler,
     backchannelLogoutHandler,
     profileOptions,
-    withPageAuthRequiredOptions,
+    withClientAccessRequiredOptions,
     onError = defaultOnError,
     getAccessTokenOptions,
     discoveryOptions,
@@ -107,8 +107,8 @@ export const setup = async (
     touchSession,
     updateSession,
     getAccessToken,
-    withApiAuthRequired,
-    withPageAuthRequired
+    withServerAccessRequired,
+    withClientAccessRequired
   } = initEartho(config);
   const callback: NextApiHandler = (...args) => (callbackHandler || handleCallback)(...args, callbackOptions);
   const login: NextApiHandler = (...args) => (loginHandler || handleConnect)(...args, loginOptions);
@@ -127,9 +127,9 @@ export const setup = async (
   global.getSession = getSession;
   global.touchSession = touchSession;
   global.updateSession = updateSession;
-  global.withApiAuthRequired = withApiAuthRequired;
-  global.withPageAuthRequired = (): any => withPageAuthRequired(withPageAuthRequiredOptions);
-  global.withPageAuthRequiredCSR = withPageAuthRequired;
+  global.withServerAccessRequired = withServerAccessRequired;
+  global.withClientAccessRequired = (): any => withClientAccessRequired(withClientAccessRequiredOptions);
+  global.withClientAccessRequiredCSR = withClientAccessRequired;
   global.getAccessToken = (req: IncomingMessage | NextApiRequest, res: ServerResponse | NextApiResponse) =>
     getAccessToken(req, res, getAccessTokenOptions);
   global.onError = onError;
@@ -144,9 +144,9 @@ export const teardown = async (): Promise<void> => {
   delete global.touchSession;
   delete global.updateSession;
   delete global.handleAccess;
-  delete global.withApiAuthRequired;
-  delete global.withPageAuthRequired;
-  delete global.withPageAuthRequiredCSR;
+  delete global.withServerAccessRequired;
+  delete global.withClientAccessRequired;
+  delete global.withClientAccessRequiredCSR;
   delete global.getAccessToken;
   delete global.onError;
   delete global.asyncProps;

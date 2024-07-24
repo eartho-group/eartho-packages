@@ -12,4 +12,4 @@ export default function Profile({ user }: InferGetServerSidePropsType<typeof get
   );
 }
 
-export const getServerSideProps = pageRouterAuth.withPageAuthRequired();
+export const getServerSideProps = pageRouterAuth.withClientAccessRequired();

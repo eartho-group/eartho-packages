@@ -40,9 +40,9 @@ export type AppRouteHandlerFn = (
  *
  * ```js
  * // app/protected-api/route.js
- * import { withApiAuthRequired, getSession } from '@eartho/one-client-nextjs';
+ * import { withServerAccessRequired, getSession } from '@eartho/one-client-nextjs';
  *
- * export default withApiAuthRequired(function Protected(req) {
+ * export default withServerAccessRequired(function Protected(req) {
  *   const session = getSession();
  *   ...
  * });
@@ -52,7 +52,7 @@ export type AppRouteHandlerFn = (
  *
  * @category Server
  */
-export type WithApiAuthRequiredAppRoute = (apiRoute: AppRouteHandlerFn) => AppRouteHandlerFn;
+export type WithServerAccessRequiredAppRoute = (apiRoute: AppRouteHandlerFn) => AppRouteHandlerFn;
 
 /**
  * Wrap a page router API route to check that the user has a valid session. If they're not logged in the
@@ -60,9 +60,9 @@ export type WithApiAuthRequiredAppRoute = (apiRoute: AppRouteHandlerFn) => AppRo
  *
  * ```js
  * // pages/api/protected-route.js
- * import { withApiAuthRequired, getSession } from '@eartho/one-client-nextjs';
+ * import { withServerAccessRequired, getSession } from '@eartho/one-client-nextjs';
  *
- * export default withApiAuthRequired(function ProtectedRoute(req, res) {
+ * export default withServerAccessRequired(function ProtectedRoute(req, res) {
  *   const session = getSession(req, res);
  *   ...
  * });
@@ -72,20 +72,20 @@ export type WithApiAuthRequiredAppRoute = (apiRoute: AppRouteHandlerFn) => AppRo
  *
  * @category Server
  */
-export type WithApiAuthRequiredPageRoute = (apiRoute: NextApiHandler) => NextApiHandler;
+export type WithServerAccessRequiredPageRoute = (apiRoute: NextApiHandler) => NextApiHandler;
 
 /**
- * Protects API routes for Page router pages {@link WithApiAuthRequiredPageRoute} or
- * App router pages {@link WithApiAuthRequiredAppRoute}
+ * Protects API routes for Page router pages {@link WithServerAccessRequiredPageRoute} or
+ * App router pages {@link WithServerAccessRequiredAppRoute}
  *
  * @category Server
  */
-export type WithApiAuthRequired = WithApiAuthRequiredAppRoute & WithApiAuthRequiredPageRoute;
+export type WithServerAccessRequired = WithServerAccessRequiredAppRoute & WithServerAccessRequiredPageRoute;
 
 /**
  * @ignore
  */
-export default function withApiAuthFactory(sessionCache: SessionCache): WithApiAuthRequired {
+export default function withServerAccessFactory(sessionCache: SessionCache): WithServerAccessRequired {
   const pageRouteHandler = pageRouteHandlerFactory(sessionCache);
   const appRouteHandler = appRouteHandlerFactory(sessionCache);
 
@@ -97,7 +97,7 @@ export default function withApiAuthFactory(sessionCache: SessionCache): WithApiA
           resOrParams as AppRouteHandlerFnContext
         );
       }
-      return (pageRouteHandler as WithApiAuthRequiredPageRoute)(apiRoute as NextApiHandler)(
+      return (pageRouteHandler as WithServerAccessRequiredPageRoute)(apiRoute as NextApiHandler)(
         req as NextApiRequest,
         resOrParams as NextApiResponse
       );
@@ -108,7 +108,7 @@ export default function withApiAuthFactory(sessionCache: SessionCache): WithApiA
  * @ignore
  */
 const appRouteHandlerFactory =
-  (sessionCache: SessionCache): WithApiAuthRequiredAppRoute =>
+  (sessionCache: SessionCache): WithServerAccessRequiredAppRoute =>
   (apiRoute) =>
   async (req, params): Promise<NextResponse> => {
     const res = new NextResponse();
@@ -133,7 +133,7 @@ const appRouteHandlerFactory =
  * @ignore
  */
 const pageRouteHandlerFactory =
-  (sessionCache: SessionCache): WithApiAuthRequiredPageRoute =>
+  (sessionCache: SessionCache): WithServerAccessRequiredPageRoute =>
   (apiRoute) =>
   async (req, res) => {
     assertReqRes(req, res);

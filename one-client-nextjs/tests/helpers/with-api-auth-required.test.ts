@@ -15,18 +15,18 @@ describe('with-api-auth-required', () => {
         earthoInstance,
         extraHandlers: {
           protected(req: NextRequest, ctx: { params: Record<string, any> }) {
-            return earthoInstance.withApiAuthRequired(() => {
+            return earthoInstance.withServerAccessRequired(() => {
               return NextResponse.json({ foo: 'bar' });
             })(req, ctx);
           },
           'protected-returns-response'(req: NextRequest, ctx: { params: Record<string, any> }) {
-            return earthoInstance.withApiAuthRequired((_req: NextRequest) => {
+            return earthoInstance.withServerAccessRequired((_req: NextRequest) => {
               // @ts-expect-error This is not in lib/dom right now.
               return Response.json({ foo: 'bar' });
             })(req, ctx);
           },
           'protected-updates-headers'(req: NextRequest, ctx: { params: Record<string, any> }) {
-            return earthoInstance.withApiAuthRequired((_req: NextRequest) => {
+            return earthoInstance.withServerAccessRequired((_req: NextRequest) => {
               const res = NextResponse.json({ foo: 'bar' });
               res.cookies.set('foo', 'bar');
               res.headers.set('baz', 'bar');
@@ -34,7 +34,7 @@ describe('with-api-auth-required', () => {
             })(req, ctx);
           },
           'protected-updates-session'(req: NextRequest, ctx: { params: Record<string, any> }) {
-            return earthoInstance.withApiAuthRequired(async (req: NextRequest) => {
+            return earthoInstance.withServerAccessRequired(async (req: NextRequest) => {
               const res = NextResponse.json({ foo: 'bar' });
               const session = await earthoInstance.getSession(req, res);
               await earthoInstance.updateSession(req, res, {

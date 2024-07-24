@@ -1,9 +1,9 @@
 import React from 'react';
-import { useUser, withPageAuthRequired } from '@eartho/one-client-nextjs/client';
+import { useUser, withClientAccessRequired } from '@eartho/one-client-nextjs/client';
 
 import Layout from '@/components/layout';
 
-export default withPageAuthRequired(function Profile() {
+export default withClientAccessRequired(function Profile() {
   const { user, isLoading } = useUser();
   if (isLoading) {
     return <p>Loading...</p>;

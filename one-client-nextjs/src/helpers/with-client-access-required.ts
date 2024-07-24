@@ -8,18 +8,18 @@ import { EarthoNextRequestCookies } from '../http';
 import { NodeRequest } from '../eartho-session/http';
 
 /**
- * If you wrap your `getServerSideProps` with {@link WithPageAuthRequired} your props object will be augmented with
+ * If you wrap your `getServerSideProps` with {@link WithClientAccessRequired} your props object will be augmented with
  * the user property, which will be the user's {@link Claims}.
  *
  * ```js
  * // pages/profile.js
- * import { withPageAuthRequired } from '@eartho/one-client-nextjs';
+ * import { withClientAccessRequired } from '@eartho/one-client-nextjs';
  *
  * export default function Profile({ user }) {
  *   return <div>Hello {user.name}</div>;
  * }
  *
- * export const getServerSideProps = withPageAuthRequired();
+ * export const getServerSideProps = withClientAccessRequired();
  * ```
  *
  * @category Server
@@ -27,7 +27,7 @@ import { NodeRequest } from '../eartho-session/http';
 export type GetServerSidePropsResultWithSession<P = any> = GetServerSidePropsResult<P & { user: Claims }>;
 
 /**
- * A page route that has been augmented with {@link WithPageAuthRequired}.
+ * A page route that has been augmented with {@link WithClientAccessRequired}.
  *
  * @category Server
  */
@@ -46,7 +46,7 @@ export type AppRouterPageRouteOpts = {
 };
 
 /**
- * An app route that has been augmented with {@link WithPageAuthRequired}.
+ * An app route that has been augmented with {@link WithClientAccessRequired}.
  *
  * @category Server
  */
@@ -61,13 +61,13 @@ export type AppRouterPageRoute = (obj: AppRouterPageRouteOpts) => Promise<React.
  *
  * ```js
  * // pages/protected-page.js
- * import { getSession, withPageAuthRequired } from '@eartho/one-client-nextjs';
+ * import { getSession, withClientAccessRequired } from '@eartho/one-client-nextjs';
  *
  * export default function ProtectedPage({ user, customProp }) {
  *   return <div>Protected content</div>;
  * }
  *
- * export const getServerSideProps = withPageAuthRequired({
+ * export const getServerSideProps = withClientAccessRequired({
  *   // returnTo: '/unauthorized',
  *   async getServerSideProps(ctx) {
  *     // access the user session if needed
@@ -83,7 +83,7 @@ export type AppRouterPageRoute = (obj: AppRouterPageRouteOpts) => Promise<React.
  *
  * @category Server
  */
-export type WithPageAuthRequiredPageRouterOptions<
+export type WithClientAccessRequiredPageRouterOptions<
   P extends { [key: string]: any } = { [key: string]: any },
   Q extends ParsedUrlQuery = ParsedUrlQuery
 > = {
@@ -97,13 +97,13 @@ export type WithPageAuthRequiredPageRouterOptions<
  *
  * ```js
  * // pages/protected-page.js
- * import { withPageAuthRequired } from '@eartho/one-client-nextjs';
+ * import { withClientAccessRequired } from '@eartho/one-client-nextjs';
  *
  * export default function ProtectedPage() {
  *   return <div>Protected content</div>;
  * }
  *
- * export const getServerSideProps = withPageAuthRequired();
+ * export const getServerSideProps = withClientAccessRequired();
  * ```
  *
  * If the user visits `/protected-page` without a valid session, it will redirect the user to the
@@ -111,11 +111,11 @@ export type WithPageAuthRequiredPageRouterOptions<
  *
  * @category Server
  */
-export type WithPageAuthRequiredPageRouter = <
+export type WithClientAccessRequiredPageRouter = <
   P extends { [key: string]: any } = { [key: string]: any },
   Q extends ParsedUrlQuery = ParsedUrlQuery
 >(
-  opts?: WithPageAuthRequiredPageRouterOptions<P, Q>
+  opts?: WithClientAccessRequiredPageRouterOptions<P, Q>
 ) => PageRoute<P, Q>;
 
 /**
@@ -124,7 +124,7 @@ export type WithPageAuthRequiredPageRouter = <
  *
  * @category Server
  */
-export type WithPageAuthRequiredAppRouterOptions = {
+export type WithClientAccessRequiredAppRouterOptions = {
   returnTo?: string | ((obj: AppRouterPageRouteOpts) => Promise<string> | string);
 };
 
@@ -134,9 +134,9 @@ export type WithPageAuthRequiredAppRouterOptions = {
  *
  * ```js
  * // app/protected-page/page.js
- * import { withPageAuthRequired } from '@eartho/one-client-nextjs';
+ * import { withClientAccessRequired } from '@eartho/one-client-nextjs';
  *
- * export default function withPageAuthRequired(ProtectedPage() {
+ * export default function withClientAccessRequired(ProtectedPage() {
  *   return <div>Protected content</div>;
  * }, { returnTo: '/protected-page' });
  * ```
@@ -153,9 +153,9 @@ export type WithPageAuthRequiredAppRouterOptions = {
  *
  * ```js
  * // app/protected-page/[slug]/page.js
- * import { withPageAuthRequired } from '@eartho/one-client-nextjs';
+ * import { withClientAccessRequired } from '@eartho/one-client-nextjs';
  *
- * export default function withPageAuthRequired(ProtectedPage() {
+ * export default function withClientAccessRequired(ProtectedPage() {
  *   return <div>Protected content</div>;
  * }, {
  *   returnTo({ params }) {
@@ -166,45 +166,45 @@ export type WithPageAuthRequiredAppRouterOptions = {
  *
  * @category Server
  */
-export type WithPageAuthRequiredAppRouter = (
+export type WithClientAccessRequiredAppRouter = (
   fn: AppRouterPageRoute,
-  opts?: WithPageAuthRequiredAppRouterOptions
+  opts?: WithClientAccessRequiredAppRouterOptions
 ) => AppRouterPageRoute;
 
 /**
- * Protects Page router pages {@link WithPageAuthRequiredPageRouter} or
- * App router pages {@link WithPageAuthRequiredAppRouter}
+ * Protects Page router pages {@link WithClientAccessRequiredPageRouter} or
+ * App router pages {@link WithClientAccessRequiredAppRouter}
  *
  * @category Server
  */
-export type WithPageAuthRequired = WithPageAuthRequiredPageRouter & WithPageAuthRequiredAppRouter;
+export type WithClientAccessRequired = WithClientAccessRequiredPageRouter & WithClientAccessRequiredAppRouter;
 
 /**
  * @ignore
  */
-export default function withPageAuthRequiredFactory(
+export default function withClientAccessRequiredFactory(
   getConfig: GetConfig,
   sessionCache: SessionCache
-): WithPageAuthRequired {
+): WithClientAccessRequired {
   const appRouteHandler = appRouteHandlerFactory(getConfig, sessionCache);
   const pageRouteHandler = pageRouteHandlerFactory(getConfig, sessionCache);
 
   return ((
-    fnOrOpts?: WithPageAuthRequiredPageRouterOptions | AppRouterPageRoute,
-    opts?: WithPageAuthRequiredAppRouterOptions
+    fnOrOpts?: WithClientAccessRequiredPageRouterOptions | AppRouterPageRoute,
+    opts?: WithClientAccessRequiredAppRouterOptions
   ) => {
     if (typeof fnOrOpts === 'function') {
       return appRouteHandler(fnOrOpts, opts);
     }
     return pageRouteHandler(fnOrOpts);
-  }) as WithPageAuthRequired;
+  }) as WithClientAccessRequired;
 }
 
 /**
  * @ignore
  */
 const appRouteHandlerFactory =
-  (getConfig: GetConfig, sessionCache: SessionCache): WithPageAuthRequiredAppRouter =>
+  (getConfig: GetConfig, sessionCache: SessionCache): WithClientAccessRequiredAppRouter =>
   (handler, opts = {}) =>
   async (params) => {
     const {
@@ -224,7 +224,7 @@ const appRouteHandlerFactory =
  * @ignore
  */
 const pageRouteHandlerFactory =
-  (getConfig: GetConfig, sessionCache: SessionCache): WithPageAuthRequiredPageRouter =>
+  (getConfig: GetConfig, sessionCache: SessionCache): WithClientAccessRequiredPageRouter =>
   ({ getServerSideProps, returnTo } = {}) =>
   async (ctx) => {
     assertCtx(ctx);

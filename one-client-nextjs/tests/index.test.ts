@@ -2,8 +2,8 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { Socket } from 'net';
 import { withoutApi } from './fixtures/default-settings';
 import {
-  WithApiAuthRequired,
-  WithPageAuthRequired,
+  WithServerAccessRequired,
+  WithClientAccessRequired,
   InitEartho,
   GetSession,
   ConfigParameters,
@@ -12,8 +12,8 @@ import {
 import { NextRequest } from 'next/server';
 
 describe('index', () => {
-  let withPageAuthRequired: WithPageAuthRequired,
-    withApiAuthRequired: WithApiAuthRequired,
+  let withClientAccessRequired: WithClientAccessRequired,
+    withServerAccessRequired: WithServerAccessRequired,
     initEartho: InitEartho,
     getSession: GetSession;
   let env: NodeJS.ProcessEnv;
@@ -31,7 +31,7 @@ describe('index', () => {
 
   beforeEach(async () => {
     env = process.env;
-    ({ withPageAuthRequired, withApiAuthRequired, initEartho, getSession } = await import('../src'));
+    ({ withClientAccessRequired, withServerAccessRequired, initEartho, getSession } = await import('../src'));
   });
 
   afterEach(() => {
@@ -39,15 +39,15 @@ describe('index', () => {
     jest.resetModules();
   });
 
-  test('withPageAuthRequired should not create an SDK instance at build time', async () => {
+  test('withClientAccessRequired should not create an SDK instance at build time', async () => {
     process.env = { ...env, EARTHO_SECRET: undefined };
     await expect(() =>
-      withApiAuthRequired(jest.fn() as AppRouteHandlerFn)(new NextRequest(new URL('http://example.com')), {
+      withServerAccessRequired(jest.fn() as AppRouteHandlerFn)(new NextRequest(new URL('http://example.com')), {
         params: {}
       })
     ).rejects.toThrow('"secret" is required');
-    expect(() => withApiAuthRequired(jest.fn())).not.toThrow();
-    expect(() => withPageAuthRequired()).not.toThrow();
+    expect(() => withServerAccessRequired(jest.fn())).not.toThrow();
+    expect(() => withClientAccessRequired()).not.toThrow();
   });
 
   test('should error when mixing named exports and own instance', async () => {

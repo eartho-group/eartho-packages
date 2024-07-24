@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { withPageAuthRequired } from '@eartho/one-client-nextjs/client';
+import { withClientAccessRequired } from '@eartho/one-client-nextjs/client';
 
 import Layout from '@/components/layout';
 
-export default withPageAuthRequired(function ProfileApi() {
+export default withClientAccessRequired(function ProfileApi() {
   const [user, setUser] = useState();
 
   useEffect(() => {

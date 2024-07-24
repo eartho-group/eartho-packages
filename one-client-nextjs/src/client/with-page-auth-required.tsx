@@ -15,14 +15,14 @@ const defaultOnRedirecting = (): JSX.Element => <></>;
 const defaultOnError = (): JSX.Element => <></>;
 
 /**
- * Options to customize the withPageAuthRequired higher order component.
+ * Options to customize the withClientAccessRequired higher order component.
  *
  * @category Client
  */
-export interface WithPageAuthRequiredOptions {
+export interface WithClientAccessRequiredOptions {
   /**
    * ```js
-   * withPageAuthRequired(Profile, {
+   * withClientAccessRequired(Profile, {
    *   returnTo: '/profile'
    * });
    * ```
@@ -32,7 +32,7 @@ export interface WithPageAuthRequiredOptions {
   returnTo?: string;
   /**
    * ```js
-   * withPageAuthRequired(Profile, {
+   * withClientAccessRequired(Profile, {
    *   onRedirecting: () => <div>Redirecting you to the login...</div>
    * });
    * ```
@@ -42,7 +42,7 @@ export interface WithPageAuthRequiredOptions {
   onRedirecting?: () => JSX.Element;
   /**
    * ```js
-   * withPageAuthRequired(Profile, {
+   * withClientAccessRequired(Profile, {
    *   onError: error => <div>Error: {error.message}</div>
    * });
    * ```
@@ -58,7 +58,7 @@ export interface UserProps {
 
 /**
  * ```js
- * const MyProtectedPage = withPageAuthRequired(MyPage);
+ * const MyProtectedPage = withClientAccessRequired(MyPage);
  * ```
  *
  * When you wrap your pages in this higher order component and an anonymous user visits your page,
@@ -66,16 +66,16 @@ export interface UserProps {
  *
  * @category Client
  */
-export type WithPageAuthRequired = <P extends {}>(
+export type WithClientAccessRequired = <P extends {}>(
   Component: ComponentType<P & UserProps>,
-  options?: WithPageAuthRequiredOptions
+  options?: WithClientAccessRequiredOptions
 ) => React.FC<P>;
 
 /**
  * @ignore
  */
-const withPageAuthRequired: WithPageAuthRequired = (Component, options = {}) => {
-  return function WithPageAuthRequired(props): JSX.Element {
+const withClientAccessRequired: WithClientAccessRequired = (Component, options = {}) => {
+  return function WithClientAccessRequired(props): JSX.Element {
     const { returnTo, onRedirecting = defaultOnRedirecting, onError = defaultOnError } = options;
     const { loginUrl } = useConfig();
     const { user, error, isLoading } = useUser();
@@ -101,4 +101,4 @@ const withPageAuthRequired: WithPageAuthRequired = (Component, options = {}) => 
   };
 };
 
-export default withPageAuthRequired;
+export default withClientAccessRequired;

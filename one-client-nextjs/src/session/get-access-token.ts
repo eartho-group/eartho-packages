@@ -120,11 +120,11 @@ export interface GetAccessTokenResult {
  * }
  *
  * // Or, it's slightly more efficient to use the `req`, `res` args if you're
- * // using another part of the SDK like `withApiAuthRequired` or `getSession`.
+ * // using another part of the SDK like `withServerAccessRequired` or `getSession`.
  * import { NextResponse } from 'next/server';
- * import { getAccessToken, withApiAuthRequired } from '@eartho/one-client-nextjs';
+ * import { getAccessToken, withServerAccessRequired } from '@eartho/one-client-nextjs';
  *
- * const GET = withApiAuthRequired(async function GET(req) {
+ * const GET = withServerAccessRequired(async function GET(req) {
  *   const res = new NextResponse();
  *   const { accessToken } = await getAccessToken(req, res);
  *   return NextResponse.json({ foo: 'bar' }, res);

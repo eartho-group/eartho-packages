@@ -1,19 +1,19 @@
 export {
-  default as withApiAuthRequiredFactory,
-  WithApiAuthRequired,
+  default as withServerAccessRequiredFactory,
+  WithServerAccessRequired,
   AppRouteHandlerFn,
-  WithApiAuthRequiredAppRoute,
-  WithApiAuthRequiredPageRoute
-} from './with-api-auth-required';
+  WithServerAccessRequiredAppRoute,
+  WithServerAccessRequiredPageRoute
+} from './with-server-access-required';
 export {
-  default as withPageAuthRequiredFactory,
+  default as withClientAccessRequiredFactory,
   GetServerSidePropsResultWithSession,
-  WithPageAuthRequired,
-  WithPageAuthRequiredPageRouterOptions,
-  WithPageAuthRequiredAppRouterOptions,
+  WithClientAccessRequired,
+  WithClientAccessRequiredPageRouterOptions,
+  WithClientAccessRequiredAppRouterOptions,
   PageRoute,
   AppRouterPageRouteOpts,
   AppRouterPageRoute,
-  WithPageAuthRequiredPageRouter,
-  WithPageAuthRequiredAppRouter
-} from './with-page-auth-required';
+  WithClientAccessRequiredPageRouter,
+  WithClientAccessRequiredAppRouter
+} from './with-client-access-required';

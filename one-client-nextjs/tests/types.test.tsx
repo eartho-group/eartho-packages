@@ -2,7 +2,7 @@ import React from 'react';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import { expectTypeOf } from 'expect-type';
-import { handleAccess, HandlerError, AppRouteHandlerFnContext, withPageAuthRequired } from '../src';
+import { handleAccess, HandlerError, AppRouteHandlerFnContext, withClientAccessRequired } from '../src';
 
 describe('types', () => {
   test('should allow customisation of page router auth handlers', () => {
@@ -41,24 +41,24 @@ describe('types', () => {
     });
   });
 
-  test('should allow withPageAuthRequired in app router', () => {
+  test('should allow withClientAccessRequired in app router', () => {
     async function Page() {
       return <span>Foo</span>;
     }
-    expectTypeOf(withPageAuthRequired).toBeCallableWith(Page);
+    expectTypeOf(withClientAccessRequired).toBeCallableWith(Page);
   });
 
-  test('should allow withPageAuthRequired in app router with opts', () => {
+  test('should allow withClientAccessRequired in app router with opts', () => {
     async function Page() {
       return <span>Foo</span>;
     }
-    expectTypeOf(withPageAuthRequired).toBeCallableWith(Page, { returnTo: 'foo' });
+    expectTypeOf(withClientAccessRequired).toBeCallableWith(Page, { returnTo: 'foo' });
   });
 
-  test('should allow custom params in withPageAuthRequired', () => {
+  test('should allow custom params in withClientAccessRequired', () => {
     async function Page({ params }: { params?: Record<string, string | string[]> }) {
       return <span>{typeof params}</span>;
     }
-    expectTypeOf(withPageAuthRequired).toBeCallableWith(Page);
+    expectTypeOf(withClientAccessRequired).toBeCallableWith(Page);
   });
 });

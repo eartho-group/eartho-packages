@@ -575,25 +575,23 @@ export interface JWTVerifyOptions {
 
 export interface IdToken {
   __raw: string;
-  name?: string;
-  given_name?: string;
-  family_name?: string;
-  middle_name?: string;
+
+  uid?: string;
+  firstName?: string;
+  lastName?: string;
+  middleName?: string;
   displayName?: string;
-  preferred_username?: string;
-  profile?: string;
-  picture?: string;
-  website?: string;
+  photoURL?: string;
   email?: string;
-  email_verified?: boolean;
+  emailVerified?: boolean;
   gender?: string;
   birthdate?: string;
-  zoneinfo?: string;
   locale?: string;
-  phone_number?: string;
-  phone_number_verified?: boolean;
-  address?: string;
-  updated_at?: string;
+  phoneNumber?: string;
+  phoneNumberVerified?: boolean;
+  authSource?: boolean;
+  updatedAt?: string;
+
   iss?: string;
   aud?: string;
   exp?: number;
@@ -617,27 +615,21 @@ export interface IdToken {
 
 export class User {
   uid?: string;
-  name?: string;
   firstName?: string;
   lastName?: string;
   middleName?: string;
   displayName?: string;
-  preferredUsername?: string;
-  profile?: string;
   photoURL?: string;
-  website?: string;
   email?: string;
   emailVerified?: boolean;
   gender?: string;
   birthdate?: string;
-  zoneinfo?: string;
   locale?: string;
   phoneNumber?: string;
   phoneNumberVerified?: boolean;
   authSource?: boolean;
-  address?: string;
   updatedAt?: string;
-  sub?: string;
+
   [key: string]: any;
 }
 

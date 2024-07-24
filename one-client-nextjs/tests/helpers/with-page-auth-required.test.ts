@@ -37,7 +37,7 @@ describe('with-page-auth-required ssr', () => {
             .join('; ')
         );
       }
-      const handler = instance.withPageAuthRequired(() => Promise.resolve(React.createElement('div', {}, 'foo')), {
+      const handler = instance.withClientAccessRequired(() => Promise.resolve(React.createElement('div', {}, 'foo')), {
         returnTo
       });
       return handler({ params, searchParams });
@@ -110,7 +110,7 @@ describe('with-page-auth-required ssr', () => {
     });
 
     test('accept a custom returnTo url', async () => {
-      const baseUrl = await setup(withoutApi, { withPageAuthRequiredOptions: { returnTo: '/foo' } });
+      const baseUrl = await setup(withoutApi, { withClientAccessRequiredOptions: { returnTo: '/foo' } });
       const {
         res: { statusCode, headers }
       } = await get(baseUrl, '/protected', { fullResponse: true });
@@ -121,7 +121,7 @@ describe('with-page-auth-required ssr', () => {
     test('accept custom server-side props', async () => {
       const spy = jest.fn().mockReturnValue({ props: {} });
       const baseUrl = await setup(withoutApi, {
-        withPageAuthRequiredOptions: {
+        withClientAccessRequiredOptions: {
           getServerSideProps: spy
         }
       });
@@ -135,7 +135,7 @@ describe('with-page-auth-required ssr', () => {
 
     test('allow to override the user prop', async () => {
       const baseUrl = await setup(withoutApi, {
-        withPageAuthRequiredOptions: {
+        withClientAccessRequiredOptions: {
           async getServerSideProps() {
             return { props: { user: { sub: 'foo' } } };
           }
@@ -148,7 +148,7 @@ describe('with-page-auth-required ssr', () => {
 
     test('allow to override the user prop when using async props', async () => {
       const baseUrl = await setup(withoutApi, {
-        withPageAuthRequiredOptions: {
+        withClientAccessRequiredOptions: {
           async getServerSideProps() {
             return { props: Promise.resolve({ user: { sub: 'foo' } }) };
           }
@@ -171,7 +171,7 @@ describe('with-page-auth-required ssr', () => {
     });
 
     test('should preserve multiple query params in the returnTo URL', async () => {
-      const baseUrl = await setup(withoutApi, { withPageAuthRequiredOptions: { returnTo: '/foo?bar=baz&qux=quux' } });
+      const baseUrl = await setup(withoutApi, { withClientAccessRequiredOptions: { returnTo: '/foo?bar=baz&qux=quux' } });
       const {
         res: { statusCode, headers }
       } = await get(baseUrl, '/protected', { fullResponse: true });
@@ -182,7 +182,7 @@ describe('with-page-auth-required ssr', () => {
 
     test('allow access to a page with a valid session and async props', async () => {
       const baseUrl = await setup(withoutApi, {
-        withPageAuthRequiredOptions: {
+        withClientAccessRequiredOptions: {
           getServerSideProps() {
             return Promise.resolve({ props: Promise.resolve({}) });
           }
@@ -202,7 +202,7 @@ describe('with-page-auth-required ssr', () => {
 
     test('save session when getServerSideProps completes async', async () => {
       const baseUrl = await setup(withoutApi, {
-        withPageAuthRequiredOptions: {
+        withClientAccessRequiredOptions: {
           async getServerSideProps(ctx) {
             await Promise.resolve();
             const session = await (global as any).getSession(ctx.req, ctx.res);

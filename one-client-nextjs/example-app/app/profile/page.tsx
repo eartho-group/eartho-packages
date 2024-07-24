@@ -1,9 +1,9 @@
 import React from 'react';
-import { getSession, withPageAuthRequired } from '@eartho/one-client-nextjs';
+import { getSession, withClientAccessRequired } from '@eartho/one-client-nextjs';
 import ServerComponent from '@/app/server-component';
 import ClientComponent from '@/app/client-component';
 
-export default withPageAuthRequired(
+export default withClientAccessRequired(
   async function Page() {
     const session = await getSession();
 

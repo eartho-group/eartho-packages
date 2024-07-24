@@ -8,9 +8,9 @@ import {
   HandleBackchannelLogout
 } from './handlers';
 import { SessionCache, GetSession, GetAccessToken, Session, TouchSession, UpdateSession } from './session';
-import { WithApiAuthRequired, WithPageAuthRequired } from './helpers';
+import { WithServerAccessRequired, WithClientAccessRequired } from './helpers';
 import { ConfigParameters } from './config';
-import { WithMiddlewareAccessRequired } from './helpers/with-middleware-auth-required';
+import { WithMiddlewareAccessRequired } from './helpers/with-middleware-access-required';
 import version from './version';
 
 export const telemetry = { name: 'nextjs-eartho', version };
@@ -73,12 +73,12 @@ export interface EarthoServer {
   /**
    * Helper that adds auth to an API route.
    */
-  withApiAuthRequired: WithApiAuthRequired;
+  withServerAccessRequired: WithServerAccessRequired;
 
   /**
    * Helper that adds auth to a Page route.
    */
-  withPageAuthRequired: WithPageAuthRequired;
+  withClientAccessRequired: WithClientAccessRequired;
 
   /**
    * Create the main handlers for your api routes.
@@ -129,15 +129,15 @@ export {
 export {
   AppRouterPageRouteOpts,
   AppRouterPageRoute,
-  WithPageAuthRequiredPageRouter,
-  WithPageAuthRequiredAppRouter,
+  WithClientAccessRequiredPageRouter,
+  WithClientAccessRequiredAppRouter,
   GetServerSidePropsResultWithSession,
-  WithPageAuthRequiredPageRouterOptions,
-  WithPageAuthRequiredAppRouterOptions,
+  WithClientAccessRequiredPageRouterOptions,
+  WithClientAccessRequiredAppRouterOptions,
   PageRoute,
   AppRouteHandlerFn,
-  WithApiAuthRequiredAppRoute,
-  WithApiAuthRequiredPageRoute
+  WithServerAccessRequiredAppRoute,
+  WithServerAccessRequiredPageRoute
 } from './helpers';
 
 export {
@@ -165,8 +165,8 @@ export {
   HandleLogout,
   HandleCallback,
   HandleBackchannelLogout,
-  WithApiAuthRequired,
-  WithPageAuthRequired,
+  WithServerAccessRequired,
+  WithClientAccessRequired,
   SessionCache,
   GetSession,
   TouchSession,

@@ -21,10 +21,10 @@ import { get, set, SessionCache } from '.';
  * }
  *
  * // Or, it's slightly more efficient to use the `req`, `res` args if you're
- * // using another part of the SDK like `withApiAuthRequired` or `getSession`.
- * import { touchSession, withApiAuthRequired } from '@eartho/one-client-nextjs';
+ * // using another part of the SDK like `withServerAccessRequired` or `getSession`.
+ * import { touchSession, withServerAccessRequired } from '@eartho/one-client-nextjs';
  *
- * const GET = withApiAuthRequired(async function GET(req) {
+ * const GET = withServerAccessRequired(async function GET(req) {
  *   const res = new NextResponse();
  *   await touchSession(req, res);
  *   return NextResponse.json({ foo: 'bar' }, res);

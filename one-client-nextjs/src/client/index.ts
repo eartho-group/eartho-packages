@@ -8,9 +8,9 @@ import {
   useUser
 } from './use-user';
 import {
-  default as withPageAuthRequired,
-  WithPageAuthRequired,
-  WithPageAuthRequiredOptions
+  default as withClientAccessRequired,
+  WithClientAccessRequired,
+  WithClientAccessRequiredOptions
 } from './with-page-auth-required';
 export { EarthoClientProvider, EarthoClientProviderProps, UserProfile, UserContext, RequestError, useUser };
-export { withPageAuthRequired, WithPageAuthRequired, WithPageAuthRequiredOptions };
+export { withClientAccessRequired, WithClientAccessRequired, WithClientAccessRequiredOptions };

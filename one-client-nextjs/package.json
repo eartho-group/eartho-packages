@@ -1,6 +1,6 @@
 {
   "name": "@eartho/one-client-nextjs",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Next.js SDK for signing in with Eartho",
   "private": false,
   "exports": {
@@ -123,6 +123,7 @@
   "dependencies": {
     "@panva/hkdf": "^1.2.1",
     "cookie": "^0.6.0",
+    "crypto": "^1.0.1",
     "debug": "^4.3.5",
     "joi": "^17.13.3",
     "jose": "^5.6.3",

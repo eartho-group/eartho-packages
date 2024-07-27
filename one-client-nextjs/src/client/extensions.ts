@@ -1,8 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
-type RedirectFunction = (req: NextApiRequest, res: NextApiResponse) => void;
-
-export const connectWithRedirect = (accessId: string): void | RedirectFunction => {
+export const connectWithRedirect = (accessId: string): void  => {
   if (typeof window !== 'undefined') {
     // Client-side redirect
     window.location.href = `/api/connect/${accessId}`;

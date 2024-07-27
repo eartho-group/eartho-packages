@@ -75,5 +75,5 @@ export const handleProfile: HandleProfile = ((...args: Parameters<HandleProfile>
 export const handleAccess: HandleAccess = (...args) => getInstance().handleAccess(...args);
 
 export * from './shared';
-export * from './extensions';
+export * from './client/extensions';
 export * from './helpers/access-required';

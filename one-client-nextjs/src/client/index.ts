@@ -14,3 +14,5 @@ import {
 } from './with-page-auth-required';
 export { EarthoClientProvider, EarthoClientProviderProps, UserProfile, UserContext, RequestError, useUser };
 export { withClientAccessRequired, WithClientAccessRequired, WithClientAccessRequiredOptions };
+
+export * from './extensions';

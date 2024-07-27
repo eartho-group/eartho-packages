@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hasAccess, ProtectionRule } from '../edge';
 
+// config/accessControl.ts
+import { ProtectionRule } from '../dist';
+import { hasAccess } from '../edge';
 
 export const accessRules: ProtectionRule[] = [
   // Admin Dashboard - Only accessible to users in the 'adminSpace'
@@ -16,44 +18,44 @@ export const accessRules: ProtectionRule[] = [
     accessIds: ['authenticatedUserAccessId'],
     category: 'page',
     description: 'Access to view and edit user profile information.'
-  }
+  },
   // Public Pages - Accessible to everyone, including unauthenticated users
-  // {
-  //   path: /^\/(home|about|contact)/,
-  //   category: 'page',
-  //   description: 'Public pages, no access restrictions.',
-  //   condition: (user: any, req: NextRequest) => {
-  //     user.uid;
-  //     req.body;
-  //     return true;
-  //   } // Example of a condition that always returns true
-  // },
-  // {
-  //   path: /^\/api\/user\/\d+/,
-  //   category: 'api',
-  //   description: 'API endpoint to access or modify user data.',
-  //   condition: (user: any, req: NextRequest) => {
-  //     const userId = req.nextUrl.pathname.split('/').pop();
-  //     return user.spaces.includes('adminSpace') || user.id === parseInt(userId || '', 10);
-  //   }
-  // },
+  {
+    path: /^\/(home|about|contact)/,
+    category: 'page',
+    description: 'Public pages, no access restrictions.',
+    condition: (user: any, req: NextRequest) => {
+      user.uid;
+      req.body;
+      return true;
+    } // Example of a condition that always returns true
+  },
+  {
+    path: /^\/api\/user\/\d+/,
+    category: 'api',
+    description: 'API endpoint to access or modify user data.',
+    condition: (user: any, req: NextRequest) => {
+      const userId = req.nextUrl.pathname.split('/').pop();
+      return user.spaces.includes('adminSpace') || user.id === parseInt(userId || '', 10);
+    }
+  }
 ];
 
 export async function middleware(req: NextRequest) {
   // Check if the request has access according to defined rules
   const { hasAccess: authorized, rule: failedRule } = await hasAccess(req, accessRules);
 
-  // if (!authorized) {
-  //   if (failedRule?.category === 'api') {
-  //     return new NextResponse(JSON.stringify({ error: 'Unauthorized access' }), {
-  //       status: 401,
-  //       headers: { 'Content-Type': 'application/json' }
-  //     });
-  //   } else {
-  //     const redirectUrl = new URL('/unauthorized', req.url);
-  //     return NextResponse.redirect(redirectUrl);
-  //   }
-  // }
+  if (!authorized) {
+    if (failedRule?.category === 'api') {
+      return new NextResponse(JSON.stringify({ error: 'Unauthorized access' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else {
+      const redirectUrl = new URL('/unauthorized', req.url);
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
 
   return NextResponse.next();
 }

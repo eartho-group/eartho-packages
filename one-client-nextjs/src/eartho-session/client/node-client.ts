@@ -145,7 +145,7 @@ export class NodeClient extends AbstractClient {
       if (
         this.config.idpLogout &&
         (this.config.earthoLogout ||
-          (issuerUrl.hostname.match('\\.eartho\\.com$') && this.config.earthoLogout !== false))
+          (issuerUrl.hostname.match('\\.eartho\\.io$') && this.config.earthoLogout !== false))
       ) {
         Object.defineProperty(this.client, 'endSessionUrl', {
           value(params: EndSessionParameters) {

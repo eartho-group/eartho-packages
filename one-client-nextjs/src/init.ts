@@ -21,7 +21,6 @@ import { EarthoServer, telemetry } from './shared';
 import withMiddlewareAccessRequiredFactory from './helpers/with-middleware-access-required';
 import { GetClient } from './eartho-session/client/abstract-client';
 import handlePopupCallbackFactory from './handlers/callback-popup';
-import { accessControlFactory } from './helpers/access-required';
 
 /**
  * Initialise your own instance of the SDK.
@@ -77,7 +76,6 @@ export const _initAuth = ({
   const withServerAccessRequired = withServerAccessRequiredFactory(sessionCache);
   const withClientAccessRequired = withClientAccessRequiredFactory(getConfig, sessionCache);
   const withMiddlewareAccessRequired = withMiddlewareAccessRequiredFactory(getConfig, sessionCache);
-  const hasAccess = accessControlFactory(sessionCache);
 
   return {
     getSession,
@@ -88,7 +86,6 @@ export const _initAuth = ({
     withServerAccessRequired,
     withClientAccessRequired,
     withMiddlewareAccessRequired,
-    hasAccess,
 
     handleConnect,
     handleLogout,

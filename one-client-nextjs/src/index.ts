@@ -76,4 +76,3 @@ export const handleAccess: HandleAccess = (...args) => getInstance().handleAcces
 
 export * from './shared';
 export * from './client/extensions';
-export * from './helpers/access-required';

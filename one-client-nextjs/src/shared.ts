@@ -12,7 +12,6 @@ import { WithServerAccessRequired, WithClientAccessRequired } from './helpers';
 import { ConfigParameters } from './config';
 import { WithMiddlewareAccessRequired } from './helpers/with-middleware-access-required';
 import version from './version';
-import { HasAccessFunction } from './helpers/access-required';
 
 export const telemetry = { name: 'nextjs-eartho', version };
 
@@ -90,8 +89,6 @@ export interface EarthoServer {
    * Add auth to your middleware functions.
    */
   withMiddlewareAccessRequired: WithMiddlewareAccessRequired;
-
-  hasAccess: HasAccessFunction;
 }
 
 export {

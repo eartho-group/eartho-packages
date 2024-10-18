@@ -17,7 +17,6 @@ import { _initAuth } from './init';
 import { setIsUsingNamedExports, setIsUsingOwnInstance } from './utils/instance-check';
 import { clientGetter } from './eartho-session/client/edge-client';
 import { WithMiddlewareAccessRequired } from './helpers/with-middleware-access-required';
-import { HasAccessFunction } from '.';
 
 const genId = () => {
   const bytes = new Uint8Array(16);
@@ -65,7 +64,6 @@ export const withClientAccessRequired: WithClientAccessRequired = ((...args: Par
   getInstance().withClientAccessRequired(...args)) as WithClientAccessRequired;
 export const withMiddlewareAccessRequired: WithMiddlewareAccessRequired = (...args) =>
   getInstance().withMiddlewareAccessRequired(...args);
-export const hasAccess: HasAccessFunction = (...args) => getInstance().hasAccess(...args);
 
 export const handleConnect: HandleConnect = ((...args: Parameters<HandleConnect>) =>
   getInstance().handleConnect(...args)) as HandleConnect;
@@ -78,4 +76,3 @@ export const handleProfile: HandleProfile = ((...args: Parameters<HandleProfile>
 export const handleAccess: HandleAccess = (...args) => getInstance().handleAccess(...args);
 
 export * from './shared';
-export * from './helpers/access-required';

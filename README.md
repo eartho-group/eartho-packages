@@ -11,6 +11,11 @@
 </div>
 
 <br />
+<div align="center">
+  <b>🌟 Don't forget to give us a star 🌟</b>
+</div>
+
+<br />
 <h3 align="center">
   <a href="https://eartho.io">Website</a>
   | <a href="https://www.eartho.io/developers/demo/login">Demo</a>

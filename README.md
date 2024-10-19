@@ -12,7 +12,7 @@
 
 <br />
 <div align="center">
-  <b>🌟 Don't forget to give us a star 🌟</b>
+  <b>🌟 Please give us a star to help us continue and grow! 🌟</b>
 </div>
 
 <br />

@@ -162,6 +162,68 @@ Eartho is built for developers who care about privacy and security, but don't wa
 
 ...
 
+## **Developer? Add Eartho to Your App**
+
+Enhance your app’s authentication with Eartho. It provides a **privacy-first login** experience that integrates easily into your existing system. With Eartho, you can offer users the convenience of popular sign-in options like **Google, Facebook, Apple**, and more—without compromising their privacy. We ensure that **Big Tech companies can’t track your users** or use their data against you.
+
+### **Why Add Eartho?**
+- **Privacy-First Authentication**: Eartho acts as a layer of protection between your users and Big Tech, preventing data tracking while still allowing users to log in with familiar providers.
+- **Multiple Authentication Options**: Give your users the freedom to log in with **Google, Facebook, Apple**, **GitHub**, or even **MetaMask**—while keeping their data private.
+- **Easy Integration**: Eartho simplifies the development process for login, sign-up, and profile management pages. With just one line of code, you can integrate Eartho seamlessly into your app.
+- **No Migration Needed**: Continue using existing authentication providers without the need to migrate users or disrupt their experience. Eartho enhances privacy while keeping everything intact.
+- **Advanced Security Features**: Eartho comes with an **advanced antifraud system**, using on-device machine learning to verify user authenticity and prevent fraud.
+
+### **How to Add Eartho**
+1. **Install the SDK**  
+   Begin by installing the Eartho SDK via npm or yarn:
+   ```bash
+   npm install @eartho/one-client-js
+   ```
+   or
+   ```bash
+   yarn add @eartho/one-client-js
+   ```
+
+2. **Initialize Eartho in Your App**  
+   Configure Eartho by adding the following code snippet to your application:
+   ```javascript
+   import Eartho from '@eartho/one-client-js';
+
+   const eartho = new EarthoOne({
+       client_id: 'YOUR_CLIENT_ID',
+       redirect_uri: 'YOUR_REDIRECT_URI'
+   });
+   ```
+
+3. **Add Login and Logout Features**  
+   Implement login and logout functionality to allow users to sign in or out securely:
+   ```javascript
+   function login() {
+       eartho.connectWithPopup().then(user => {
+           console.log('Logged in as:', user);
+       }).catch(err => {
+           console.error('Login failed:', err);
+       });
+   }
+
+   function logout() {
+       eartho.disconnect();
+   }
+   ```
+
+4. **Integrate Eartho Pay**  
+   Eartho’s **integrated payment system** removes the need for manual connections between authentication and payment systems. Charge users securely, with ease.
+
+### **Supported Platforms**
+Eartho works seamlessly with a wide range of environments, including:
+- **Firebase Auth**
+- **Auth0**
+- **Okta**
+- **Clerk**
+- **Custom OAuth Providers**
+
+It supports various platforms—web, mobile, and browser extensions—making Eartho ideal for any project.
+
 ## Authentication Methods Supported
 
 Eartho supports a wide range of authentication methods, allowing users to log in using their preferred provider while ensuring their privacy is maintained. Below are the supported authentication methods that users can choose from:
@@ -190,10 +252,6 @@ Eartho wraps these providers, acting as a privacy layer, which means your login 
     <img src="https://github.com/eartho-group/media/blob/main/authentication_methods.png" height="264" width="264" alt="Logo">
   </a>
 </div>
-
-## Developer? Want to add us to your app?
-
-...
 
 <h2>Contributing</h2>
 <p>

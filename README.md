@@ -47,7 +47,6 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
 4. [Usage](#usage)
 5. [Configuration](#configuration)
 6. [Authentication Methods Supported](#authentication-methods-supported)
-7. [API Documentation](#api-documentation)
 8. [Contributing](#contributing)
 9. [Community & Support](#community--support)
 10. [License](#license)
@@ -66,35 +65,28 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
     <td><b>Privacy-Focused</b></td>
     <td>Zero data tracking or sharing—your users’ data is encrypted and only accessible by them.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/privacy.png" alt="Privacy Icon" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_3.png" alt="Privacy Icon" width="64" height="64">
     </td>
   </tr>
   <tr>
-    <td><b>Multi-Provider Login</b></td>
-    <td>Supports various social and crypto authentication providers like Google, Facebook, Apple, GitHub, MetaMask, and more.</td>
-    <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/multi_provider.png" alt="Multi-Provider Login" width="64" height="64">
-    </td>
-  </tr>
-  <tr>
-    <td><b>Easy Integration</b></td>
+    <td><b>Manage Multiple Identities Online</b></td>
     <td>Integrate Eartho into your existing platform with minimal setup and a clean API.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/easy_integration.png" alt="Easy Integration" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_1.png" alt="Easy Integration" width="64" height="64">
+    </td>
+  </tr>
+   <tr>
+    <td><b>Security Checkups</b></td>
+    <td>Supports various social and crypto authentication providers like Google, Facebook, Apple, GitHub, MetaMask, and more.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_2.png" alt="Multi-Provider Login" width="64" height="64">
     </td>
   </tr>
   <tr>
     <td><b>Open Source</b></td>
-    <td>Built on open-source technologies and licensed under the MIT License for full transparency and control.</td>
+    <td>Built on open-source technologies and licensed under the open-source License for full transparency and control.</td>
     <td align="center">
       <img src="https://github.com/eartho-group/media/blob/main/open_source.png" alt="Open Source" width="64" height="64">
-    </td>
-  </tr>
-  <tr>
-    <td><b>Customizable Privacy Settings</b></td>
-    <td>Allow users to control their own privacy settings and delete their data by date, product, or topic.</td>
-    <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/custom_settings.png" alt="Customizable Privacy Settings" width="64" height="64">
     </td>
   </tr>
   <tr>

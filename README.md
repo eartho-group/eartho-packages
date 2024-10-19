@@ -164,7 +164,32 @@ Eartho is built for developers who care about privacy and security, but don't wa
 
 ## Authentication Methods Supported
 
-...
+Eartho supports a wide range of authentication methods, allowing users to log in using their preferred provider while ensuring their privacy is maintained. Below are the supported authentication methods that users can choose from:
+
+### **Popular Authentication Providers:**
+- **Google**: Log in with your Google account for seamless access.
+- **Apple**: Use your Apple ID for secure and private authentication.
+- **Facebook**: Sign in through Facebook while keeping your data private from Big Tech.
+- **Twitter (X)**: Authenticate with your Twitter (X) account and remain protected.
+- **GitHub**: Ideal for developers logging in with their GitHub accounts.
+
+### **Additional Methods:**
+- **Email**: Secure login via one-time password (OTP) sent to your email.
+- **SMS**: Authenticate using a code sent directly to your phone via SMS.
+- **VK**: Support for VK, a popular platform in Eastern Europe and Russia.
+- **Reddit**: Login via Reddit for users active on the platform.
+- **Yandex**: A secure login option through Yandex.
+- **MetaMask**: For crypto enthusiasts, log in using your MetaMask wallet.
+- **Wave**: Authentication via Wave for added flexibility.
+
+### **How It Works**:
+Eartho wraps these providers, acting as a privacy layer, which means your login process goes through Eartho. This ensures that while the authentication provider can verify your credentials, they don't gain access to your app activity or personal information—keeping your data safe and secure.
+
+<div align="center">
+<a href="https://eartho.io">
+    <img src="https://github.com/eartho-group/media/blob/main/authentication_methods.png" height="264" width="264" alt="Logo">
+  </a>
+</div>
 
 ## Developer? Want to add us to your app?
 

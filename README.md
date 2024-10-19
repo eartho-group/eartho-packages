@@ -1,125 +1,199 @@
-
-<div id="top"></div>
-<br />
 <div align="center">
   <a href="https://eartho.io">
-    <img src="https://github.com/eartho-group/media/blob/main/icon.png" alt="Logo" width="128" height="128">
+    <img src="https://github.com/eartho-group/media/blob/main/eartho_cover_1.png" alt="Logo">
   </a>
-
-  <h1 align="center">Eartho.</h1>
-
-  <p align="center">
-    One line of code to authenticate and charge users via<br /><b>Any social network, crypto wallet, phone authentication, and payment processor</b><br /><br />
-
-Eartho introduces the first free shared access infrastructure for developers.<br />
-Free user management for all platforms:  authentication, verification & payments.<br />
-Start building in minutes with just one line of code, no complex integrations are needed.<br />
-
-<a href="https://www.eartho.io"><strong>Quick Start »</strong></a>
-<br />
-<br />
-<a href="https://eartho.io">Our Website</a>
-·
-<a href="https://github.com/eartho-group/eartho-packages">Report Bug</a>
-·
-<a href="https://github.com/eartho-group/eartho-packages">Request Feature</a>
-·
-<a href="https://discord.gg/5QbuTNTG2q">Discord</a>
+  <h1>The Open-Source, <br /> Privacy-Focused Alternative to Google Sign-In</h1>
+  <p>
+    <b>Eartho</b> is an open-source authentication and user identity management system that prioritizes user privacy.
+    It offers a flexible, secure, and privacy-first alternative to traditional login providers like Google Sign-In, Apple, or Facebook.
+    Eartho ensures that users' personal data stays protected from Big Tech tracking, while developers benefit from a simple, easy-to-integrate solution.
   </p>
- <br />
-<img src="https://github.com/eartho-group/media/blob/main/web_icons.png">
+</div>
+
+## How it works?
+
+<div align="center">
+<a href="https://eartho.io">
+    <img src="https://github.com/eartho-group/media/blob/main/eartho_shield_illustration_white.svg" alt="Logo">
+  </a>
 </div>
 
 
-<!-- ABOUT THE PROJECT -->
+## Table of Contents
+1. [Features](#features)
+2. [Why Eartho?](#why-eartho)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Configuration](#configuration)
+6. [Authentication Methods Supported](#authentication-methods-supported)
+7. [API Documentation](#api-documentation)
+8. [Contributing](#contributing)
+9. [Community & Support](#community--support)
+10. [License](#license)
 
-## About The Project
+---
 
-<p align="center">
-<br />
-    <img src="https://user-images.githubusercontent.com/99670283/178576414-ac74ae1f-c072-4ea2-81e4-a0b758d5256d.gif" alt="Logo" height="300" />
-<br /><br /><br />
-Get all integrations at once. No extra steps.
-From improving customer experience through seamless sign-on to making auth as easy as a click of a button – your login box must find the right balance between user convenience, privacy and security.
+## Features
 
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>Description</th>
+    <th>Image</th>
+  </tr>
+  <tr>
+    <td><b>Privacy-Focused</b></td>
+    <td>Zero data tracking or sharing—your users’ data is encrypted and only accessible by them.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/privacy.png" alt="Privacy Icon" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Multi-Provider Login</b></td>
+    <td>Supports various social and crypto authentication providers like Google, Facebook, Apple, GitHub, MetaMask, and more.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/multi_provider.png" alt="Multi-Provider Login" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Easy Integration</b></td>
+    <td>Integrate Eartho into your existing platform with minimal setup and a clean API.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/easy_integration.png" alt="Easy Integration" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Open Source</b></td>
+    <td>Built on open-source technologies and licensed under the MIT License for full transparency and control.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/open_source.png" alt="Open Source" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Customizable Privacy Settings</b></td>
+    <td>Allow users to control their own privacy settings and delete their data by date, product, or topic.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/custom_settings.png" alt="Customizable Privacy Settings" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>End-to-End Encryption</b></td>
+    <td>Every piece of data is encrypted, ensuring no unauthorized access.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/encryption.png" alt="Encryption" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Zero Trust Architecture</b></td>
+    <td>Implements a zero-trust approach to authenticate each user action and keep accounts secure.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/zero_trust.png" alt="Zero Trust" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Autofill Support</b></td>
+    <td>Seamlessly autofill passwords and payment information across all platforms.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/autofill.png" alt="Autofill" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Built-in Payment System</b></td>
+    <td>Eartho integrates a privacy-first payment system, simplifying transactions for your users.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/payment_system.png" alt="Payment System" width="64" height="64">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Proactive Security Alerts</b></td>
+    <td>Get real-time notifications for any suspicious activities.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/security_alerts.png" alt="Security Alerts" width="64" height="64">
+    </td>
+  </tr>
+</table>
 
-Here's why:
+---
 
-* Ready high converting UI/UX
-* Login from Google, Twitter, Github, Facebook, Apple, Microsoft, VK, Snapchat, Yandex, Reddit, SMS, Metamask at once with not extra steps or
-  extra effort.
-* You don't need to read the documents of all companies and you don't need to open accounts there.
-* Your users will be protected under our third layer, we prevent from companies to track after your
-  users.
-* Set boundaries and rules to stop users you don't want from connecting.
-* Advanced analytics and info about your app from all sources. ready for use. no extra steps
-* No-Code / Your own server. you decide. We support all, your own server, our server, firebase auth
-  and many more.
+## Why Eartho?
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+In today’s digital age, privacy is paramount. Most single sign-on (SSO) providers collect data from users and track their online activity. **Eartho** solves this problem by offering a sign-in solution that ensures users’ privacy remains intact.
 
+Developers can integrate Eartho with a few lines of code and provide users with:
+- Secure login options
+- Control over what data they share and with whom
+- A unified account management system with multiple login methods
+- Protection from Big Tech tracking and surveillance
 
-<!-- GETTING STARTED -->
+Eartho is built for developers who care about privacy and security, but don't want to compromise on ease of use.
 
-## Getting Started
+---
 
-<h3 align="center">Only 3 simple steps and you done</h3>
-<p align="center">
+## Installation
 
-  Develop fast<br />
-  Get users from all sources into your app fast!<br />
-  One line of code to authenticate users via any social network. Eartho also supports web3 login via Metamask etc.<br />
-  You dont need to read the docs of all companies and you dont need to open accounts there. <br />
-  
-```
-  final options = { accessId: "0xd...07" };
-  final crendentials = earthoOne.connectWithRedirect(options);  
-```
-  
-We manage our documents on our website as a single source of truth. Open our quick start guide to
-get started.
-
-<br /> 
-<h3>Full Docs Here<br /> 
-<a href="https://www.eartho.io"> 
-https://www.eartho.io
-</a></h3>
-<br /> <br />
-<h3>
-<a href="https://discord.gg/5QbuTNTG2q"> 
-Our Discord For Live Support
-</a></h3>
-</p>
-<br /> <br />
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-<!-- USAGE EXAMPLES -->
+...
 
 ## Usage
 
-Check the example folder
+...
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## Configuration
 
+...
 
+## Authentication Methods Supported
 
-<!-- CONTACT -->
+...
 
-## Contact
+## Developer? Want to add us to your app?
 
-Eartho<br />
+...
 
+<h2>Contributing</h2>
+<p>
+  We welcome contributions from the open-source community! If you'd like to contribute to Eartho, please follow these steps:
+</p>
+<ol>
+  <li><strong>Fork the repository</strong> on GitHub.</li>
+  <li><strong>Create a new branch</strong> for your feature or fix: <br>
+    <code>git checkout -b feature/your-feature-name</code>
+  </li>
+  <li><strong>Make your changes</strong> and commit them with a meaningful message: <br>
+    <code>git commit -m "Add your feature or fix description"</code>
+  </li>
+  <li><strong>Push to your fork</strong>: <br>
+    <code>git push origin feature/your-feature-name</code>
+  </li>
+  <li><strong>Create a pull request</strong> from your branch into the main repository.</li>
+</ol>
+<p>
+  We also encourage you to review our 
+  <a href="link_to_contributing_guide">Contributing Guide</a> before submitting a pull request. 
+  Contributions can range from code improvements, documentation updates, or even bug reports. Every contribution helps make Eartho better for everyone!
+</p>
 
-Discord - [Link](https://discord.gg/5QbuTNTG2q)<br />
-Twitter - [@eartho_io](https://twitter.com/eartho_io)<br />
+<hr>
 
-Project Link: [https://github.com/eartho-group/eartho-packages](https://github.com/eartho-group/eartho-packages)
+<h2>Community & Support</h2>
+<p>
+  Join our vibrant community of developers and privacy advocates who are helping to shape the future of Eartho! Here’s how you can get involved:
+</p>
+<ul>
+  <li><strong>Discord</strong>: Join our <a href="https://discord.gg/5QbuTNTG2q">Discord community</a> for real-time discussions, support, and collaboration with other developers.</li>
+  <li><strong>GitHub Discussions</strong>: Start or join a conversation in our <a href="https://github.com/eartho-group/eartho-packages/pulls">GitHub Discussions</a> to get help or suggest new features.</li>
+  <li><strong>Our Website</strong>: Follow us on <a href="https://eartho.io">Eartho</a> for updates, news, and announcements.</li>
+</ul>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<hr>
 
-## Copyrights
+<h2>License</h2>
+<p>
+ Each package is licensed individually.
+
+ Server components are licensed under the AGPLv3, while client libraries and examples are provided under custom license license. 
+ For detailed information, please refer to the LICENSE files in each package.
+</p>
+
 
 Portions of this code are derived from projects licensed with MIT(Check LICENSE file to see the full license).
 Here are the copyrights and the license type:
@@ -129,4 +203,3 @@ Here are the copyrights and the license type:
 - MIT License, Copyright (c) 2020 Jose
 - MIT License, Copyright (c) 2016 Filip Skokan
 - MIT License, Copyright (c) 2020 Ville de Montréal
-

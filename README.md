@@ -4,13 +4,21 @@
   </a>
   <h1>The Open-Source, <br /> Privacy-Focused Alternative to Google Sign-In</h1>
   <p>
-    <b>Eartho</b> is an open-source authentication and user identity management system that prioritizes user privacy.
+    <b>Eartho</b> is an open-source authentication alternative that prioritizes user privacy.
     It offers a flexible, secure, and privacy-first alternative to traditional login providers like Google Sign-In, Apple, or Facebook.
     Eartho ensures that users' personal data stays protected from Big Tech tracking, while developers benefit from a simple, easy-to-integrate solution.
   </p>
 </div>
 
----
+<br />
+<h3 align="center">
+  <a href="https://eartho.io">Website</a>
+  | <a href="https://www.eartho.io/developers/demo/login">Demo</a>
+  | <a href="https://discord.gg/5QbuTNTG2q">Our Discord</a>
+  | <a href="contact@eartho.io">Contact Us</a>
+</h4>
+
+<br /><br /><br />
 
 ## How It Works
 
@@ -51,7 +59,7 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
 9. [Community & Support](#community--support)
 10. [License](#license)
 
----
+
 
 ## Features
 
@@ -126,7 +134,6 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
   </tr>
 </table>
 
----
 
 ## Why Eartho?
 
@@ -140,7 +147,6 @@ Developers can integrate Eartho with a few lines of code and provide users with:
 
 Eartho is built for developers who care about privacy and security, but don't want to compromise on ease of use.
 
----
 
 ## Installation
 
@@ -268,8 +274,6 @@ Eartho wraps these providers, acting as a privacy layer, which means your login 
   Contributions can range from code improvements, documentation updates, or even bug reports. Every contribution helps make Eartho better for everyone!
 </p>
 
-<hr>
-
 <h2>Community & Support</h2>
 <p>
   Join our vibrant community of developers and privacy advocates who are helping to shape the future of Eartho! Here’s how you can get involved:
@@ -279,8 +283,6 @@ Eartho wraps these providers, acting as a privacy layer, which means your login 
   <li><strong>GitHub Discussions</strong>: Start or join a conversation in our <a href="https://github.com/eartho-group/eartho-packages/pulls">GitHub Discussions</a> to get help or suggest new features.</li>
   <li><strong>Our Website</strong>: Follow us on <a href="https://eartho.io">Eartho</a> for updates, news, and announcements.</li>
 </ul>
-
-<hr>
 
 <h2>License</h2>
 <p>

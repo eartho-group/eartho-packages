@@ -65,63 +65,63 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
     <td><b>Privacy-Focused</b></td>
     <td>Zero data tracking or sharing—your users’ data is encrypted and only accessible by them.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_3.png" alt="Privacy Icon" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_3.png" alt="Privacy Icon" width="250" >
     </td>
   </tr>
   <tr>
     <td><b>Manage Multiple Identities Online</b></td>
     <td>Integrate Eartho into your existing platform with minimal setup and a clean API.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_1.png" alt="Easy Integration" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_1.png" alt="Easy Integration" width="250" >
     </td>
   </tr>
    <tr>
     <td><b>Security Checkups</b></td>
     <td>Supports various social and crypto authentication providers like Google, Facebook, Apple, GitHub, MetaMask, and more.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_2.png" alt="Multi-Provider Login" width="64" height="64">
-    </td>
-  </tr>
-  <tr>
-    <td><b>Open Source</b></td>
-    <td>Built on open-source technologies and licensed under the open-source License for full transparency and control.</td>
-    <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/open_source.png" alt="Open Source" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_2.png" alt="Multi-Provider Login" width="250" >
     </td>
   </tr>
   <tr>
     <td><b>End-to-End Encryption</b></td>
     <td>Every piece of data is encrypted, ensuring no unauthorized access.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/encryption.png" alt="Encryption" width="64" height="64">
-    </td>
-  </tr>
-  <tr>
-    <td><b>Zero Trust Architecture</b></td>
-    <td>Implements a zero-trust approach to authenticate each user action and keep accounts secure.</td>
-    <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/zero_trust.png" alt="Zero Trust" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_4.png" alt="Encryption" width="250" >
     </td>
   </tr>
   <tr>
     <td><b>Autofill Support</b></td>
     <td>Seamlessly autofill passwords and payment information across all platforms.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/autofill.png" alt="Autofill" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/autofill.png" alt="Autofill" width="250" >
     </td>
   </tr>
   <tr>
     <td><b>Built-in Payment System</b></td>
     <td>Eartho integrates a privacy-first payment system, simplifying transactions for your users.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/payment_system.png" alt="Payment System" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/payment_system.png" alt="Payment System" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Proactive Security Alerts</b></td>
     <td>Get real-time notifications for any suspicious activities.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/security_alerts.png" alt="Security Alerts" width="64" height="64">
+      <img src="https://github.com/eartho-group/media/blob/main/security_alerts.png" alt="Security Alerts" width="250" >
+    </td>
+  </tr>
+  <tr>
+    <td><b>Zero Trust Architecture</b></td>
+    <td>Implements a zero-trust approach to authenticate each user action and keep accounts secure.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/zero_trust.png" alt="Zero Trust" width="250">
+    </td>
+  </tr>
+  <tr>
+    <td><b>Open Source</b></td>
+    <td>Built on open-source technologies and licensed under the open-source License for full transparency and control.</td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/open_source.png" alt="Open Source" width="250">
     </td>
   </tr>
 </table>

@@ -10,14 +10,35 @@
   </p>
 </div>
 
-## How it works?
+---
 
+## How It Works
+
+Eartho serves as a privacy-focused layer between users and major authentication providers like Google, Facebook, and others. When users log in using Eartho, they can still choose popular sign-in options such as **Google Sign-In** or **Facebook Login**, but with a critical difference: **Big Tech companies will no longer have access to your users’ data**.
+
+### Key Process:
+1. **User Login**: 
+   - When a user selects a login option (e.g., Google or Facebook), Eartho wraps the process, acting as an intermediary between the user and the authentication provider.
+   
+2. **Eartho as the Provider**:
+   - While users still authenticate via their preferred service, Eartho handles the interaction and prevents the original provider (Google, Facebook, etc.) from seeing the internal application logic, user actions, or any personal data beyond what’s required for authentication.
+
+3. **Data Protection**:
+   - All authentication data is encrypted and protected by Eartho. Big Tech providers can only process the basic login flow, but they cannot track the user's activity, personal preferences, or any other data within the app. Eartho ensures your users’ privacy by restricting data access only to the login process.
+
+4. **Seamless Integration**:
+   - Eartho offers an easy-to-integrate solution for developers, requiring minimal changes to the existing login system. Your users will enjoy the same familiarity with major login providers, but with the added benefit of enhanced privacy and security through Eartho.
+
+By wrapping major sign-in services, Eartho provides the best of both worlds: the convenience of popular authentication providers and the security of true privacy for users, ensuring that no personal data leaks to third-party companies.
+
+<br /> <br />
 <div align="center">
 <a href="https://eartho.io">
     <img src="https://github.com/eartho-group/media/blob/main/eartho_shield_illustration_white.svg" alt="Logo">
   </a>
 </div>
 
+<br /><br />
 
 ## Table of Contents
 1. [Features](#features)

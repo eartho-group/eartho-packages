@@ -18,6 +18,7 @@
 <br />
 <h3 align="center">
   <a href="https://eartho.io">Website</a>
+  | <a href="https://one.eartho.io">Eartho Account</a>
   | <a href="https://earthoo.webflow.io/developers/demo/login-oauth">Demo</a>
   | <a href="https://discord.gg/5QbuTNTG2q">Our Discord</a>
   | <a href="contact@eartho.io">Contact Us</a>

@@ -10,21 +10,41 @@
   </p>
 </div>
 
-<br />
-<div align="center">
-  <b>🌟 Please give us a star to help us continue and grow! 🌟</b>
-</div>
-
-<br />
 <h3 align="center">
   <a href="https://eartho.io">Website</a>
   | <a href="https://one.eartho.io">Eartho Account</a>
   | <a href="https://earthoo.webflow.io/developers/demo/login-oauth">Demo</a>
   | <a href="https://discord.gg/5QbuTNTG2q">Our Discord</a>
   | <a href="contact@eartho.io">Contact Us</a>
-</h4>
+</h3>
 
-<br /><br /><br />
+<div align="center">
+  <b>🌟 Please give us a star to help us continue and grow! 🌟</b>
+</div>
+
+<br /><br />
+
+<table align="center" border="1" cellpadding="10">
+  <tr>
+    <th align="center">Name</th>
+    <th align="center">Image</th>
+  </tr>
+  <tr>
+    <td align="center"><b>Auth0</b></td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/example_auth0.png" alt="Auth0 Logo" width="200" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><b>Clerk</b></td>
+    <td align="center">
+      <img src="https://github.com/eartho-group/media/blob/main/example_clerk_1.png" alt="Clerk Logo" width="200" />
+    </td>
+  </tr>
+</table>
+
+
+<br />
 
 ## How It Works
 

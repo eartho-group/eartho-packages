@@ -77,6 +77,11 @@
 - **Multi-Account Management**: Easily switch between multiple accounts.
 - **Enhanced Offline Access**: Authenticate even without internet connectivity.
 
+**Future**
+
+- **Browser Extension**: Autofill, and more.
+- **Eartho One Tap**: Users are prompted to create an account with a dialog that's inline with your app's content, so they're never taken out of context by a sign-up screen.
+
 <br />
 
 ## How It Works

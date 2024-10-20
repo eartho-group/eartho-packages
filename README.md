@@ -46,6 +46,41 @@
 
 <br />
 
+## Roadmap
+
+
+**Ready and Available** ✅
+
+- **Multi-Provider Authentication**: Log in via Google, Facebook, Apple, GitHub, MetaMask, and more.
+- **Seamless Developer Integration**: Quick setup with minimal code for easy logins.
+- **Zero Tracking**: No data tracking—user information remains private.
+- **Two-Factor Authentication (2FA)**: Secure logins with SMS, email, or authenticator apps.
+- **Recent Activity Review**: Monitor and review account activity for unauthorized access.
+
+**In Progress** 🚧
+
+- **End-to-End Encryption**: Encrypt user data for enhanced security.
+- **Trusted Devices Management**: Manage devices connected to your account.
+- **Session Management**: Remotely log out from unrecognized devices.
+- **Security Alerts**: Get real-time alerts for suspicious activity.
+- **Advanced Antifraud System**: Detect and prevent fraudulent logins.
+
+- **Privacy Checkup**: Review and adjust privacy settings.
+- **Data from Connected Apps**: Manage permissions for apps connected to your account.
+- **Plan Your Digital Legacy**: Set up account management for when you can no longer access it.
+- **Autofill Support**: Autofill passwords and payment info for faster logins.
+- **Eartho Pay**: Integrate payments securely alongside authentication.
+- **Customizable UI**: Tailor Eartho’s login widget to fit your brand.
+
+- **Biometric Authentication**: Fingerprint and facial recognition for secure access.
+- **Anonymous Login**: Protect identities with anonymous access.
+- **Advanced Analytics Dashboard**: Gain insights into account activity and data usage.
+- **Granular Privacy Controls**: Set specific data permissions for apps.
+- **Multi-Account Management**: Easily switch between multiple accounts.
+- **Enhanced Offline Access**: Authenticate even without internet connectivity.
+
+<br />
+
 ## How It Works
 
 Eartho serves as a privacy-focused layer between users and major authentication providers like Google, Facebook, and others. When users log in using Eartho, they can still choose popular sign-in options such as **Google Sign-In** or **Facebook Login**, but with a critical difference: **Big Tech companies will no longer have access to your users’ data**.

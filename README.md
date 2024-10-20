@@ -2,7 +2,7 @@
   <a href="https://eartho.io">
     <img src="https://github.com/eartho-group/media/blob/main/eartho_cover_1.png" alt="Logo">
   </a>
-  <h1>The Open-Source, <br /> Privacy-Focused Alternative to Google Sign-In</h1>
+  <h1>The Open-Source, <br /> Privacy-Focused Alternative to Google Sign-In <br/> (In Construction, Join Us)</h1>
   <p>
     <b>Eartho</b> is an open-source authentication alternative that prioritizes user privacy.
     It offers a flexible, secure, and privacy-first alternative to traditional login providers like Google Sign-In, Apple, or Facebook.

@@ -130,68 +130,69 @@ By wrapping major sign-in services, Eartho provides the best of both worlds: the
   </tr>
   <tr>
     <td><b>Privacy-Focused</b></td>
-    <td>Zero data tracking or sharing—your users’ data is encrypted and only accessible by them.</td>
+    <td>Your users' data stays private. Eartho uses zero data tracking or sharing, with all information encrypted and accessible only by the user.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_3.png" alt="Privacy Icon" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_3.png" alt="Privacy Icon" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Manage Multiple Identities Online</b></td>
-    <td>Integrate Eartho into your existing platform with minimal setup and a clean API.</td>
+    <td>With minimal setup, Eartho enables users to securely manage multiple identities (e.g., social accounts, crypto wallets) across different platforms.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_1.png" alt="Easy Integration" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_1.png" alt="Easy Integration" width="250">
     </td>
   </tr>
-   <tr>
+  <tr>
     <td><b>Security Checkups</b></td>
-    <td>Supports various social and crypto authentication providers like Google, Facebook, Apple, GitHub, MetaMask, and more.</td>
+    <td>Perform regular security checkups to ensure your account is secure. Supports a wide range of authentication providers, including social and crypto logins.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_2.png" alt="Multi-Provider Login" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_2.png" alt="Multi-Provider Login" width="250">
     </td>
   </tr>
   <tr>
     <td><b>End-to-End Encryption</b></td>
-    <td>Every piece of data is encrypted, ensuring no unauthorized access.</td>
+    <td>Ensure that all data is encrypted at rest and in transit, safeguarding it from unauthorized access.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_4.png" alt="Encryption" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/readme/feature_4.png" alt="Encryption" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Autofill Support</b></td>
-    <td>Seamlessly autofill passwords and payment information across all platforms.</td>
+    <td>Enhance user experience by offering autofill for passwords, payment details, and other sensitive information across devices and platforms.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/autofill.png" alt="Autofill" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/autofill.png" alt="Autofill" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Built-in Payment System</b></td>
-    <td>Eartho integrates a privacy-first payment system, simplifying transactions for your users.</td>
+    <td>Eartho’s integrated payment system offers secure, privacy-first transactions without needing additional setup for third-party payment gateways.</td>
     <td align="center">
       <img src="https://github.com/eartho-group/media/blob/main/payment_system.png" alt="Payment System" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Proactive Security Alerts</b></td>
-    <td>Get real-time notifications for any suspicious activities.</td>
+    <td>Receive real-time alerts about any suspicious or unauthorized account activities, keeping your account secure.</td>
     <td align="center">
-      <img src="https://github.com/eartho-group/media/blob/main/security_alerts.png" alt="Security Alerts" width="250" >
+      <img src="https://github.com/eartho-group/media/blob/main/security_alerts.png" alt="Security Alerts" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Zero Trust Architecture</b></td>
-    <td>Implements a zero-trust approach to authenticate each user action and keep accounts secure.</td>
+    <td>Eartho follows a zero-trust security model, verifying each user action to prevent breaches and ensure account security.</td>
     <td align="center">
       <img src="https://github.com/eartho-group/media/blob/main/zero_trust.png" alt="Zero Trust" width="250">
     </td>
   </tr>
   <tr>
     <td><b>Open Source</b></td>
-    <td>Built on open-source technologies and licensed under the open-source License for full transparency and control.</td>
+    <td>Built on open-source technologies and licensed under an open-source license, Eartho offers full transparency and developer control.</td>
     <td align="center">
       <img src="https://github.com/eartho-group/media/blob/main/open_source.png" alt="Open Source" width="250">
     </td>
   </tr>
 </table>
+
 
 
 ## Why Eartho?

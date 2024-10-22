@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
+import Cookies from '../../../node_modules/@types/js-cookie';
 import {
   Select,
   SelectContent,

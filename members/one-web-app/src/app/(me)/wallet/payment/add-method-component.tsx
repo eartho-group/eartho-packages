@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useStripe } from "@stripe/react-stripe-js";
 import { FinanceService } from "service";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../../../../node_modules/react-i18next";
 
 const AddMethodComponent: React.FC = () => {
   const { t } = useTranslation("me");

@@ -1,0 +1,38 @@
+Copyright Eartho Inc. 2024. All rights reserved.
+
+You acknowledge and agree that Eartho Inc. (“Licensor”) (or Licensor’s licensors) own all legal rights, title, and interest in and to the work, software, application, source code, documentation, and any other documents in this repository (collectively, the “Program”), including any intellectual property rights which subsist in the Program (whether those rights are registered or not, and wherever in the world those rights may exist), whether in source code or any other form.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Program”), to use, copy, modify, merge, and distribute copies of the Program, subject to the following conditions:
+
+### 1. Non-Commercial Use
+You are granted a non-exclusive, non-transferable, non-sublicensable license to use, distribute, publish, copy, modify, merge, combine with another program, or create derivative works of the Program (collectively, the “Resulting Program”) solely for **Non-Commercial Use**, provided that:
+
+- **Attribution**: You must give prominent notice with each copy of the Resulting Program that the original Program is the copyright of Eartho, and include a link to the original repository if distributed electronically.
+- **License Continuity**: Any distribution, publication, copy, modification, merger, combination with another program, or creation of derivative works must be subject to the same Non-Commercial Use restriction and attribution requirement.
+
+### 2. Definition of Non-Commercial Use
+“Non-Commercial Use” means use that:
+1. Is for personal research, personal study, private entertainment, hobby projects, or amateur pursuits, without any intended or actual commercial application.
+2. Is for use by charitable organizations, educational institutions, public research organizations, public safety or health organizations, environmental protection organizations, or government institutions, without the intent of making a profit.
+3. Does not exceed **100 monthly active users** (MAU) across all versions and platforms of the Resulting Program globally.
+
+### 3. Prohibited Uses
+You may not, nor permit anyone else to:
+- Reverse engineer, decompile, or otherwise attempt to extract the source code of the Program, except where explicitly permitted by applicable law.
+- Use, sell, or distribute the Program or Resulting Program for any commercial purpose.
+- Sublicense, resell, or otherwise transfer rights to the Program, except as allowed by this license.
+- Use any trademark, service mark, trade name, or logo of Eartho or any third party in a way that is likely to cause confusion about ownership or endorsement, unless you have prior written permission.
+
+### 4. Contributions
+If you contribute to this repository, you hereby grant Eartho a perpetual, worldwide, non-exclusive, royalty-free license to use, reproduce, modify, distribute, and create derivative works from your contribution as part of the Program.
+
+Unless otherwise agreed upon in writing, contributions will be licensed under the same terms as the Program.
+
+### 5. Warranty Disclaimer
+The Program is provided "as-is," without any warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall Eartho be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the Program or the use or other dealings in the Program.
+
+### 6. Limitation of Liability
+Under no circumstances, including negligence, shall Eartho be liable for any incidental, special, indirect, or consequential damages arising out of or relating to the use of or inability to use the Program, even if Eartho has been advised of the possibility of such damages.
+
+### 7. Contact for Commercial Use and Inquiries
+For any other use cases beyond Non-Commercial Use, or if you have any questions regarding this license, please contact us at: contact@eartho.io

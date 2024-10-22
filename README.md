@@ -214,6 +214,15 @@ Developers can integrate Eartho with a few lines of code and provide users with:
 
 Eartho is built for developers who care about privacy and security, but don't want to compromise on ease of use.
 
+## **Tech Stack** ⚙️
+
+- **Backend**: Next.js API for authentication + Node.js to manage overall data and endpoints
+- **Frontend**: Next.js (React)
+- **Database**: Firestore(Should be replaced)
+- **Cloud**: Google Cloud Platform (GCP)
+- **Authentication**: OAuth 2.0, JWT
+
+- **Auth.js**: Our one module use auth.js
 
 ## Installation
 
@@ -368,3 +377,5 @@ Here are the copyrights and the license type:
 - MIT License, Copyright (c) 2020 Jose
 - MIT License, Copyright (c) 2016 Filip Skokan
 - MIT License, Copyright (c) 2020 Ville de Montréal
+- MIT License, Copyright (c) 2020 Ville de Montréal
+- ISC License, Copyright (c) 2022-2024, Balázs Orbán (Auth.js)

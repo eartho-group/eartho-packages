@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Cookies from '../../../node_modules/@types/js-cookie';
 import {
   Select,
   SelectContent,
@@ -10,20 +9,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { getCookie, setCookie } from 'cookies-next'
 
 export default function LanguageChanger() {
   const [locale, setLocale] = useState('en');
   const router = useRouter();
 
   useEffect(() => {
-    let storedLocale = Cookies.get('NEXT_LOCALE');
+    let storedLocale = getCookie('NEXT_LOCALE');
     if (!storedLocale) return;
     setLocale(storedLocale);
   }, []);
 
   const handleChange = (selectedLocale: string) => {
     setLocale(selectedLocale);
-    Cookies.set('NEXT_LOCALE', selectedLocale, { expires: 365 }); // Set the cookie for 1 year
+    let nextYearDate = new Date(new Date().setDate(new Date().getDate() + 365));
+    setCookie('NEXT_LOCALE', selectedLocale, { expires: nextYearDate }); // Set the cookie for 1 year
     router.refresh(); // Refresh the page to reflect the locale change
   };
 

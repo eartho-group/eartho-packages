@@ -98,23 +98,6 @@ const authOptions: NextAuthConfig = {
     AppleProvider({
       clientId: "auth.one.eartho.io",
       clientSecret: process.env.AUTH_APPLE_TOKEN!,
-      wellKnown: "https://appleid.apple.com/.well-known/openid-configuration",
-      checks: ["pkce"],
-      authorization: {
-        url: 'https://appleid.apple.com/auth/authorize',
-        params: {
-          scope: "name email",
-          response_type: "code",
-          response_mode: "form_post",
-          state: crypto.randomUUID(),
-        },
-      },
-      token: {
-        url: `https://appleid.apple.com/auth/token`,
-      },
-      client: {
-        token_endpoint_auth_method: "client_secret_post",
-      },
       profile(profile) {
         return {
           id: profile.sub,

@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "登录",
+		"signOut": "登出",
+		"connectWithEartho": "在下方连接您的Eartho账户",
+		"connectWithEartho2": "连接您的Eartho, ",
+		"becomeUndetectable": "并在网上变得无法检测，甚至对我们也是如此。",
+		"beginFromScratch": "从头开始，没有存储的详细信息",
+		"agreeToTerms": "点击继续，即表示您同意我们的",
+		"termsOfService": "服务条款",
+		"privacyPolicy": "隐私政策",
+		"and": "和",
+		"oneTimePass": "一次性密码",
+		"magicLink": "魔术链接",
+		"email": "电子邮件",
+		"enterEmail": "输入您的电子邮件...",
+		"code": "代码",
+		"enterCodeEmail": "输入发送到您电子邮件的代码...",
+		"enterCodePhone": "输入发送到您手机的代码...",
+		"sendCode": "发送代码",
+		"continueWithEmail": "继续使用电子邮件",
+		"sendMagicLink": "发送魔术链接",
+		"enterEmailToReceive": "输入您的电子邮件以接收",
+		"oneTimePassQuickLoginEmail": "用于快速登录的一次性密码",
+		"phoneNumber": "电话号码",
+		"enterPhone": "输入您的电话号码",
+		"login": "登录",
+		"testimonial": "Eartho为我节省了无数小时，并帮助我更快、更隐私地管理我的在线访问。",
+		"testimonialAuthor": "米娅·罗森伯格"
+	},
+	"connect": {
+		"agreeToTerms": "点击继续，即表示您同意我们的",
+		"termsOfService": "服务条款",
+		"privacyPolicy": "隐私政策",
+		"and": "和",
+		"connectTo": "您想连接到",
+		"trustTitle": "信任",
+		"trustDescription": "建立信任的过程",
+		"termsTitle": "条款",
+		"termsDescription": "获得访问权限的要求",
+		"confirm": "确认",
+		"errorTitle": "错误",
+		"errorDescription": "请联系支持",
+		"partnersWith": "与...合作",
+		"forSecureAccess": "以确保安全访问",
+		"returnTo": "返回",
+		"contact": "联系",
+		"terms": "条款",
+		"privacy": "隐私",
+		"poweredBy": "由...提供支持",
+		"accessterms": {
+			"trust": {
+				"oneTime": "一次"
+			},
+			"payment": {
+				"free": "免费",
+				"every": "每",
+				"year": "年",
+				"month": "月",
+				"week": "周",
+				"day": "天",
+				"for": "为期"
+			},
+			"identity": {
+				"name": "姓名",
+				"email": "电子邮件",
+				"phone": "电话"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "选择身份",
+			"searchIdentity": "搜索身份...",
+			"noIdentityFound": "未找到身份。",
+			"personalAccount": "个人账户",
+			"virtualIdentity": "虚拟身份",
+			"createIdentity": "创建身份",
+			"createIdentityDescription": "添加新的身份以提高您的隐私。",
+			"cancel": "取消",
+			"continue": "继续"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "搜索支付方式...",
+			"noPaymentMethods": "没有可用的支付方式。",
+			"selectPaymentMethod": "选择支付方式",
+			"addNewCard": "添加新卡",
+			"cards": "卡片",
+			"otherProviders": "其他提供商"
+		}
+	},
+	"home": {}
+}

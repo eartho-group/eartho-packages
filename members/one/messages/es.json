@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "Iniciar sesión",
+		"signOut": "Cerrar sesión",
+		"connectWithEartho": "Conéctese con su cuenta de Eartho a continuación",
+		"connectWithEartho2": "Conéctese con su Eartho, ",
+		"becomeUndetectable": "Y conviértase en indetectable en línea, incluso para nosotros.",
+		"beginFromScratch": "Comience desde cero, sin detalles almacenados",
+		"agreeToTerms": "Al hacer clic en continuar, acepta nuestros",
+		"termsOfService": "Términos de servicio",
+		"privacyPolicy": "Política de privacidad",
+		"and": "y",
+		"oneTimePass": "Contraseña de una vez",
+		"magicLink": "Enlace mágico",
+		"email": "Correo electrónico",
+		"enterEmail": "Ingrese su correo electrónico...",
+		"code": "Código",
+		"enterCodeEmail": "Ingrese el código enviado a su correo electrónico...",
+		"enterCodePhone": "Ingrese el código enviado a su teléfono...",
+		"sendCode": "Enviar código",
+		"continueWithEmail": "Continuar con el correo electrónico",
+		"sendMagicLink": "Enviar enlace mágico",
+		"enterEmailToReceive": "Ingrese su correo electrónico para recibir una",
+		"oneTimePassQuickLoginEmail": "contraseña de un solo uso para un inicio de sesión rápido",
+		"phoneNumber": "Número de teléfono",
+		"enterPhone": "Ingrese su número de teléfono",
+		"login": "Iniciar sesión",
+		"testimonial": "Eartho me ha ahorrado incontables horas y me ha ayudado a gestionar mi acceso en línea de manera más rápida y privada de lo que jamás imaginé.",
+		"testimonialAuthor": "Mia Rosenberg"
+	},
+	"connect": {
+		"agreeToTerms": "Al hacer clic en continuar, acepta nuestros",
+		"termsOfService": "Términos de servicio",
+		"privacyPolicy": "Política de privacidad",
+		"and": "y",
+		"connectTo": "¿Desea conectarse a",
+		"trustTitle": "Confianza",
+		"trustDescription": "El proceso para construir confianza",
+		"termsTitle": "Términos",
+		"termsDescription": "Los requisitos para obtener acceso",
+		"confirm": "Confirmar",
+		"errorTitle": "Error",
+		"errorDescription": "Por favor, contacte con el soporte",
+		"partnersWith": "se asocia con",
+		"forSecureAccess": "para un acceso seguro",
+		"returnTo": "Regresar a",
+		"contact": "Contacto",
+		"terms": "Términos",
+		"privacy": "Privacidad",
+		"poweredBy": "Desarrollado por",
+		"accessterms": {
+			"trust": {
+				"oneTime": "Una vez"
+			},
+			"payment": {
+				"free": "Gratis",
+				"every": "cada",
+				"year": "Año",
+				"month": "Mes",
+				"week": "Semana",
+				"day": "Día",
+				"for": "por"
+			},
+			"identity": {
+				"name": "Nombre",
+				"email": "Correo electrónico",
+				"phone": "Teléfono"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "Seleccionar identidad",
+			"searchIdentity": "Buscar identidad...",
+			"noIdentityFound": "No se encontró ninguna identidad.",
+			"personalAccount": "Cuenta personal",
+			"virtualIdentity": "Identidad virtual",
+			"createIdentity": "Crear identidad",
+			"createIdentityDescription": "Agregue una nueva identidad para mejorar su privacidad.",
+			"cancel": "Cancelar",
+			"continue": "Continuar"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "Buscar método de pago...",
+			"noPaymentMethods": "No hay métodos de pago disponibles.",
+			"selectPaymentMethod": "Seleccione un método de pago",
+			"addNewCard": "Agregar nueva tarjeta",
+			"cards": "Tarjetas",
+			"otherProviders": "Otros proveedores"
+		}
+	},
+	"home": {}
+}

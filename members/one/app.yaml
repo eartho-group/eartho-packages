@@ -1,0 +1,10 @@
+service: one
+runtime: nodejs18
+instance_class: F2
+
+automatic_scaling:
+  min_instances: 1
+
+handlers:
+- url: /.*
+  script: auto

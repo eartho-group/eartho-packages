@@ -24,3 +24,7 @@ results/
 *.history*
 *.vscode*
 *.node_modules*
+.env.local
+.env.production
+.env.development
+members/one/src/lib/firestore/eartho-app-firebase-adminsdk-njcdc-0fff8407e9.json

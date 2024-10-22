@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "サインイン",
+		"signOut": "サインアウト",
+		"connectWithEartho": "以下でEarthoアカウントに接続",
+		"connectWithEartho2": "Earthoに接続, ",
+		"becomeUndetectable": "そして、オンラインで検出不可能になり、私たちからも見えません。",
+		"beginFromScratch": "初めから始める、保存された詳細なし",
+		"agreeToTerms": "続行をクリックすることで、当社の",
+		"termsOfService": "利用規約",
+		"privacyPolicy": "プライバシーポリシー",
+		"and": "および",
+		"oneTimePass": "ワンタイムパス",
+		"magicLink": "マジックリンク",
+		"email": "メール",
+		"enterEmail": "メールアドレスを入力...",
+		"code": "コード",
+		"enterCodeEmail": "メールに送信されたコードを入力...",
+		"enterCodePhone": "電話に送信されたコードを入力...",
+		"sendCode": "コードを送信",
+		"continueWithEmail": "メールで続行",
+		"sendMagicLink": "マジックリンクを送信",
+		"enterEmailToReceive": "受け取るメールアドレスを入力",
+		"oneTimePassQuickLoginEmail": "クイックログイン用のワンタイムパスワード",
+		"phoneNumber": "電話番号",
+		"enterPhone": "電話番号を入力",
+		"login": "ログイン",
+		"testimonial": "Earthoは無数の時間を節約し、オンラインアクセスをより速く、よりプライバシーを保ちながら管理するのに役立ちました。",
+		"testimonialAuthor": "ミア・ローゼンバーグ"
+	},
+	"connect": {
+		"agreeToTerms": "続行をクリックすることで、当社の",
+		"termsOfService": "利用規約",
+		"privacyPolicy": "プライバシーポリシー",
+		"and": "および",
+		"connectTo": "接続しますか",
+		"trustTitle": "信頼",
+		"trustDescription": "信頼を築くプロセス",
+		"termsTitle": "利用条件",
+		"termsDescription": "アクセスを取得するための要件",
+		"confirm": "確認",
+		"errorTitle": "エラー",
+		"errorDescription": "サポートに連絡してください",
+		"partnersWith": "との提携",
+		"forSecureAccess": "安全なアクセスのため",
+		"returnTo": "に戻る",
+		"contact": "連絡先",
+		"terms": "利用規約",
+		"privacy": "プライバシー",
+		"poweredBy": "提供",
+		"accessterms": {
+			"trust": {
+				"oneTime": "一回"
+			},
+			"payment": {
+				"free": "無料",
+				"every": "ごとに",
+				"year": "年",
+				"month": "月",
+				"week": "週",
+				"day": "日",
+				"for": "の間"
+			},
+			"identity": {
+				"name": "名前",
+				"email": "メール",
+				"phone": "電話"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "アイデンティティを選択",
+			"searchIdentity": "アイデンティティを検索...",
+			"noIdentityFound": "アイデンティティが見つかりません。",
+			"personalAccount": "個人アカウント",
+			"virtualIdentity": "仮想アイデンティティ",
+			"createIdentity": "アイデンティティを作成",
+			"createIdentityDescription": "プライバシーを向上させるために新しいアイデンティティを追加。",
+			"cancel": "キャンセル",
+			"continue": "続行"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "支払い方法を検索...",
+			"noPaymentMethods": "利用可能な支払い方法はありません。",
+			"selectPaymentMethod": "支払い方法を選択",
+			"addNewCard": "新しいカードを追加",
+			"cards": "カード",
+			"otherProviders": "その他のプロバイダー"
+		}
+	},
+	"home": {}
+}

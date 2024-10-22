@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "Войти",
+		"signOut": "Выйти",
+		"connectWithEartho": "Подключитесь к своей учетной записи Eartho ниже",
+		"connectWithEartho2": "Подключитесь к своему Eartho, ",
+		"becomeUndetectable": "И станьте незаметными в Интернете, даже для нас.",
+		"beginFromScratch": "Начните с нуля, без сохраненных данных",
+		"agreeToTerms": "Нажимая «Продолжить», вы соглашаетесь с нашими",
+		"termsOfService": "Условиями обслуживания",
+		"privacyPolicy": "Политикой конфиденциальности",
+		"and": "и",
+		"oneTimePass": "Одноразовый пароль",
+		"magicLink": "Магическая ссылка",
+		"email": "Электронная почта",
+		"enterEmail": "Введите свою электронную почту...",
+		"code": "Код",
+		"enterCodeEmail": "Введите код, отправленный на вашу электронную почту...",
+		"enterCodePhone": "Введите код, отправленный на ваш телефон...",
+		"sendCode": "Отправить код",
+		"continueWithEmail": "Продолжить с электронной почтой",
+		"sendMagicLink": "Отправить магическую ссылку",
+		"enterEmailToReceive": "Введите свою электронную почту, чтобы получить",
+		"oneTimePassQuickLoginEmail": "одноразовый пароль для быстрого входа",
+		"phoneNumber": "Номер телефона",
+		"enterPhone": "Введите свой номер телефона",
+		"login": "Войти",
+		"testimonial": "Eartho сэкономил мне бесчисленное количество часов и помог управлять моим доступом в Интернет быстрее и с большей конфиденциальностью, чем я когда-либо мог себе представить.",
+		"testimonialAuthor": "Миа Розенберг"
+	},
+	"connect": {
+		"agreeToTerms": "Нажимая «Продолжить», вы соглашаетесь с нашими",
+		"termsOfService": "Условиями обслуживания",
+		"privacyPolicy": "Политикой конфиденциальности",
+		"and": "и",
+		"connectTo": "Хотите подключиться к",
+		"trustTitle": "Доверие",
+		"trustDescription": "Процесс построения доверия",
+		"termsTitle": "Условия",
+		"termsDescription": "Требования для получения доступа",
+		"confirm": "Подтвердить",
+		"errorTitle": "Ошибка",
+		"errorDescription": "Пожалуйста, свяжитесь со службой поддержки",
+		"partnersWith": "партнеры с",
+		"forSecureAccess": "для безопасного доступа",
+		"returnTo": "Вернуться к",
+		"contact": "Контакт",
+		"terms": "Условия",
+		"privacy": "Конфиденциальность",
+		"poweredBy": "Поддерживается",
+		"accessterms": {
+			"trust": {
+				"oneTime": "Один раз"
+			},
+			"payment": {
+				"free": "Бесплатно",
+				"every": "каждый",
+				"year": "Год",
+				"month": "Месяц",
+				"week": "Неделя",
+				"day": "День",
+				"for": "за"
+			},
+			"identity": {
+				"name": "Имя",
+				"email": "Электронная почта",
+				"phone": "Телефон"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "Выбрать личность",
+			"searchIdentity": "Искать личность...",
+			"noIdentityFound": "Личность не найдена.",
+			"personalAccount": "Личный аккаунт",
+			"virtualIdentity": "Виртуальная личность",
+			"createIdentity": "Создать личность",
+			"createIdentityDescription": "Добавьте новую личность для повышения конфиденциальности.",
+			"cancel": "Отмена",
+			"continue": "Продолжить"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "Искать способ оплаты...",
+			"noPaymentMethods": "Способы оплаты не доступны.",
+			"selectPaymentMethod": "Выберите способ оплаты",
+			"addNewCard": "Добавить новую карту",
+			"cards": "Карты",
+			"otherProviders": "Другие поставщики"
+		}
+	},
+	"home": {}
+}

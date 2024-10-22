@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "تسجيل الدخول",
+		"signOut": "تسجيل الخروج",
+		"connectWithEartho": "اتصل بحساب Eartho الخاص بك أدناه",
+		"connectWithEartho2": "اتصل بـ Eartho الخاص بك، ",
+		"becomeUndetectable": "وأصبح غير قابل للكشف عبر الإنترنت، حتى لنا.",
+		"beginFromScratch": "ابدأ من الصفر، لا توجد تفاصيل مخزنة",
+		"agreeToTerms": "بالضغط على متابعة، فإنك توافق على",
+		"termsOfService": "شروط الخدمة",
+		"privacyPolicy": "سياسة الخصوصية",
+		"and": "و",
+		"oneTimePass": "كلمة مرور لمرة واحدة",
+		"magicLink": "رابط سحري",
+		"email": "البريد الإلكتروني",
+		"enterEmail": "أدخل بريدك الإلكتروني...",
+		"code": "الرمز",
+		"enterCodeEmail": "أدخل الرمز المرسل إلى بريدك الإلكتروني...",
+		"enterCodePhone": "أدخل الرمز المرسل إلى هاتفك...",
+		"sendCode": "أرسل الرمز",
+		"continueWithEmail": "المتابعة بالبريد الإلكتروني",
+		"sendMagicLink": "أرسل الرابط السحري",
+		"enterEmailToReceive": "أدخل بريدك الإلكتروني لتلقي",
+		"oneTimePassQuickLoginEmail": "كلمة مرور لمرة واحدة لتسجيل الدخول السريع",
+		"phoneNumber": "رقم الهاتف",
+		"enterPhone": "أدخل رقم هاتفك",
+		"login": "تسجيل الدخول",
+		"testimonial": "لقد وفر لي Eartho ساعات لا حصر لها وساعدني في إدارة وصولي عبر الإنترنت بشكل أسرع وبمزيد من الخصوصية مما تخيلت.",
+		"testimonialAuthor": "ميا روزنبرج"
+	},
+	"connect": {
+		"agreeToTerms": "بالضغط على متابعة، فإنك توافق على",
+		"termsOfService": "شروط الخدمة",
+		"privacyPolicy": "سياسة الخصوصية",
+		"and": "و",
+		"connectTo": "هل تريد الاتصال بـ",
+		"trustTitle": "ثقة",
+		"trustDescription": "عملية بناء الثقة",
+		"termsTitle": "الشروط",
+		"termsDescription": "متطلبات الحصول على الوصول",
+		"confirm": "تأكيد",
+		"errorTitle": "خطأ",
+		"errorDescription": "يرجى الاتصال بالدعم",
+		"partnersWith": "شريك مع",
+		"forSecureAccess": "للوصول الآمن",
+		"returnTo": "العودة إلى",
+		"contact": "اتصال",
+		"terms": "الشروط",
+		"privacy": "الخصوصية",
+		"poweredBy": "مدعوم من",
+		"accessterms": {
+			"trust": {
+				"oneTime": "مرة واحدة"
+			},
+			"payment": {
+				"free": "مجاني",
+				"every": "كل",
+				"year": "سنة",
+				"month": "شهر",
+				"week": "أسبوع",
+				"day": "يوم",
+				"for": "لـ"
+			},
+			"identity": {
+				"name": "اسم",
+				"email": "البريد الإلكتروني",
+				"phone": "هاتف"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "اختر الهوية",
+			"searchIdentity": "ابحث عن الهوية...",
+			"noIdentityFound": "لم يتم العثور على هوية.",
+			"personalAccount": "حساب شخصي",
+			"virtualIdentity": "هوية افتراضية",
+			"createIdentity": "إنشاء هوية",
+			"createIdentityDescription": "أضف هوية جديدة لتحسين خصوصيتك.",
+			"cancel": "إلغاء",
+			"continue": "متابعة"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "ابحث عن طريقة الدفع...",
+			"noPaymentMethods": "لا توجد طرق دفع متاحة.",
+			"selectPaymentMethod": "اختر طريقة الدفع",
+			"addNewCard": "أضف بطاقة جديدة",
+			"cards": "بطاقات",
+			"otherProviders": "مزودون آخرون"
+		}
+	},
+	"home": {}
+}

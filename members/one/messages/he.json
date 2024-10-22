@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "התחבר",
+		"signOut": "התנתק",
+		"connectWithEartho": "התחבר לחשבון Eartho שלך למטה",
+		"connectWithEartho2": "התחבר עם Eartho שלך, ",
+		"becomeUndetectable": "ותהיה בלתי ניתן לזיהוי באינטרנט, אפילו עבורנו.",
+		"beginFromScratch": "התחל מההתחלה, ללא פרטים שמורים",
+		"agreeToTerms": "בלחיצה על המשך, אתה מסכים לתנאים שלנו",
+		"termsOfService": "תנאי השירות",
+		"privacyPolicy": "מדיניות פרטיות",
+		"and": "ו",
+		"oneTimePass": "סיסמה חד פעמית",
+		"magicLink": "קישור קסם",
+		"email": "אימייל",
+		"enterEmail": "הכנס את האימייל שלך...",
+		"code": "קוד",
+		"enterCodeEmail": "הזן את הקוד שנשלח לאימייל שלך...",
+		"enterCodePhone": "הזן את הקוד שנשלח לטלפון שלך...",
+		"sendCode": "שלח קוד",
+		"continueWithEmail": "המשך עם אימייל",
+		"sendMagicLink": "שלח קישור קסם",
+		"enterEmailToReceive": "הזן את האימייל שלך כדי לקבל",
+		"oneTimePassQuickLoginEmail": "סיסמה חד פעמית לכניסה מהירה",
+		"phoneNumber": "מספר טלפון",
+		"enterPhone": "הכנס את מספר הטלפון שלך",
+		"login": "התחבר",
+		"testimonial": "Eartho חסך לי אינספור שעות ועזר לי לנהל את הגישה המקוונת שלי בצורה מהירה יותר ופרטיות רבה יותר ממה שדמיינתי.",
+		"testimonialAuthor": "מיה רוזנברג"
+	},
+	"connect": {
+		"agreeToTerms": "בלחיצה על המשך, אתה מסכים לתנאים שלנו",
+		"termsOfService": "תנאי השירות",
+		"privacyPolicy": "מדיניות פרטיות",
+		"and": "ו",
+		"connectTo": "האם אתה רוצה להתחבר ל",
+		"trustTitle": "אמון",
+		"trustDescription": "התהליך לבניית אמון",
+		"termsTitle": "תנאים",
+		"termsDescription": "הדרישות לקבלת גישה",
+		"confirm": "אישור",
+		"errorTitle": "שגיאה",
+		"errorDescription": "אנא פנה לתמיכה",
+		"partnersWith": "שותף עם",
+		"forSecureAccess": "לגישה מאובטחת",
+		"returnTo": "חזור ל",
+		"contact": "איש קשר",
+		"terms": "תנאים",
+		"privacy": "פרטיות",
+		"poweredBy": "מופעל על ידי",
+		"accessterms": {
+			"trust": {
+				"oneTime": "פעם אחת"
+			},
+			"payment": {
+				"free": "חינם",
+				"every": "כל",
+				"year": "שנה",
+				"month": "חודש",
+				"week": "שבוע",
+				"day": "יום",
+				"for": "עבור"
+			},
+			"identity": {
+				"name": "שם",
+				"email": "אימייל",
+				"phone": "טלפון"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "בחר זהות",
+			"searchIdentity": "חפש זהות...",
+			"noIdentityFound": "לא נמצאה זהות.",
+			"personalAccount": "חשבון אישי",
+			"virtualIdentity": "זהות וירטואלית",
+			"createIdentity": "צור זהות",
+			"createIdentityDescription": "הוסף זהות חדשה לשיפור הפרטיות שלך.",
+			"cancel": "בטל",
+			"continue": "המשך"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "חפש שיטת תשלום...",
+			"noPaymentMethods": "לא זמינות שיטות תשלום.",
+			"selectPaymentMethod": "בחר שיטת תשלום",
+			"addNewCard": "הוסף כרטיס חדש",
+			"cards": "כרטיסים",
+			"otherProviders": "ספקים אחרים"
+		}
+	},
+	"home": {}
+}

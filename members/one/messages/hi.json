@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "साइन इन करें",
+		"signOut": "साइन आउट करें",
+		"connectWithEartho": "नीचे अपने Eartho खाते से कनेक्ट करें",
+		"connectWithEartho2": "अपने Eartho से कनेक्ट करें, ",
+		"becomeUndetectable": "और ऑनलाइन अप्राप्य बनें, यहां तक कि हमारे लिए भी।",
+		"beginFromScratch": "शून्य से शुरू करें, कोई संग्रहीत विवरण नहीं",
+		"agreeToTerms": "जारी रखने पर क्लिक करके, आप हमारे",
+		"termsOfService": "सेवा की शर्तों",
+		"privacyPolicy": "गोपनीयता नीति",
+		"and": "और",
+		"oneTimePass": "वन टाइम पास",
+		"magicLink": "मैजिक लिंक",
+		"email": "ईमेल",
+		"enterEmail": "अपना ईमेल दर्ज करें...",
+		"code": "कोड",
+		"enterCodeEmail": "अपने ईमेल पर भेजे गए कोड को दर्ज करें...",
+		"enterCodePhone": "अपने फोन पर भेजे गए कोड को दर्ज करें...",
+		"sendCode": "कोड भेजें",
+		"continueWithEmail": "ईमेल के साथ जारी रखें",
+		"sendMagicLink": "मैजिक लिंक भेजें",
+		"enterEmailToReceive": "प्राप्त करने के लिए अपना ईमेल दर्ज करें",
+		"oneTimePassQuickLoginEmail": "त्वरित लॉगिन के लिए वन टाइम पासवर्ड",
+		"phoneNumber": "फोन नंबर",
+		"enterPhone": "अपना फोन नंबर दर्ज करें",
+		"login": "लॉगिन करें",
+		"testimonial": "Eartho ने मुझे अनगिनत घंटे बचाए हैं और मुझे अपने ऑनलाइन एक्सेस को तेज और अधिक गोपनीयता के साथ प्रबंधित करने में मदद की है जितना मैंने कभी सोचा था।",
+		"testimonialAuthor": "मिया रोज़ेनबर्ग"
+	},
+	"connect": {
+		"agreeToTerms": "जारी रखने पर क्लिक करके, आप हमारे",
+		"termsOfService": "सेवा की शर्तों",
+		"privacyPolicy": "गोपनीयता नीति",
+		"and": "और",
+		"connectTo": "क्या आप कनेक्ट करना चाहते हैं",
+		"trustTitle": "भरोसा",
+		"trustDescription": "भरोसा बनाने की प्रक्रिया",
+		"termsTitle": "नियम",
+		"termsDescription": "एक्सेस प्राप्त करने की आवश्यकताएँ",
+		"confirm": "पुष्टि करें",
+		"errorTitle": "त्रुटि",
+		"errorDescription": "कृपया समर्थन से संपर्क करें",
+		"partnersWith": "के साथ साझेदारी",
+		"forSecureAccess": "सुरक्षित एक्सेस के लिए",
+		"returnTo": "वापस जाएं",
+		"contact": "संपर्क",
+		"terms": "नियम",
+		"privacy": "गोपनीयता",
+		"poweredBy": "द्वारा संचालित",
+		"accessterms": {
+			"trust": {
+				"oneTime": "एक बार"
+			},
+			"payment": {
+				"free": "मुफ्त",
+				"every": "हर",
+				"year": "साल",
+				"month": "महीना",
+				"week": "सप्ताह",
+				"day": "दिन",
+				"for": "के लिए"
+			},
+			"identity": {
+				"name": "नाम",
+				"email": "ईमेल",
+				"phone": "फोन"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "पहचान चुनें",
+			"searchIdentity": "पहचान खोजें...",
+			"noIdentityFound": "कोई पहचान नहीं मिली।",
+			"personalAccount": "व्यक्तिगत खाता",
+			"virtualIdentity": "आभासी पहचान",
+			"createIdentity": "पहचान बनाएं",
+			"createIdentityDescription": "अपनी गोपनीयता में सुधार के लिए एक नई पहचान जोड़ें।",
+			"cancel": "रद्द करें",
+			"continue": "जारी रखें"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "भुगतान विधि खोजें...",
+			"noPaymentMethods": "कोई भुगतान विधि उपलब्ध नहीं है।",
+			"selectPaymentMethod": "भुगतान विधि चुनें",
+			"addNewCard": "नया कार्ड जोड़ें",
+			"cards": "कार्ड",
+			"otherProviders": "अन्य प्रदाता"
+		}
+	},
+	"home": {}
+}

@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "সাইন ইন করুন",
+		"signOut": "সাইন আউট করুন",
+		"connectWithEartho": "নিচে আপনার Eartho অ্যাকাউন্টের সাথে সংযুক্ত করুন",
+		"connectWithEartho2": "আপনার Eartho-এর সাথে সংযুক্ত করুন, ",
+		"becomeUndetectable": "এবং অনলাইনে অদৃশ্য হয়ে যান, এমনকি আমাদের কাছেও।",
+		"beginFromScratch": "শুরু থেকে শুরু করুন, কোনো সংরক্ষিত বিবরণ নেই",
+		"agreeToTerms": "চালিয়ে যেতে ক্লিক করে, আপনি আমাদের সম্মত হন",
+		"termsOfService": "সেবার শর্তাবলী",
+		"privacyPolicy": "গোপনীয়তা নীতি",
+		"and": "এবং",
+		"oneTimePass": "ওয়ান টাইম পাস",
+		"magicLink": "ম্যাজিক লিঙ্ক",
+		"email": "ইমেল",
+		"enterEmail": "আপনার ইমেল লিখুন...",
+		"code": "কোড",
+		"enterCodeEmail": "আপনার ইমেলে পাঠানো কোডটি লিখুন...",
+		"enterCodePhone": "আপনার ফোনে পাঠানো কোডটি লিখুন...",
+		"sendCode": "কোড পাঠান",
+		"continueWithEmail": "ইমেলের সাথে চালিয়ে যান",
+		"sendMagicLink": "ম্যাজিক লিঙ্ক পাঠান",
+		"enterEmailToReceive": "একটি গ্রহণ করতে আপনার ইমেল লিখুন",
+		"oneTimePassQuickLoginEmail": "দ্রুত লগইনের জন্য একবারের পাসওয়ার্ড",
+		"phoneNumber": "ফোন নম্বর",
+		"enterPhone": "আপনার ফোন নম্বর লিখুন",
+		"login": "লগইন",
+		"testimonial": "Eartho আমাকে অসংখ্য ঘণ্টা বাঁচিয়েছে এবং আমাকে দ্রুত এবং আরও গোপনীয়তার সাথে আমার অনলাইন অ্যাক্সেস পরিচালনা করতে সহায়তা করেছে যা আমি কখনও কল্পনাও করিনি।",
+		"testimonialAuthor": "মিয়া রোজেনবার্গ"
+	},
+	"connect": {
+		"agreeToTerms": "চালিয়ে যেতে ক্লিক করে, আপনি আমাদের সম্মত হন",
+		"termsOfService": "সেবার শর্তাবলী",
+		"privacyPolicy": "গোপনীয়তা নীতি",
+		"and": "এবং",
+		"connectTo": "আপনি সংযুক্ত করতে চান",
+		"trustTitle": "বিশ্বাস",
+		"trustDescription": "বিশ্বাস গঠনের প্রক্রিয়া",
+		"termsTitle": "শর্তাবলী",
+		"termsDescription": "প্রবেশাধিকার পাওয়ার প্রয়োজনীয়তা",
+		"confirm": "নিশ্চিত করুন",
+		"errorTitle": "ত্রুটি",
+		"errorDescription": "সমর্থনের সাথে যোগাযোগ করুন",
+		"partnersWith": "এর সাথে অংশীদার",
+		"forSecureAccess": "নিরাপদ অ্যাক্সেসের জন্য",
+		"returnTo": "ফিরে যান",
+		"contact": "যোগাযোগ",
+		"terms": "শর্তাবলী",
+		"privacy": "গোপনীয়তা",
+		"poweredBy": "চালিত",
+		"accessterms": {
+			"trust": {
+				"oneTime": "একবার"
+			},
+			"payment": {
+				"free": "বিনামূল্যে",
+				"every": "প্রতি",
+				"year": "বছর",
+				"month": "মাস",
+				"week": "সপ্তাহ",
+				"day": "দিন",
+				"for": "জন্য"
+			},
+			"identity": {
+				"name": "নাম",
+				"email": "ইমেল",
+				"phone": "ফোন"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "পরিচয় নির্বাচন করুন",
+			"searchIdentity": "পরিচয় সন্ধান করুন...",
+			"noIdentityFound": "কোনো পরিচয় পাওয়া যায়নি।",
+			"personalAccount": "ব্যক্তিগত অ্যাকাউন্ট",
+			"virtualIdentity": "ভার্চুয়াল পরিচয়",
+			"createIdentity": "পরিচয় তৈরি করুন",
+			"createIdentityDescription": "আপনার গোপনীয়তা বাড়াতে একটি নতুন পরিচয় যোগ করুন।",
+			"cancel": "বাতিল করুন",
+			"continue": "চালিয়ে যান"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "অর্থপ্রদানের পদ্ধতি সন্ধান করুন...",
+			"noPaymentMethods": "কোনো অর্থপ্রদানের পদ্ধতি উপলব্ধ নেই।",
+			"selectPaymentMethod": "অর্থপ্রদানের পদ্ধতি নির্বাচন করুন",
+			"addNewCard": "নতুন কার্ড যোগ করুন",
+			"cards": "কার্ড",
+			"otherProviders": "অন্যান্য প্রদানকারী"
+		}
+	},
+	"home": {}
+}

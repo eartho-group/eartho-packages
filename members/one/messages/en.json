@@ -1,0 +1,93 @@
+{
+	"auth": {
+		"signIn": "Sign in",
+		"signOut": "Sign Out",
+		"connectWithEartho": "Connect with your Eartho account below",
+		"connectWithEartho2": "Connect with your Eartho, ",
+		"becomeUndetectable": "And become undetectable online, even to us.",
+		"beginFromScratch": "Begin from scratch, no stored details",
+		"agreeToTerms": "By clicking continue, you agree to our",
+		"termsOfService": "Terms of Service",
+		"privacyPolicy": "Privacy Policy",
+		"and": "and",
+		"oneTimePass": "One Time Pass",
+		"magicLink": "Magic Link",
+		"email": "Email",
+		"enterEmail": "Enter your email...",
+		"code": "Code",
+		"enterCodeEmail": "Enter the code sent to your email...",
+		"enterCodePhone": "Enter the code sent to your phone...",
+		"sendCode": "Send Code",
+		"continueWithEmail": "Continue With Email",
+		"sendMagicLink": "Send Magic Link",
+		"enterEmailToReceive": "Enter your email to receive a",
+		"oneTimePassQuickLoginEmail": "one-time password for quick login",
+		"phoneNumber": "Phone Number",
+		"enterPhone": "Enter your phone number",
+		"login": "Login",
+		"testimonial": "Eartho has saved me countless hours and helped me manage my online access faster and with more privacy than I ever imagined.",
+		"testimonialAuthor": "Mia Rosenberg"
+	},
+	"connect": {
+		"agreeToTerms": "By clicking continue, you agree to our",
+		"termsOfService": "Terms of Service",
+		"privacyPolicy": "Privacy Policy",
+		"and": "and",
+		"connectTo": "Do you want to connect to",
+		"trustTitle": "Trust",
+		"trustDescription": "The process to build trust",
+		"termsTitle": "Terms",
+		"termsDescription": "The requirements for gaining access",
+		"confirm": "Confirm",
+		"errorTitle": "Error",
+		"errorDescription": "Please contact with support",
+		"partnersWith": "partners with",
+		"forSecureAccess": "for secure access",
+		"returnTo": "Return to",
+		"contact": "Contact",
+		"terms": "Terms",
+		"privacy": "Privacy",
+		"poweredBy": "Powered By",
+		"accessterms": {
+			"trust": {
+				"oneTime": "One Time"
+			},
+			"payment": {
+				"free": "Free",
+				"every": "Every",
+				"year": "Year",
+				"month": "Month",
+				"week": "Week",
+				"day": "Day",
+				"for": "for"
+			},
+			"identity": {
+				"name": "Name",
+				"email": "Email",
+				"phone": "Phone"
+			}
+		}
+	},
+	"components": {
+		"identitySwitcher": {
+			"selectIdentity": "Select Identity",
+			"searchIdentity": "Search Identity...",
+			"noIdentityFound": "No identity found.",
+			"personalAccount": "Personal Account",
+			"virtualIdentity": "Virtual Identity",
+			"createIdentity": "Create Identity",
+			"createIdentityDescription": "Add a new identity to improve your privacy.",
+			"cancel": "Cancel",
+			"continue": "Continue"
+		},
+		"paymentSwitcher": {
+			"searchPaymentMethod": "Search Payment Method...",
+			"noPaymentMethods": "No payment methods available.",
+			"selectPaymentMethod": "Select a payment method",
+			"addNewCard": "Add New Card",
+			"cards": "Cards",
+			"otherProviders": "Other Providers"
+		}
+	},
+	"home": {}
+}

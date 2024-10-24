@@ -277,7 +277,7 @@ Enhance your app’s authentication with Eartho. It provides a **privacy-first l
            console.log('Logged in as:', result.token);
            console.log('Logged in as:', result.user);
 
-           auth0/nextauth/firebase/supabase/clerk.loginWithCustomToken(result.token.)
+           auth0/nextauth/firebase/supabase/clerk.loginWithCustomToken(result.token);
        }).catch(err => {
            console.error('Login failed:', err);
        });

@@ -273,8 +273,11 @@ Enhance your app’s authentication with Eartho. It provides a **privacy-first l
    Implement login and logout functionality to allow users to sign in or out securely:
    ```javascript
    function login() {
-       eartho.connectWithPopup().then(user => {
-           console.log('Logged in as:', user);
+       eartho.connectWithPopup().then(result => {
+           console.log('Logged in as:', result.token);
+           console.log('Logged in as:', result.user);
+
+           auth0/nextauth/firebase/supabase/clerk.loginWithCustomToken(result.token.)
        }).catch(err => {
            console.error('Login failed:', err);
        });
